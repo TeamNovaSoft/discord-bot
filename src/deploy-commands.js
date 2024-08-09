@@ -29,7 +29,7 @@ for (const folder of commandFolders) {
 
 const rest = new REST().setToken(token);
 
-(async () => {
+const init = async () => {
   try {
     console.log(
       `Started refreshing ${commands.length} application (/) commands.`
@@ -46,4 +46,6 @@ const rest = new REST().setToken(token);
   } catch (error) {
     console.error(error);
   }
-})();
+};
+
+init();

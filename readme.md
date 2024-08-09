@@ -37,3 +37,34 @@ This project is a Discord bot built with `discord.js`. The bot includes various 
    - **DISCORD_CLIENT_ID**: Your bot's client ID.
    - **DISCORD_GUILD_ID**: The ID of the server (guild) where the commands will be deployed.
 
+## Running the Bot
+
+1. Start the bot with the following command:
+    ```bash
+    yarn start
+    ```
+
+   This will run the bot and connect it to Discord. You should see a message in the console indicating that the bot is ready and logged in.
+
+## Creating New Commands
+
+To create a new command:
+
+1. Navigate to the `commands` directory and create a new folder for your command (if needed).
+
+2. Inside this folder, create a new JavaScript file for your command. Here's a basic example structure:
+    ```javascript
+    const { SlashCommandBuilder } = require('discord.js');
+
+    module.exports = {
+        data: new SlashCommandBuilder()
+            .setName('commandname')
+            .setDescription('Description of your command'),
+        async execute(interaction) {
+            // Your command logic here
+            await interaction.reply('Response message');
+        },
+    };
+    ```
+
+3. The new command will be automatically loaded the next time you start the bot.

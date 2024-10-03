@@ -52,7 +52,7 @@ Once `Developer Mode` is enabled, you can follow these steps to obtain Environme
 - Copy the bot token that is generated. This is your **DISCORD_TOKEN**.
 
 ### 2. Obtain **DISCORD_CLIENT_ID**
-- In the Discord Portal, select your application (your user avatar).
+- In the Discord Portal (not Discord Developer Portal), select or click on your user avatar on the bottom part when located on the `@me channel`.
 - You will find the option to copy the Client ID. This is your **DISCORD_CLIENT_ID**.
 
 ### 3. Obtain **DISCORD_GUILD_ID**

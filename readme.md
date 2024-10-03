@@ -53,7 +53,7 @@ Once `Developer Mode` is enabled, you can follow these steps to obtain Environme
 
 ### 2. Obtain **DISCORD_CLIENT_ID**
 - In the Discord Portal (not Discord Developer Portal), select or click on your user avatar on the bottom part when located on the `@me channel`.
-- You will find the option to copy the Client ID. This is your **DISCORD_CLIENT_ID**.
+- You will find the option to copy the `Client ID` in the menu called `Copy User ID`. This is your **DISCORD_CLIENT_ID**.
 
 ### 3. Obtain **DISCORD_GUILD_ID**
 - Open Discord and go to the server from which you want to obtain the ID.

@@ -1,6 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
+const { createServer } = require("http");
 require("./deploy-commands");
 require('dotenv').config();
 
@@ -43,3 +44,15 @@ for (const file of eventFiles) {
 }
 
 client.login(token);
+
+const PORT = process.env.PORT || 5900;
+
+const server = createServer();
+
+server.on("request", (request, response) => {
+  response.end("Server is online");
+});
+
+server.listen(PORT, () => {
+  console.log(`Starting health endpoint on ${PORT}`);
+});

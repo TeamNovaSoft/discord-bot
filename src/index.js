@@ -1,6 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
+const { Events } = require("discord.js");
 require("./deploy-commands");
 require('dotenv').config();
 
@@ -36,10 +37,25 @@ const eventFiles = fs
 for (const file of eventFiles) {
   const event = require(path.join(eventsPath, file));
   if (event.once) {
-    client.once(event.name, (...args) => event.execute(...args));
+    client.once(event.name, event.execute);
   } else {
-    client.on(event.name, (...args) => event.execute(...args));
+    client.on(event.name, event.execute);
   }
 }
+// JUST TESTING. REMOVE LATER
+client.on(Events.MessagePollVoteRemove, (answer, userId) => {
+  console.log(`User ${userId} removed their vote for answer ${answer.id}`);
+});
+
+client.on(Events.MessagePollVoteAdd, (answer, userId) => {
+  console.log(`User ${userId} voted for answer ${answer.id}`);
+});
+
+
+client.on(Events.MessageUpdate, async (_oldMessage, newMessage) => {
+  if (!newMessage.poll) return;
+
+  console.log('Poll was updated', newMessage.poll);
+});
 
 client.login(token);

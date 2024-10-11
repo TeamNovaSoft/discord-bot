@@ -25,7 +25,7 @@ module.exports = {
         .setDescription('status command')
         .setRequired(true)
         .addChoices(
-          COMMAND_KEYS.map(command => ({ name: command, value: command }))
+          COMMAND_KEYS.map(command => ({ name: command.replaceAll('pr-', '').replaceAll('-', ' '), value: command }))
         )
     ),
   async execute(interaction) {
@@ -33,7 +33,7 @@ module.exports = {
 
       const { options, channel } = interaction;
 
-      if (!channel.isThread()) return await interaction.reply("Sorry, this is not a thread!");
+      if (!channel.isThread()) return await interaction.reply({ content: "Sorry, this is not a thread!", ephemeral: true });
 
       const status = options.getString('status');
       const newStatus = MAPPED_STATUS_COMMANDS[status];

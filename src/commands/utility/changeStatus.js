@@ -48,7 +48,7 @@ module.exports = {
       const channelNameWithStatus = oldStatus ? channelName.replace(regex, newStatus) : `${newStatus} ${channelName}`;
 
       await channel.setName(channelNameWithStatus);
-      await interaction.reply(`Status updated to ${status}`);
+      await interaction.reply(`Status updated to ${status.replaceAll('-', ' ')}`);
     } catch (error) {
       await interaction.reply("An error occurred while updating the status.");
     }

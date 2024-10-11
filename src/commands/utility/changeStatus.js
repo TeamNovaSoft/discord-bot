@@ -25,17 +25,7 @@ module.exports = {
         .setDescription('status command')
         .setRequired(true)
         .addChoices(
-          { name: '/pr-no-merge', value: 'pr-no-merge' },
-          { name: '/pr-sos', value: 'pr-sos' },
-          { name: '/pr-draft', value: 'pr-draft' },
-          { name: '/pr-reviewing', value: 'pr-reviewing' },
-          { name: '/pr-request-changes', value: 'pr-request-changes' },
-          { name: '/pr-request-review', value: 'pr-request-review' },
-          { name: '/pr-working-in-fixes', value: 'pr-working-in-fixes' },
-          { name: '/pr-approved', value: 'pr-approved' },
-          { name: '/pr-merged', value: 'pr-merged' },
-          { name: '/pr-merged-need-tasks', value: 'pr-merged-need-tasks' },
-          { name: '/pr-merged-task-created', value: 'pr-merged-task-created' }
+          COMMAND_KEYS.map(command => ({ name: `/${command}`, value: command }))
         )
     ),
   async execute(interaction) {

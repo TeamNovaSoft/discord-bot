@@ -18,14 +18,14 @@ const COMMAND_KEYS = Object.keys(MAPPED_STATUS_COMMANDS);
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('changestatus')
+    .setName('change-status')
     .setDescription('Change the status of the thread')
     .addStringOption(option =>
       option.setName('status')
         .setDescription('status command')
         .setRequired(true)
         .addChoices(
-          COMMAND_KEYS.map(command => ({ name: `/${command}`, value: command }))
+          COMMAND_KEYS.map(command => ({ name: command, value: command }))
         )
     ),
   async execute(interaction) {

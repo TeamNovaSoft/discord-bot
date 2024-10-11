@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
 
-const MAPPED_COMMANDS = {
+const MAPPED_STATUS_COMMANDS = {
   'pr-no-merge': '🚫',
   'pr-sos': '🆘',
   'pr-draft': '🚧',
@@ -14,7 +14,7 @@ const MAPPED_COMMANDS = {
   'pr-merged-task-created': '✅🛫📋'
 };
 
-const COMMAND_KEYS = Object.keys(MAPPED_COMMANDS);
+const COMMAND_KEYS = Object.keys(MAPPED_STATUS_COMMANDS);
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -40,22 +40,22 @@ module.exports = {
     ),
   async execute(interaction) {
     try {
-      
+
       const { options, channel } = interaction;
-  
+
       if (!channel.isThread()) return await interaction.reply("Sorry, this is not a thread!");
-  
+
       const status = options.getString('status');
-      const newStatus = MAPPED_COMMANDS[status];
-  
+      const newStatus = MAPPED_STATUS_COMMANDS[status];
+
       if (!newStatus) {
         return await interaction.reply("Invalid status command.");
       }
-  
-      const oldStatus = COMMAND_KEYS.find(command => channel.name.startsWith(MAPPED_COMMANDS[command]));
-      const regex = new RegExp(`(${MAPPED_COMMANDS[oldStatus]})`, 'g');
+
+      const oldStatus = COMMAND_KEYS.find(command => channel.name.startsWith(MAPPED_STATUS_COMMANDS[command]));
+      const regex = new RegExp(`(${MAPPED_STATUS_COMMANDS[oldStatus]})`, 'g');
       const channelNameWithStatus = oldStatus ? channel.name.replace(regex, newStatus) : `${newStatus} ${channel.name}`;
-  
+
       await channel.setName(channelNameWithStatus);
       await interaction.reply(`Status updated to ${channelNameWithStatus}`);
     } catch (error) {

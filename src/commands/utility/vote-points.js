@@ -12,7 +12,7 @@ module.exports = {
           emoji: { name: '🧮' },
         },
         allowMultiselect: false,
-        duration: 1,
+        duration: 24,
         answers: [
           {
             text: "1",

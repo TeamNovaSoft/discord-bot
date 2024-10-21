@@ -36,9 +36,9 @@ const eventFiles = fs
 for (const file of eventFiles) {
   const event = require(path.join(eventsPath, file));
   if (event.once) {
-    client.once(event.name, (...args) => event.execute(...args));
+    client.once(event.name, event.execute);
   } else {
-    client.on(event.name, (...args) => event.execute(...args));
+    client.on(event.name, event.execute);
   }
 }
 

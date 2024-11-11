@@ -34,9 +34,11 @@ module.exports = {
       interaction.options.getInteger("month") || currentDate.getMonth() || 12;
     const user = interaction.options.getUser("user") || interaction.user;
 
-    const taskCompletedTagId = process.env.TASK_COMPLETED_TAG_ID;
-    const addPointTagId = process.env.ADD_POINT_TAG_ID;
-    const boostedPointTagId = process.env.ADD_BOOSTED_POINT_TAG_ID;
+    const taskCompletedTagId =
+      process.env.TASK_COMPLETED_TAG_ID || "1203085046769262592";
+    const addPointTagId = process.env.ADD_POINT_TAG_ID || "1258801833191669802";
+    const boostedPointTagId =
+      process.env.ADD_BOOSTED_POINT_TAG_ID || "1263873487953592381";
 
     const targetStartDate = new Date(year, month - 1, 1);
     const targetEndDate = new Date(year, month, 1);

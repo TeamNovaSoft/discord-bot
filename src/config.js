@@ -14,7 +14,7 @@ const MAPPED_STATUS_COMMANDS = {
     'pr-request-changes': '🔁',
     'pr-request-review': '❗',
     'pr-working-in-fixes': '🧑‍🔧',
-    'pr-approved-by-code-review': '👍🏾',
+    'pr-approved-by-code-review': '👍',
     'pr-merged-in-dev': '✅',
   };
 

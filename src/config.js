@@ -1,3 +1,11 @@
+require("dotenv").config();
+
+const DISCORD_CONFIG = {
+  discordToken: process.env.DISCORD_TOKEN,
+  discordClientId: process.env.DISCORD_CLIENT_ID,
+  discordGuildId: process.env.DISCORD_GUILD_ID
+}
+
 const MAPPED_STATUS_COMMANDS = {
     'pr-no-merge': '🚫',
     'pr-sos': '🆘',
@@ -47,5 +55,6 @@ const VOTE_POINTS_ANSWERS = [
 
 module.exports = {
     MAPPED_STATUS_COMMANDS,
-    VOTE_POINTS_ANSWERS
+    VOTE_POINTS_ANSWERS,
+    DISCORD_CONFIG
 }

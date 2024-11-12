@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-require("dotenv").config();
+require("dotenv").config(); // Load environment variables from .env file
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -24,6 +24,17 @@ module.exports = {
         .setName("user")
         .setDescription("User to search for")
         .setRequired(false)
+    )
+
+    .addStringOption((option) =>
+      option
+        .setName("channel")
+        .setDescription("Select a specific channel")
+        .setRequired(false)
+        .addChoices(
+          { name: "novabot", value: "novabot" },
+          { name: "code-review", value: "code-review" }
+        )
     ),
 
   async execute(interaction) {
@@ -33,6 +44,7 @@ module.exports = {
     const month =
       interaction.options.getInteger("month") || currentDate.getMonth() || 12;
     const user = interaction.options.getUser("user") || interaction.user;
+    const selectedChannel = interaction.options.getString("channel");
 
     const taskCompletedTagId =
       process.env.TASK_COMPLETED_TAG_ID || "1203085046769262592";
@@ -52,9 +64,11 @@ module.exports = {
 
     const escapedUserId = `<@${user.id}>`;
 
-    const taskCompletedQuery = `before: ${endDateStr} after: ${startDateStr} <@&${taskCompletedTagId}> ${escapedUserId}`;
-    const addPointQuery = `before: ${endDateStr} after: ${startDateStr} <@&${addPointTagId}> ${escapedUserId}`;
-    const boostedPointQuery = `before: ${endDateStr} after: ${startDateStr} <@&${boostedPointTagId}> ${escapedUserId}`;
+    const channelQueryPart = selectedChannel ? `in:${selectedChannel} ` : "";
+
+    const taskCompletedQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryPart}<@&${taskCompletedTagId}> ${escapedUserId}`;
+    const addPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryPart}<@&${addPointTagId}> ${escapedUserId}`;
+    const boostedPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryPart}<@&${boostedPointTagId}> ${escapedUserId}`;
 
     await interaction.reply(
       `Here are your search queries:\n\n**Tasks completed:**\n\`\`\`${taskCompletedQuery}\`\`\`\n\n**Points obtained:**\n\`\`\`${addPointQuery}\`\`\`\n\n**Boosted Points obtained:**\n\`\`\`${boostedPointQuery}\`\`\``

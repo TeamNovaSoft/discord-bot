@@ -3,7 +3,9 @@ require("dotenv").config();
 const DISCORD_CONFIG = {
   discordToken: process.env.DISCORD_TOKEN,
   discordClientId: process.env.DISCORD_CLIENT_ID,
-  discordGuildId: process.env.DISCORD_GUILD_ID
+  discordGuildId: process.env.DISCORD_GUILD_ID,
+  discordQARoleId: process.env.DISCORD_QA_ROLE_ID,
+  discordQAChannelName: process.env.DISCORD_QA_CHANNEL_ID,
 }
 
 const MAPPED_STATUS_COMMANDS = {

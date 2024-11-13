@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-require("dotenv").config(); 
+require("dotenv").config();
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -7,35 +7,29 @@ module.exports = {
     .setDescription(
       "Get the Discord search query to check points for a specific month"
     )
-
     .addIntegerOption((option) =>
       option.setName("year").setDescription("Year to search").setRequired(false)
     )
-
     .addIntegerOption((option) =>
       option
         .setName("month")
         .setDescription("Month to search")
         .setRequired(false)
     )
-
     .addUserOption((option) =>
       option
         .setName("user")
         .setDescription("User to search for")
         .setRequired(false)
     )
-
-    .addStringOption((option) =>
-      option
-        .setName("channel")
-        .setDescription("Select a specific channel")
-        .setRequired(false)
-        .addChoices(
-          { name: "novabot", value: "novabot" },
-          { name: "code-review", value: "code-review" }
+    .addStringOption((option) => {
+      return option
+        .setName("channels")
+        .setDescription(
+          "Enter one or more channels (comma-separated, Ex: novabot,code-review)"
         )
-    ),
+        .setRequired(false);
+    }),
 
   async execute(interaction) {
     const currentDate = new Date();
@@ -44,7 +38,11 @@ module.exports = {
     const month =
       interaction.options.getInteger("month") || currentDate.getMonth() || 12;
     const user = interaction.options.getUser("user") || interaction.user;
-    const selectedChannel = interaction.options.getString("channel");
+
+    const channelsInput = interaction.options.getString("channels");
+    const channels = channelsInput
+      ? channelsInput.split(",").map((channel) => channel.trim())
+      : [];
 
     const taskCompletedTagId =
       process.env.TASK_COMPLETED_TAG_ID || "1203085046769262592";
@@ -64,11 +62,13 @@ module.exports = {
 
     const escapedUserId = `<@${user.id}>`;
 
-    const channelQueryPart = selectedChannel ? `in:${selectedChannel} ` : "";
+    const channelQueryParts = channels.length
+      ? channels.map((channel) => `in:${channel}`).join(" ")
+      : "";
 
-    const taskCompletedQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryPart}<@&${taskCompletedTagId}> ${escapedUserId}`;
-    const addPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryPart}<@&${addPointTagId}> ${escapedUserId}`;
-    const boostedPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryPart}<@&${boostedPointTagId}> ${escapedUserId}`;
+    const taskCompletedQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${taskCompletedTagId}> ${escapedUserId}`;
+    const addPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${addPointTagId}> ${escapedUserId}`;
+    const boostedPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${boostedPointTagId}> ${escapedUserId}`;
 
     await interaction.reply(
       `Here are your search queries:\n\n**Tasks completed:**\n\`\`\`${taskCompletedQuery}\`\`\`\n\n**Points obtained:**\n\`\`\`${addPointQuery}\`\`\`\n\n**Boosted Points obtained:**\n\`\`\`${boostedPointQuery}\`\`\``

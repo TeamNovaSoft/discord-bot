@@ -1,8 +1,8 @@
+require('dotenv').config();
 const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 require("./deploy-commands");
-require('dotenv').config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 

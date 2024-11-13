@@ -53,8 +53,20 @@ const VOTE_POINTS_ANSWERS = [
     }
   ]
 
+const CronTimes = {
+  channelMessageId: process.env.CHANNEL_MESSAGE_ID,
+  cronMorning : process.env.CRON_MORNING,
+  cronNoon: process.env.CRON_NOON,
+  cronEvening: process.env.CRON_EVENING,
+  grettingMorning: process.env.GREETING_MORNING,
+  greetingNoon: process.env.GREETING_NOON,
+  greetingEvening: process.env.GREETING_EVENING,
+  timeZone: process.env.TIME_ZONE
+}
+
 module.exports = {
     MAPPED_STATUS_COMMANDS,
     VOTE_POINTS_ANSWERS,
-    DISCORD_CONFIG
+    DISCORD_CONFIG,
+    CronTimes
 }

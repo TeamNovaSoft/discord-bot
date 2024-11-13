@@ -3,6 +3,7 @@ const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 require("./deploy-commands");
 const { DISCORD_CONFIG } = require('./config');
+const { sendMorningGreeting, sendNoonGreeting, sendEveningGreeting } = require("./cron/cron-messages");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessagePolls, GatewayIntentBits.DirectMessagePolls] });
 
@@ -41,5 +42,9 @@ for (const file of eventFiles) {
     client.on(event.name, event.execute);
   }
 }
+
+console.log(sendMorningGreeting(client));
+console.log(sendNoonGreeting(client));
+console.log(sendEveningGreeting(client));
 
 client.login(token);

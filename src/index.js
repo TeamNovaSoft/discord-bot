@@ -3,13 +3,14 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 require("./deploy-commands");
+const { DISCORD_CONFIG } = require('./config');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
-const token = process.env.DISCORD_TOKEN;
+const token = DISCORD_CONFIG.discordToken;
 
 for (const folder of commandFolders) {
   const commandsPath = path.join(foldersPath, folder);

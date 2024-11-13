@@ -70,7 +70,10 @@ module.exports = {
     const boostedPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${boostedPointTagId}> ${escapedUserId}`;
 
     await interaction.reply(
-      `Here are your search queries:\n\n**Tasks completed:**\n\`\`\`${taskCompletedQuery}\`\`\`\n\n**Points obtained:**\n\`\`\`${addPointQuery}\`\`\`\n\n**Boosted Points obtained:**\n\`\`\`${boostedPointQuery}\`\`\``
+      {
+       content: `Here are your search queries:\n\n**Tasks completed:**\n\`\`\`${taskCompletedQuery}\`\`\`\n\n**Points obtained:**\n\`\`\`${addPointQuery}\`\`\`\n\n**Boosted Points obtained:**\n\`\`\`${boostedPointQuery}\`\`\``,
+       ephemeral: true
+      }
     );
   },
 };

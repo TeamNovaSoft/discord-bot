@@ -3,6 +3,11 @@ const { Events } = require("discord.js");
 module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction) {
+    console.log('Esto es interactionCreate', interaction)
+    if (interaction?.message) {
+      console.log('Esto es un mensaje', interaction?.message);
+    }
+    
     if (!interaction.isChatInputCommand()) return;
 
     const command = interaction.client.commands.get(interaction.commandName);

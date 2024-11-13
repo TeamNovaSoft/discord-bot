@@ -4,7 +4,7 @@ const { Client, Collection, GatewayIntentBits } = require("discord.js");
 require("./deploy-commands");
 const { DISCORD_CONFIG } = require('./config');
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessagePolls, GatewayIntentBits.DirectMessagePolls] });
 
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, "commands");

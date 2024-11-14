@@ -16,7 +16,13 @@ module.exports = {
       return await message.reply({ content: `Sorry, the channel: #${DISCORD_CONFIG.discordQAChannelName} for QA requests was not found!`, ephemeral: true });
     };
 
+    const qaRole = mentionedRoles.get(DISCORD_CONFIG.discordQARoleId);
+    const qaRoleIdRef = `<@&${qaRole.id}>`;
     const messageLink = `https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id}`;
-    qaRequestChannel.send(`The role @qa has been mentioned and a review has been requested. [Check message](${messageLink})`);
+
+    qaRequestChannel.send(`
+      The role ${qaRoleIdRef} has been mentioned and a review has been requested. [Check message](${messageLink}).
+      > ${message.content}.\n\nPlease create a thread on this message to send your report.  
+    `);
   },
 };

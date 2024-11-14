@@ -4,7 +4,7 @@ const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 require("./deploy-commands");
 const { DISCORD_CONFIG, cronTimes } = require('./config');
-const { sendAutomaticMessage } = require("./cron/cron-messages");
+const { scheduleMessage } = require("./cron/cron-messages");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessagePolls, GatewayIntentBits.DirectMessagePolls] });
 
@@ -44,9 +44,11 @@ for (const file of eventFiles) {
   }
 }
 
+console.log(cronTimes.greetingTimes);
+
 cronTimes?.greetingTimes.forEach((greetingTime) => {
   const { cronTime, greeting } = greetingTime; 
-  sendAutomaticMessage(client, greeting, cronTime, cronTimes.timeZone);
+  scheduleMessage(client, greeting, cronTime, cronTimes.timeZone);
 });
 
 client.login(token);

@@ -1,4 +1,5 @@
 require("dotenv").config();
+const csvParser = require("./utils/csv-parser");
 
 const DISCORD_CONFIG = {
   discordToken: process.env.DISCORD_TOKEN,
@@ -57,7 +58,7 @@ const VOTE_POINTS_ANSWERS = [
 
 const cronTimes = {
   channelMessageId: process.env.CHANNEL_MESSAGE_ID,
-  greetingTimes: process.env.GREETING_TIMES ? JSON.parse(process.env.GREETING_TIMES) : [],
+  greetingTimes: process.env.GREETING_TIMES ? csvParser(process.env.GREETING_TIMES) : [],
   timeZone: process.env.TIME_ZONE
 }
 

@@ -1,7 +1,7 @@
 const { CronJob } = require("cron");
 const { cronTimes } = require("../config");
 
-const sendAutomaticMessage = function (client, message, deliveryTime, timeZone) {
+const scheduleMessage = function (client, message, deliveryTime, timeZone) {
     if (!client || !message || !deliveryTime || !timeZone) return null
     new CronJob(
         deliveryTime,
@@ -19,4 +19,4 @@ const sendAutomaticMessage = function (client, message, deliveryTime, timeZone) 
     ).start()
 }
 
-module.exports = { sendAutomaticMessage }
+module.exports = { scheduleMessage }

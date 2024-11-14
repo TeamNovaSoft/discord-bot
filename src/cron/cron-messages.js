@@ -1,54 +1,22 @@
 const { CronJob } = require("cron");
-const { CronTimes } = require("../config");
+const { cronTimes } = require("../config");
 
-const sendMorningGreeting = function (client) {
+const sendAutomaticMessage = function (client, message, deliveryTime, timeZone) {
+    if (!client || !message || !deliveryTime || !timeZone) return null
     new CronJob(
-        CronTimes.cronMorning,
+        deliveryTime,
         function () {
-            const channel = client.channels.cache.get(CronTimes.channelMessageId);
+            const channel = client.channels.cache.get(cronTimes.channelMessageId);
             if (channel) {
-                channel.send(CronTimes.grettingMorning);
+                channel.send(message);
             } else {
-                console.log('Canal no encontrado o cliente no listo.');
+                console.log('Channel not found or client not ready.');
             }
         },
         null,
         true,
-        CronTimes.timeZone
+        timeZone
     ).start()
 }
 
-const sendNoonGreeting = function (client) {
-    new CronJob(
-        CronTimes.cronNoon,
-        function () {
-            const channel = client.channels.cache.get(CronTimes.channelMessageId);
-            if (channel) {
-                channel.send(CronTimes.greetingNoon);
-            } else {
-                console.log('Canal no encontrado o cliente no listo.');
-            }
-        },
-        null,
-        true,
-        CronTimes.timeZone
-    ).start()
-}
-const sendEveningGreeting = function (client) {
-    new CronJob(
-        CronTimes.cronEvening,
-        function () {
-            const channel = client.channels.cache.get(CronTimes.channelMessageId);
-            if (channel) {
-                channel.send(CronTimes.greetingEvening);
-            } else {
-                console.log('Canal no encontrado o cliente no listo.');
-            }
-        },
-        null,
-        true,
-        CronTimes.timeZone
-    ).start()
-}
-
-module.exports = { sendMorningGreeting, sendNoonGreeting, sendEveningGreeting }
+module.exports = { sendAutomaticMessage }

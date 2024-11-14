@@ -1,7 +1,7 @@
 const { CronJob } = require("cron");
 const { cronTimes } = require("../config");
 
-const scheduleMessage = function (client, message, deliveryTime, timeZone) {
+const scheduleMessage = (client, message, deliveryTime, timeZone) => {
     if (!client || !message || !deliveryTime || !timeZone) return null
     new CronJob(
         deliveryTime,
@@ -19,4 +19,11 @@ const scheduleMessage = function (client, message, deliveryTime, timeZone) {
     ).start()
 }
 
-module.exports = { scheduleMessage }
+const scheduleMessages = (client, greetingTimes) => {
+    greetingTimes.forEach((greetingTime) => {
+        const { cronTime, greeting } = greetingTime; 
+        scheduleMessage(client, greeting, cronTime, cronTimes.timeZone);
+      });
+}
+
+module.exports = { scheduleMessages }

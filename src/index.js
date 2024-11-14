@@ -44,8 +44,6 @@ for (const file of eventFiles) {
   }
 }
 
-console.log(cronTimes.greetingTimes);
-
 cronTimes?.greetingTimes.forEach((greetingTime) => {
   const { cronTime, greeting } = greetingTime; 
   scheduleMessage(client, greeting, cronTime, cronTimes.timeZone);

@@ -115,26 +115,36 @@ For detailed instructions on how to create new commands, see [Creating New Comma
 
 To schedule automated messages, you can configure the following additional environment variables in your `.env` file:
 
-
-- **CHANNEL_MESSAGE_ID**: The ID of the Discord channel where automated messages will be sent.
-- **GREETING_TIMES**: A CSV string where each entry is separated by a semicolon (`;`) and contains two values separated by a comma (`cronTime,greeting`). The `cronTime` follows the cron job syntax to define when the message should be sent, and the `greeting` is the message to be sent.
+- **SCHEDULED_MESSAGES**: A CSV string where each entry is separated by a semicolon (`;`) and contains three values separated by commas (`channel,datetime,message`). The `channel` is the Discord channel where the message will be sent, `datetime` is the date and time in ISO 8601 format (e.g., `2024-11-15T10:00:00`), and `message` is the content of the message to be sent.
 
 For example:
 ```
-GREETING_TIMES="0 8 * * 1-5,Good morning!;0 12 * * 1-5,Good afternoon!;0 18 * * 1-5,Good evening!"
+SCHEDULED_MESSAGES="canal1,2024-11-15T10:00:00,Hello World!;canal2,2024-11-15T12:00:00,Good Morning!"
 ```
 
-This example will send:
-- "Good morning!" every weekday (Monday to Friday) at 8:00 AM,
-- "Good afternoon!" every weekday at 12:00 PM,
-- "Good evening!" every weekday at 6:00 PM.
+This example will schedule two messages:
+- "Hello World!" will be sent to `canal1` on `2024-11-15` at `10:00 AM`.
+- "Good Morning!" will be sent to `canal2` on `2024-11-15` at `12:00 PM`.
 
-- **TIMEZONE**: The time zone in which the cron job should be executed. In this case, `America/Argentina/Buenos_Aires` is used for Argentina's time zone.
+- **TIMEZONE**: The time zone in which the scheduled messages should be executed. For example, `America/Argentina/Buenos_Aires` can be used for Argentina's time zone.
 
 ### Cron Job Time Format
 
-The cron time format in `GREETING_TIMES` follows this pattern:
-
+The `datetime` field in `SCHEDULED_MESSAGES` follows the ISO 8601 format:
 ```
-┬ ┬ ┬ ┬ ┬ ┬ │ │ │ │ │ │ │ │ │ │ │ └─ Day of the week (0 - 7) (Sunday to Saturday; 7 is also Sunday) │ │ │ │ └────── Month (1 - 12) │ │ │ └─────────── Day of the month (1 - 31) │ │ └──────────────── Hour (0 - 23) │ └───────────────────── Minute (0 - 59) └────────────────────────── Second (optional)
+YYYY-MM-DDTHH:mm
+(e.g., 2024-11-15T10:00:00)
+```
+
+- **YYYY**: Year (e.g., `2024`)
+- **MM**: Month (e.g., `11` for November)
+- **DD**: Day of the month (e.g., `15`)
+- **T**: Separator between the date and time components
+- **HH**: Hour in 24-hour format (e.g., `10` for 10 AM)
+- **mm**: Minutes (e.g., `00` for the start of the hour)
+- **ss**: Seconds (optional, defaults to `00`)
+
+### Example `.env` Configuration
+```
+SCHEDULED_MESSAGES="canal1,2024-11-15T10:00:00,Hello World!;canal2,2024-11-15T12:00:00,Good Morning!" TIMEZONE="America/Argentina/Buenos_Aires"
 ```

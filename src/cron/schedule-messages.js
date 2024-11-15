@@ -10,14 +10,14 @@ const { cronTimes } = require("../config");
  * @param {string} timeZone - The timezone to use for scheduling the message.
  * @returns {null} Returns null if any of the parameters are missing.
  */
-const scheduleMessage = (client, message, deliveryTime, timeZone) => {
-    if (!client || !message || !deliveryTime || !timeZone) return null
+const scheduleMessage = ({client, channel, message, datetime, timeZone}) => {
+    if (!client || !message || !datetime || !timeZone) return null
     new CronJob(
-        deliveryTime,
+        datetime,
         function () {
-            const channel = client.channels.cache.get(cronTimes.channelMessageId);
-            if (channel) {
-                channel.send(message);
+            const currentChannel = client.channels.cache.get(channel);
+            if (currentChannel) {
+                currentChannel.send(message);
             } else {
                 console.log('Channel not found or client not ready.');
             }
@@ -29,15 +29,15 @@ const scheduleMessage = (client, message, deliveryTime, timeZone) => {
 }
 
 /**
- * Schedules multiple messages to be sent to a Discord channel based on the provided greeting times.
+ * Schedules multiple messages to be sent to a Discord channel based on the provided message times.
  * 
  * @param {Client} client - The Discord.js client instance.
- * @param {Array<{cronTime: string, greeting: string}>} greetingTimes - Array of objects containing cron time and greeting message.
+ * @param {Array<{channel: string, datetime: string, messsage: string}>} scheduledMessages - Array of objects containing cron time and message message.
  */
-const scheduleMessages = (client, greetingTimes) => {
-    greetingTimes.forEach((greetingTime) => {
-        const { cronTime, greeting } = greetingTime; 
-        scheduleMessage(client, greeting, cronTime, cronTimes.timeZone);
+const scheduleMessages = (client, scheduledMessages) => {
+    scheduledMessages.forEach((scheduledMessage) => {
+        const { channel, datetime, message } = scheduledMessage; 
+        scheduleMessage({client, channel, message, datetime, timeZone: cronTimes.timeZone});
       });
 }
 

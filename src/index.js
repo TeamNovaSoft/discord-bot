@@ -44,6 +44,6 @@ for (const file of eventFiles) {
   }
 }
 
-scheduleMessages(client, cronTimes.greetingTimes)
+scheduleMessages(client, cronTimes.messageTimes)
 
 client.login(token);

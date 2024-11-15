@@ -5,8 +5,9 @@ const { cronTimes } = require("../config");
  * Schedules a message to be sent to a Discord channel at a specific time.
  * 
  * @param {Client} client - The Discord.js client instance.
+ * @param {string} channel - The channel to send the message.
  * @param {string} message - The message to send to the channel.
- * @param {string} deliveryTime - The cron expression that defines when the message should be sent.
+ * @param {string} datetime - The cron expression that defines when the message should be sent.
  * @param {string} timeZone - The timezone to use for scheduling the message.
  * @returns {null} Returns null if any of the parameters are missing.
  */

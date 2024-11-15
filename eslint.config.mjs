@@ -24,6 +24,7 @@ export default [
       'no-process-env': 'off',
       'no-process-exit': 'off',
       'no-sync': 'off',
+
       'no-unused-vars': 'error',
       'no-undef': 'error',
       'no-throw-literal': 'error',
@@ -34,13 +35,6 @@ export default [
       'prefer-const': 'error',
       'no-var': 'error',
 
-      indent: ['error', 2],
-      quotes: ['error', 'single'],
-      semi: ['error', 'always'],
-      'comma-dangle': ['error', 'always-multiline'],
-
-      'arrow-body-style': ['error', 'as-needed'],
-      'arrow-parens': ['error', 'always'],
       'prefer-arrow-callback': 'error',
       'prefer-template': 'error',
 
@@ -51,6 +45,8 @@ export default [
           ignoreDeclarationSort: true,
         },
       ],
+
+      'prettier/prettier': 'error',
     },
   },
 ];

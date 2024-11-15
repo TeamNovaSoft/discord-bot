@@ -22,6 +22,7 @@ This project is a Discord bot built with `discord.js`. The bot includes various 
    ```
 
 3. Install the dependencies:
+
    ```bash
    yarn install
    ```

@@ -2,7 +2,7 @@ import globals from 'globals';
 import pluginJs from '@eslint/js';
 import prettierPlugin from 'eslint-plugin-prettier';
 
-const { node, browser } = globals;
+const { node } = globals;
 
 export default [
   pluginJs.configs.recommended,
@@ -15,7 +15,6 @@ export default [
       sourceType: 'commonjs',
       globals: {
         ...node,
-        ...browser,
         filePath: 'readonly',
       },
     },

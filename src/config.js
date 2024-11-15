@@ -57,7 +57,6 @@ const VOTE_POINTS_ANSWERS = [
   ]
 
 const cronTimes = {
-  channelMessageId: process.env.CHANNEL_MESSAGE_ID,
   messageTimes: process.env.SCHEDULED_MESSAGES ? csvParser(process.env.SCHEDULED_MESSAGES) : [],
   timeZone: process.env.TIME_ZONE
 }

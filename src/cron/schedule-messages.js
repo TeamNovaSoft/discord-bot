@@ -11,7 +11,8 @@ const { cronTimes } = require("../config");
  * @returns {null} Returns null if any of the parameters are missing.
  */
 const scheduleMessage = ({client, channel, message, datetime, timeZone}) => {
-    if (!client || !message || !datetime || !timeZone) return null
+    if (!client || !channel || !message || !datetime || !timeZone) return console.log('Error: Missing one or more required parameters (client, channel, message, datetime, or timeZone).');
+    
     new CronJob(
         datetime,
         function () {

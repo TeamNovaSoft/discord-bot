@@ -1,4 +1,5 @@
 require("dotenv").config();
+const csvParser = require("./utils/csv-parser");
 
 const DISCORD_CONFIG = {
   discordToken: process.env.DISCORD_TOKEN,
@@ -55,8 +56,14 @@ const VOTE_POINTS_ANSWERS = [
     }
   ]
 
+const cronTimes = {
+  messageTimes: process.env.SCHEDULED_MESSAGES ? csvParser(process.env.SCHEDULED_MESSAGES) : [],
+  timeZone: process.env.TIME_ZONE
+}
+
 module.exports = {
     MAPPED_STATUS_COMMANDS,
     VOTE_POINTS_ANSWERS,
-    DISCORD_CONFIG
+    DISCORD_CONFIG,
+    cronTimes
 }

@@ -118,6 +118,30 @@ Once `Developer Mode` is enabled, you can also follow this documentation for cre
 
 For detailed instructions on how to create new commands, see [Creating New Commands](docs/creating-commands.md).
 
+## Additional Permissions Configuration
+
+To correctly install the bot on Discord and ensure it can receive and process messages, certain permissions must be configured both in the Discord Developer Portal and in the bot's code. Here are the steps and necessary permissions:
+
+### Additional Permissions Configuration
+
+1. Access the Discord Developer Portal:
+   Go to the Discord Developer Portal and select your bot application. 
+
+2. Configure the Bot's Scopes and Permissions:
+   - In the `Bot` section and check `Message Content Intent` permission to allow app bot the access to content message.
+   
+   ![message content intent option](docs/configuration/bot_permissions/message_content_intent_option.png)
+
+   - Navigate to the `Installation` section and then add the select the key permissions.
+
+   ![installation permissions](docs/configuration/bot_permissions/installation_permissions.png)
+
+   - Copy install Link to add your bot in the guild/server.
+   
+   ![install link](docs/configuration/bot_permissions/install_link.png)
+
+Configuring these permissions and intents ensures that your bot can operate effectively, receiving and processing messages as needed.
+
 ## Additional Environment Variables
 
 To schedule automated messages, you can configure the following additional environment variables in your `.env` file:

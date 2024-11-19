@@ -1,6 +1,9 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { VOTE_POINTS_ANSWERS } = require('../../config');
 
+const taskCompletedTagId =
+process.env.TASK_COMPLETED_TAG_ID || '1203085046769262592';
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('vote-points')
@@ -16,7 +19,9 @@ module.exports = {
   async execute(interaction) {
     const user = interaction.options.getUser('user') || interaction.user;
     
-    interaction.reply({
+    await interaction.reply(`<@&${taskCompletedTagId}> <@${user.id}>`);
+
+    interaction.followUp({
       poll: {
         question: {
           text: `How much cost this task? | ${user.id}`,

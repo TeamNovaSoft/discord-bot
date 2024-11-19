@@ -4,6 +4,37 @@ const { DISCORD_CONFIG } = require('../config');
 module.exports = {
   name: Events.MessageCreate,
   async execute(message) {
+    const { embeds } = message;
+    console.log('embeds!: ', embeds);
+    console.log('type!: ', embeds[0]?.type);
+
+    if (embeds.length < 0) {
+
+      const userMentionField = embeds[0].fields.find(field => field.name === 'poll_question_text');
+      let userMentioned
+
+      const parts = userMentionField?.value.split('|').map(part => part.trim());
+
+      if (parts.length === 2) {
+        const userId = parts[1];
+        userMentioned = `<@${userId}>`;
+      } else {
+        console.error('The format of field "poll_question_text" is not valid');
+      }
+
+      const channel = await message.client.channels.fetch(message.channelId);
+
+      if (channel) {
+        const resultsMessage = embeds[0].fields
+          .map(result => `**${result.name}**: ${result.value}`)
+          .join('\n');
+
+        await channel.send(`The poll is finished. Results ${userMentioned}:\n${resultsMessage}`);
+      } else {
+        console.error('Channel not found:', message.channelId);
+      }
+    }
+
     if (message.author.bot) {
       return;
     }

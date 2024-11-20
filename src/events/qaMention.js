@@ -2,9 +2,6 @@ const { Events } = require('discord.js');
 const { DISCORD_CONFIG } = require('../config');
 const { pollResults } = require('../utils/poll-vote');
 
-const boostedPointTagId =
-      process.env.ADD_BOOSTED_POINT_TAG_ID || '1263873487953592381';
-
 module.exports = {
   name: Events.MessageCreate,
   async execute(message) {

@@ -6,13 +6,13 @@ async function handleModalSubmit(interaction) {
     const prUrl = interaction.fields.getTextInputValue('urlInput');
     const title = interaction.fields.getTextInputValue('titleInput');
     const overview = interaction.fields.getTextInputValue('overviewInput');
-    const testing = interaction.fields.getTextInputValue('testingInput');
+    const howToTest = interaction.fields.getTextInputValue('howToTestInput');
 
     const formattedMessage = formatPRMessage({
       prUrl,
       title,
       overview,
-      testing,
+      howToTest,
       requester: interaction.user,
     });
 

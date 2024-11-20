@@ -28,13 +28,13 @@ function createPRModal(channelId) {
     .setStyle(TextInputStyle.Paragraph)
     .setRequired(true);
 
-  const testingInput = new TextInputBuilder()
-    .setCustomId('testingInput')
+  const howToTestInput = new TextInputBuilder()
+    .setCustomId('howToTestInput')
     .setLabel('How to Test')
     .setStyle(TextInputStyle.Paragraph)
     .setRequired(true);
 
-  const rows = [urlInput, titleInput, overviewInput, testingInput].map(
+  const rows = [urlInput, titleInput, overviewInput, howToTestInput].map(
     (input) => new ActionRowBuilder().addComponents(input)
   );
 

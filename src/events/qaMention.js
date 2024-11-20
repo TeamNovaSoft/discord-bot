@@ -9,9 +9,7 @@ module.exports = {
   name: Events.MessageCreate,
   async execute(message) {
 
-    if (message.embeds[0]?.data?.type === 'poll_result') {
-      pollResults(message)
-    }
+    if (message.embeds[0]?.data?.type === 'poll_result') await pollResults(message)  
 
     if (message.author.bot) {
       return;

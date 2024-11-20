@@ -12,8 +12,6 @@ const pollResults = async (message) => {
   const channel = await message.client.channels.fetch(message.channelId);
 
   if (channel) {
-    console.log(JSON.stringify(embeds[0].fields));
-
     if (embeds[0].fields.length > 3) {
       let finalResult = embeds[0].fields
         .find(result => result.name === 'victor_answer_text').value

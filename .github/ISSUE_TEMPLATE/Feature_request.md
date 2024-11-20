@@ -1,7 +1,6 @@
 ---
 name: "\U0001F680 Feature Request"
 about: Suggest an idea for the project
-
 ---
 
 **Is your feature request related to a problem? Please describe.**

@@ -1,7 +1,7 @@
 const { REST, Routes } = require("discord.js");
 const fs = require("node:fs");
 const path = require("node:path");
-const { DISCORD_CONFIG } = require('./config');
+const { DISCORD_CONFIG } = require("./config");
 
 const commands = [];
 const foldersPath = path.join(__dirname, "commands");
@@ -21,7 +21,7 @@ for (const folder of commandFolders) {
       commands.push(command.data.toJSON());
     } else {
       console.log(
-        `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
+        `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`,
       );
     }
   }
@@ -32,16 +32,16 @@ const rest = new REST().setToken(token);
 const init = async () => {
   try {
     console.log(
-      `Started refreshing ${commands.length} application (/) commands.`
+      `Started refreshing ${commands.length} application (/) commands.`,
     );
 
     const data = await rest.put(
       Routes.applicationGuildCommands(clientId, guildId),
-      { body: commands }
+      { body: commands },
     );
 
     console.log(
-      `Successfully reloaded ${data.length} application (/) commands.`
+      `Successfully reloaded ${data.length} application (/) commands.`,
     );
   } catch (error) {
     console.error(error);

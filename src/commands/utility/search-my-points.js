@@ -4,28 +4,31 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("my-points-query")
     .setDescription(
-      "Get the Discord search query to check points for a specific month"
+      "Get the Discord search query to check points for a specific month",
     )
     .addIntegerOption((option) =>
-      option.setName("year").setDescription("Year to search").setRequired(false)
+      option
+        .setName("year")
+        .setDescription("Year to search")
+        .setRequired(false),
     )
     .addIntegerOption((option) =>
       option
         .setName("month")
         .setDescription("Month to search")
-        .setRequired(false)
+        .setRequired(false),
     )
     .addUserOption((option) =>
       option
         .setName("user")
         .setDescription("User to search for")
-        .setRequired(false)
+        .setRequired(false),
     )
     .addStringOption((option) => {
       return option
         .setName("channels")
         .setDescription(
-          "Enter one or more channels (comma-separated, Ex: novabot,code-review)"
+          "Enter one or more channels (comma-separated, Ex: novabot,code-review)",
         )
         .setRequired(false);
     }),
@@ -53,10 +56,10 @@ module.exports = {
     const targetEndDate = new Date(year, month, 1);
 
     const startDateStr = `${targetStartDate.getFullYear()}-${String(
-      targetStartDate.getMonth() + 1
+      targetStartDate.getMonth() + 1,
     ).padStart(2, "0")}-01`;
     const endDateStr = `${targetEndDate.getFullYear()}-${String(
-      targetEndDate.getMonth() + 1
+      targetEndDate.getMonth() + 1,
     ).padStart(2, "0")}-01`;
 
     const escapedUserId = `<@${user.id}>`;
@@ -69,11 +72,9 @@ module.exports = {
     const addPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${addPointTagId}> ${escapedUserId}`;
     const boostedPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${boostedPointTagId}> ${escapedUserId}`;
 
-    await interaction.reply(
-      {
-       content: `Here are your search queries:\n\n**Tasks completed:**\n\`\`\`${taskCompletedQuery}\`\`\`\n\n**Points obtained:**\n\`\`\`${addPointQuery}\`\`\`\n\n**Boosted Points obtained:**\n\`\`\`${boostedPointQuery}\`\`\``,
-       ephemeral: true
-      }
-    );
+    await interaction.reply({
+      content: `Here are your search queries:\n\n**Tasks completed:**\n\`\`\`${taskCompletedQuery}\`\`\`\n\n**Points obtained:**\n\`\`\`${addPointQuery}\`\`\`\n\n**Boosted Points obtained:**\n\`\`\`${boostedPointQuery}\`\`\``,
+      ephemeral: true,
+    });
   },
 };

@@ -10,11 +10,16 @@ module.exports = {
 
     if (!mentionedRoles.has(DISCORD_CONFIG.discordQARoleId)) return;
 
-    const qaRequestChannel = message.guild.channels.cache.find(channel => channel.name === DISCORD_CONFIG.discordQAChannelName);
+    const qaRequestChannel = message.guild.channels.cache.find(
+      (channel) => channel.name === DISCORD_CONFIG.discordQAChannelName,
+    );
 
     if (!qaRequestChannel) {
-      return await message.reply({ content: `Sorry, the channel: #${DISCORD_CONFIG.discordQAChannelName} for QA requests was not found!`, ephemeral: true });
-    };
+      return await message.reply({
+        content: `Sorry, the channel: #${DISCORD_CONFIG.discordQAChannelName} for QA requests was not found!`,
+        ephemeral: true,
+      });
+    }
 
     const qaRole = mentionedRoles.get(DISCORD_CONFIG.discordQARoleId);
     const qaRoleIdRef = `<@&${qaRole.id}>`;

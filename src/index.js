@@ -1,11 +1,18 @@
-require('dotenv').config();
+require("dotenv").config();
 const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 require("./deploy-commands");
-const { DISCORD_CONFIG } = require('./config');
+const { DISCORD_CONFIG } = require("./config");
+const { handleModalSubmit } = require("./handlers/modal-submit");
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+  ],
+});
 
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, "commands");
@@ -23,7 +30,7 @@ for (const folder of commandFolders) {
       client.commands.set(command.data.name, command);
     } else {
       console.log(
-        `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
+        `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`,
       );
     }
   }
@@ -42,5 +49,12 @@ for (const file of eventFiles) {
     client.on(event.name, event.execute);
   }
 }
+
+client.on("interactionCreate", async (interaction) => {
+  if (interaction.isModalSubmit()) {
+    await handleModalSubmit(interaction);
+    return;
+  }
+});
 
 client.login(token);

@@ -63,9 +63,18 @@ const cronTimes = {
   timeZone: process.env.TIME_ZONE,
 };
 
+const tagIds = {
+  taskCompletedTagId:
+    process.env.TASK_COMPLETED_TAG_ID || '1203085046769262592',
+  addPointTagId: process.env.ADD_POINT_TAG_ID || '1258801833191669802',
+  boostedPointTagId:
+    process.env.ADD_BOOSTED_POINT_TAG_ID || '1263873487953592381',
+}
+
 module.exports = {
   MAPPED_STATUS_COMMANDS,
   VOTE_POINTS_ANSWERS,
   DISCORD_CONFIG,
   cronTimes,
+  tagIds
 };

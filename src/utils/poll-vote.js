@@ -1,5 +1,5 @@
-const boostedPointTagId =
-  process.env.ADD_BOOSTED_POINT_TAG_ID || '1263873487953592381';
+const { tagIds } = require("../config");
+
 
 const pollResults = async (message) => {
   const { embeds } = message;
@@ -18,7 +18,7 @@ const pollResults = async (message) => {
 
       await Promise.all(Array.from({ length: finalResult })
         .map(async () => {
-          await channel.send(`<@&${boostedPointTagId}> ${userMentioned}`);
+          await channel.send(`<@&${tagIds.boostedPointTagId}> ${userMentioned}`);
         }));
     } else {
       await channel.send(`The draw is not suported`);

@@ -7,15 +7,15 @@ Para crear un nuevo comando:
 2. Dentro de esta carpeta, crea un nuevo archivo JavaScript para tu comando. Aquí tienes un ejemplo básico de estructura:
 
    ```javascript
-   const { SlashCommandBuilder } = require("discord.js");
+   const { SlashCommandBuilder } = require('discord.js');
 
    module.exports = {
      data: new SlashCommandBuilder()
-       .setName("commandname")
-       .setDescription("Description of your command"),
+       .setName('commandname')
+       .setDescription('Description of your command'),
      async execute(interaction) {
        // Your command logic here
-       await interaction.reply("Response message");
+       await interaction.reply('Response message');
      },
    };
    ```

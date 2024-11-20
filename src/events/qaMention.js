@@ -1,14 +1,18 @@
-const { Events } = require("discord.js");
-const { DISCORD_CONFIG } = require("../config");
+const { Events } = require('discord.js');
+const { DISCORD_CONFIG } = require('../config');
 
 module.exports = {
   name: Events.MessageCreate,
   async execute(message) {
-    if (message.author.bot) return;
+    if (message.author.bot) {
+      return;
+    }
 
     const mentionedRoles = message.mentions.roles;
 
-    if (!mentionedRoles.has(DISCORD_CONFIG.discordQARoleId)) return;
+    if (!mentionedRoles.has(DISCORD_CONFIG.discordQARoleId)) {
+      return;
+    }
 
     const qaRequestChannel = message.guild.channels.cache.find(
       (channel) => channel.name === DISCORD_CONFIG.discordQAChannelName,

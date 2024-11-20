@@ -30,7 +30,7 @@ module.exports = {
         });
       }
 
-      const status = options.getString("status");
+      const status = options.getString('status');
       const newStatus = MAPPED_STATUS_COMMANDS[status];
 
       if (!newStatus) {
@@ -40,7 +40,7 @@ module.exports = {
       let channelName = channel.name;
       Object.values(MAPPED_STATUS_COMMANDS).forEach((emoji) => {
         if (channelName.startsWith(emoji)) {
-          channelName = channelName.replace(emoji, "").trim();
+          channelName = channelName.replace(emoji, '').trim();
         }
       });
 

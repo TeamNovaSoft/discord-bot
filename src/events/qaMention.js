@@ -15,7 +15,7 @@ module.exports = {
     }
 
     const qaRequestChannel = message.guild.channels.cache.find(
-      (channel) => channel.name === DISCORD_CONFIG.discordQAChannelName,
+      (channel) => channel.name === DISCORD_CONFIG.discordQAChannelName
     );
 
     if (!qaRequestChannel) {

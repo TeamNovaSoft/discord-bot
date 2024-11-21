@@ -1,6 +1,5 @@
 const { tagIds } = require("../config");
 
-
 const pollResults = async (message) => {
   const { embeds } = message;
 

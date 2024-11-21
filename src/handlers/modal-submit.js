@@ -20,7 +20,11 @@ async function handleModalSubmit(interaction) {
       const channel = await interaction.client.channels.fetch(channelId);
 
       if (!channel) {
-        throw new Error('Channel not found');
+        await interaction.reply({
+          content: '❌ The channel you are trying to access was not found.',
+          ephemeral: true,
+        });
+        return;
       }
 
       const permissions = channel.permissionsFor(interaction.client.user);

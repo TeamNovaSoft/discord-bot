@@ -3,7 +3,6 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 require('./deploy-commands');
-const { handleModalSubmit } = require('./handlers/modal-submit');
 const { DISCORD_CONFIG, cronTimes } = require('./config');
 const { scheduleMessages } = require('./cron/schedule-messages');
 
@@ -53,12 +52,6 @@ for (const file of eventFiles) {
   }
 }
 
-client.on('interactionCreate', async (interaction) => {
-  if (interaction.isModalSubmit()) {
-    await handleModalSubmit(interaction);
-    return;
-  }
-});
 scheduleMessages(client, cronTimes.messageTimes);
 
 client.login(token);

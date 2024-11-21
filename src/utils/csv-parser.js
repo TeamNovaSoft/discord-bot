@@ -5,14 +5,14 @@
  * @returns {Array<{channel: string, datetime: string, message: string}>} An array of objects, each containing `cronTime` and `message` properties.
  */
 function csvParser(csvString) {
-    return csvString.split(';').map(entry => {
-        const [channel, datetime, message] = entry.split(',');
-        return {
-            channel,
-            datetime,
-            message
-        };
-    });
+  return csvString.split(';').map((entry) => {
+    const [channel, datetime, message] = entry.split(',');
+    return {
+      channel,
+      datetime,
+      message,
+    };
+  });
 }
 
 module.exports = csvParser;

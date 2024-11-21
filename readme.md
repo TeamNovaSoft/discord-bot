@@ -116,3 +116,47 @@ Once `Developer Mode` is enabled, you can also follow this documentation for cre
 ## [Creating New Commands](docs/creating-commands.md)
 
 For detailed instructions on how to create new commands, see [Creating New Commands](docs/creating-commands.md).
+
+## Additional Permissions Configuration
+To correctly install the bot on Discord and ensure it can receive and process messages, certain permissions must be configured both in the Discord Developer Portal and in the bot's code. Here are the steps and necessary permissions:
+### Additional Permissions Configuration
+1. Access the Discord Developer Portal:
+   Go to the Discord Developer Portal and select your bot application. 
+2. Configure the Bot's Scopes and Permissions:
+   - In the `Bot` section and check `Message Content Intent` permission to allow app bot the access to content message.
+   
+   ![message content intent option](docs/configuration/bot_permissions/message_content_intent_option.png)
+   - Navigate to the `Installation` section and then add the select the key permissions.
+   ![installation permissions](docs/configuration/bot_permissions/installation_permissions.png)
+   - Copy install Link to add your bot in the guild/server.
+   
+   ![install link](docs/configuration/bot_permissions/install_link.png)
+Configuring these permissions and intents ensures that your bot can operate effectively, receiving and processing messages as needed.
+## Additional Environment Variables
+To schedule automated messages, you can configure the following additional environment variables in your `.env` file:
+- **SCHEDULED_MESSAGES**: A CSV string where each entry is separated by a semicolon (`;`) and contains three values separated by commas (`channel,datetime,message`). The `channel` is the Discord channel where the message will be sent, `datetime` is the date and time in ISO 8601 format (e.g., `2024-11-15T10:00:00`), and `message` is the content of the message to be sent.
+For example:
+```
+SCHEDULED_MESSAGES="canal1,2024-11-15T10:00:00,Hello World!;canal2,2024-11-15T12:00:00,Good Morning!"
+```
+This example will schedule two messages:
+- "Hello World!" will be sent to `canal1` on `2024-11-15` at `10:00 AM`.
+- "Good Morning!" will be sent to `canal2` on `2024-11-15` at `12:00 PM`.
+- **TIMEZONE**: The time zone in which the scheduled messages should be executed. For example, `America/Argentina/Buenos_Aires` can be used for Argentina's time zone.
+### Cron Job Time Format
+The `datetime` field in `SCHEDULED_MESSAGES` follows the ISO 8601 format:
+```
+YYYY-MM-DDTHH:mm
+(e.g., 2024-11-15T10:00:00)
+```
+- **YYYY**: Year (e.g., `2024`)
+- **MM**: Month (e.g., `11` for November)
+- **DD**: Day of the month (e.g., `15`)
+- **T**: Separator between the date and time components
+- **HH**: Hour in 24-hour format (e.g., `10` for 10 AM)
+- **mm**: Minutes (e.g., `00` for the start of the hour)
+- **ss**: Seconds (optional, defaults to `00`)
+### Example `.env` Configuration
+```
+SCHEDULED_MESSAGES="canal1,2024-11-15T10:00:00,Hello World!;canal2,2024-11-15T12:00:00,Good Morning!" TIMEZONE="America/Argentina/Buenos_Aires"
+```

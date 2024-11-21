@@ -1,4 +1,4 @@
-function formatPRMessage({ title, overview, testing, prUrl, requester }) {
+function formatPRMessage({ title, overview, howToTest, prUrl, requester }) {
   return `
 **🔍 New PR Review Request**
 
@@ -21,7 +21,7 @@ ${title}
 ${overview}
 
 ## How to test  
-${testing}
+${howToTest}
 \`\`\`
   `;
 }

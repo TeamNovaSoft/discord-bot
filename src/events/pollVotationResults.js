@@ -6,10 +6,6 @@ module.exports = {
   async execute(message) {
     const { embeds, author, client, channelId } = message;
 
-    if (author.bot) {
-      return;
-    }
-
     if (author.bot && embeds[0]?.data?.type !== 'poll_result') {
       return;
     }

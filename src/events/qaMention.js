@@ -4,10 +4,6 @@ const { DISCORD_CONFIG } = require('../config');
 module.exports = {
   name: Events.MessageCreate,
   async execute(message) {
-    if (!message.embeds[0]?.data?.type === 'poll_result') {
-      return;
-    }
-
     if (message.author.bot) {
       return;
     }

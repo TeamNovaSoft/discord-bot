@@ -33,7 +33,7 @@ module.exports = {
       const escapedUserId = `<@${user.id}>`;
 
       const threadLink = `https://discord.com/channels/${guild.id}/${channel.id}`;
-      const message = `${escapedUserId} está pidiendo un punto por **${userMessage}**. Revisa el mensaje acá: ${threadLink}`;
+      const message = `${escapedUserId} is asking for a point for **${userMessage}**. Check the message here: ${threadLink}`;
 
       const channelSend = await interaction.client.channels.fetch(
         DISCORD_CONFIG.discordAdminPointRequestChannel

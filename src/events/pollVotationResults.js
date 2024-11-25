@@ -35,7 +35,11 @@ module.exports = {
         await channel.send(`The draw is not suported`);
       }
     } else {
-      return console.error('Channel not found:', channelId);
+      console.error(`Channel not found: ${channelId}`);
+      await message.reply({
+        content: `Channel not found: ${channelId}`,
+        ephemeral: true,
+      });
     }
   },
 };

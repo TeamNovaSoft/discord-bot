@@ -15,7 +15,7 @@ module.exports = {
     ),
   async execute(interaction) {
     const user = interaction.options.getUser('user') || interaction.user;
-    
+
     await interaction.reply(`<@&${tagIds.taskCompletedTagId}> <@${user.id}>`);
 
     interaction.followUp({
@@ -25,9 +25,9 @@ module.exports = {
           emoji: { name: '🧮' },
         },
         allowMultiselect: false,
-        duration: 1,
+        duration: 24,
         answers: VOTE_POINTS_ANSWERS,
       },
-    });    
+    });
   },
 };

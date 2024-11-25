@@ -1,12 +1,12 @@
 const { Events } = require('discord.js');
 const { DISCORD_CONFIG } = require('../config');
-const { pollResults } = require('../utils/poll-vote');
 
 module.exports = {
   name: Events.MessageCreate,
   async execute(message) {
-
-    if (message.embeds[0]?.data?.type === 'poll_result') await pollResults(message)  
+    if (!message.embeds[0]?.data?.type === 'poll_result') {
+      return;
+    }
 
     if (message.author.bot) {
       return;

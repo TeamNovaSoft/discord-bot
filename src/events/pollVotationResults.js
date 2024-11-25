@@ -1,14 +1,45 @@
 const { Events } = require('discord.js');
-const { pollResults } = require('../utils/poll-vote');
+const { tagIds } = require('../config');
 
 module.exports = {
   name: Events.MessageCreate,
   async execute(message) {
+    const { embeds, author, client, channelId } = message;
 
-    if (message.author.bot) {
+    if (author.bot) {
       return;
     }
 
-    if (message.embeds[0]?.data?.type === 'poll_result') await pollResults(message)
+    if (author.bot && embeds[0]?.data?.type !== 'poll_result') {
+      return;
+    }
+
+    const userMentionField = embeds[0]?.fields.find(
+      (field) => field.name === 'poll_question_text'
+    );
+    const parts = userMentionField?.value.split('|').map((part) => part.trim());
+    const userMentioned = `<@${parts[1]}>`;
+
+    const channel = await client.channels.fetch(channelId);
+
+    if (channel) {
+      if (embeds[0].fields.length > 3) {
+        const finalResult = embeds[0].fields.find(
+          (result) => result.name === 'victor_answer_text'
+        ).value;
+
+        await Promise.all(
+          Array.from({ length: finalResult }).map(async () => {
+            await channel.send(
+              `<@&${tagIds.boostedPointTagId}> ${userMentioned}`
+            );
+          })
+        );
+      } else {
+        await channel.send(`The draw is not suported`);
+      }
+    } else {
+      return console.error('Channel not found:', channelId);
+    }
   },
 };

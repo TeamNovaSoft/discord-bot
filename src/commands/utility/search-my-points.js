@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
+const { tagIds } = require('../../config');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -43,12 +44,6 @@ module.exports = {
       ? channelsInput.split(',').map((channel) => channel.trim())
       : [];
 
-    const taskCompletedTagId =
-      process.env.TASK_COMPLETED_TAG_ID || '1203085046769262592';
-    const addPointTagId = process.env.ADD_POINT_TAG_ID || '1258801833191669802';
-    const boostedPointTagId =
-      process.env.ADD_BOOSTED_POINT_TAG_ID || '1263873487953592381';
-
     const targetStartDate = new Date(year, month - 1, 1);
     const targetEndDate = new Date(year, month, 1);
 
@@ -65,9 +60,9 @@ module.exports = {
       ? channels.map((channel) => `in:${channel}`).join(' ')
       : '';
 
-    const taskCompletedQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${taskCompletedTagId}> ${escapedUserId}`;
-    const addPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${addPointTagId}> ${escapedUserId}`;
-    const boostedPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${boostedPointTagId}> ${escapedUserId}`;
+    const taskCompletedQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${tagIds.taskCompletedTagId}> ${escapedUserId}`;
+    const addPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${tagIds.addPointTagId}> ${escapedUserId}`;
+    const boostedPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${tagIds.boostedPointTagId}> ${escapedUserId}`;
 
     await interaction.reply({
       content: `Here are your search queries:\n\n**Tasks completed:**\n\`\`\`${taskCompletedQuery}\`\`\`\n\n**Points obtained:**\n\`\`\`${addPointQuery}\`\`\`\n\n**Boosted Points obtained:**\n\`\`\`${boostedPointQuery}\`\`\``,

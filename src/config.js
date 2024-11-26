@@ -7,6 +7,8 @@ const DISCORD_CONFIG = {
   discordGuildId: process.env.DISCORD_GUILD_ID,
   discordQARoleId: process.env.DISCORD_QA_ROLE_ID,
   discordQAChannelName: process.env.DISCORD_QA_CHANNEL_ID,
+  discordAdminPointRequestChannel: process.env.ADMIN_POINT_REQUEST_CHANNEL,
+  discordAdminTagId: process.env.ADMINISTRATOR_TAG_ID,
 };
 
 const MAPPED_STATUS_COMMANDS = {

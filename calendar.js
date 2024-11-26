@@ -1,6 +1,7 @@
 const { google } = require('googleapis');
 const path = require('path');
 const fs = require('fs');
+const { googleConfig } = require('./firebase-config');
 
 // Carga las credenciales descargadas
 const credentialsPath = path.join(__dirname, 'google-keys.json');
@@ -10,32 +11,36 @@ if (!fs.existsSync(credentialsPath)) {
   throw new Error('El archivo de credenciales no existe. Verifica la ruta.');
 }
 
-const credentials = JSON.parse(fs.readFileSync(credentialsPath, 'utf8'));
-
-const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
-
 const auth = new google.auth.GoogleAuth({
   keyFile: credentialsPath,
-  scopes: SCOPES,
+  scopes: googleConfig.scopes,
 });
 
 const calendar = google.calendar({ version: 'v3', auth });
 
-async function listEvents(calendarId = 'yoelferreyra24@gmail.com') {
+async function listEvents() {
   const now = new Date();
 
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
   const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
   const response = await calendar.events.list({
-    calendarId,
+    calendarId: googleConfig.email,
     timeMin: startOfMonth,
     timeMax: endOfMonth,
     singleEvents: true,
     orderBy: 'startTime',
   });
 
-  return response.data.items;
+  const events = response.data.items;
+  return events.map(event => {
+    return {
+      summary: event.summary,
+      start: {dateTime: event.start.dateTime, timeZone: event.start.timeZone},
+      end: {dateTime: event.end.dateTime, timeZone: event.end.timeZone},
+      hangoutLink: event.hangoutLink
+    };
+  });
 }
 
 module.exports = { listEvents };

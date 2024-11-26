@@ -1,19 +1,27 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { listEvents } = require('../../../calendar');
+const {
+  scheduleEventNotification,
+} = require('../../cron/schedule-google-calendar');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('calendar')
     .setDescription('Replies with Pong!'),
-  async execute(interaction) {
+  async execute() {
     try {
-      const events = await listEvents();
-      if (events.length === 0) {
-        console.log(events);
-        await interaction.reply('Response message');
-      } else {
-        console.log(events);
-      }
+      const events2 = [
+        {
+          summary: 'Reunión importante',
+          start: { dateTime: '2024-11-26T10:56:00Z' }, // Hora UTC
+          end: { dateTime: '2024-11-26T16:00:00Z' },
+        },
+        {
+          summary: 'Taller de equipo',
+          start: { dateTime: '2024-11-26T18:00:00Z' },
+          end: { dateTime: '2024-11-26T19:00:00Z' },
+        },
+      ];
+      events2.forEach((event) => scheduleEventNotification(event));
     } catch (error) {
       console.log(error);
     }

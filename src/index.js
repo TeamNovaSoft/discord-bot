@@ -25,19 +25,6 @@ deployCommands(client);
 deployEvents(client);
 
 scheduleMessages(client, cronTimes.messageTimes);
-const events = [
-  {
-    summary: 'Meeting with Team',
-    start: { dateTime: '2024-11-26T12:10:00Z' },
-  },
-  {
-    summary: 'Project Deadline',
-    start: { dateTime: '2024-11-26T18:00:00Z' },
-  },
-];
-
-const timeZone = 'America/Argentina/Buenos_Aires';
-
-scheduleEventNotifications(client, events, timeZone);
+scheduleEventNotifications(client);
 
 client.login(token);

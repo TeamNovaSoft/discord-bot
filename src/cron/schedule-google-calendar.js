@@ -13,49 +13,50 @@ const channelId = '1306251153855610922';
  * @param {string} event.start.dateTime - The date and time (ISO string) when the event starts.
  * @param {string} timeZone - The timezone to use for scheduling the notification.
  */
-const scheduleEventNotification = async ({ client, event, timeZone }) => {
-  if (!client || !event || !event.start || !event.start.dateTime || !timeZone) {
+const scheduleEventNotification = async ({ client, event }) => {
+  if (
+    !client ||
+    !event ||
+    !event.start ||
+    !event.start.dateTime ||
+    !event.start.timeZone
+  ) {
     return console.log(
       'Error: Missing one or more required parameters (client, event, event.start.dateTime, or timeZone).'
     );
   }
 
-  // Convert event start date to a cron expression
   const dateToCronExpression = (dateString) => {
     const date = new Date(dateString);
-    const minutes = date.getUTCMinutes();
-    const hours = date.getUTCHours();
-    const day = date.getUTCDate();
-    const month = date.getUTCMonth() + 1; // Months are 0-indexed in JavaScript.
-    return `${minutes} ${hours} ${day} ${month} *`; // Format: min hour day month day_of_week
+    const minutes = date.getMinutes();
+    const hours = date.getHours();
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    return `${minutes} ${hours} ${day} ${month} *`;
   };
 
   const cronExpression = dateToCronExpression(event.start.dateTime);
-
-  console.log(
-    `Scheduling notification for event "${event.summary}" with cron: ${cronExpression}`
-  );
-
-  // Schedule the cron job
   new CronJob(
     cronExpression,
     async () => {
       const currentChannel = await client.channels.cache.get(channelId);
-      // Crear un embed con los detalles del mensaje
       const embed = new EmbedBuilder()
-        .setColor('#0099ff') // Color del embed
-        .setTitle('📅 ¡Recordatorio de reunión!')
-        .setDescription('Hola! Estamos reunidos en **Planeación de tareas**.')
-        .addFields({
-          name: 'Enlace de la reunión:',
-          value: '[Haz clic aquí](https://meet.google.com/eqv-qjph-zjm)',
-          inline: false,
-        })
-        .setTimestamp(new Date('2024-11-21T11:56:00Z')) // Hora del evento
+        .setColor('#0099ff')
+        .setTitle('📅 Meeting reminder!')
+        .setDescription('Hello! We are meeting in **Task Planning**.')
         .setFooter({
           text: 'Meet remember APP',
-          iconURL: 'https://example.com/icon.png',
-        }); // Cambia el iconURL por tu ícono si lo necesitas
+          iconURL:
+            'https://static.vecteezy.com/system/resources/previews/007/683/528/non_2x/calendar-calendar-icon-calendar-icon-simple-sign-calendar-symbol-free-vector.jpg',
+        });
+
+      if (event?.hangoutLink) {
+        embed.addFields({
+          name: 'Meeting link:',
+          value: `[Click here](${event.hangoutLink})`,
+          inline: false,
+        });
+      }
 
       if (currentChannel) {
         currentChannel.send({ embeds: [embed] });
@@ -65,30 +66,24 @@ const scheduleEventNotification = async ({ client, event, timeZone }) => {
     },
     null,
     true,
-    timeZone
+    event.start.timeZone
   ).start();
 };
 
 /**
  * Schedules multiple notifications for a list of events.
  *
- * @param {Array<{summary: string, start: {dateTime: string}}>} events - List of event objects.
- * @param {string} timeZone - The timezone to use for scheduling the notifications.
+ * @param {Array<{summary: string, start: {dateTime: string, timeZone: string}}>} events - List of event objects.
  */
-const scheduleEventNotifications = async (client, events, timeZone) => {
-  const events2 = await listEvents();
-  console.log(events2);
+const scheduleEventNotifications = async (client) => {
+  const events = await listEvents();
 
-  const events3 = [...events, ...events2];
-
-  if (!Array.isArray(events3) || events.length === 0 || !timeZone) {
-    return console.log(
-      'Error: Missing or invalid parameters (events array or timeZone).'
-    );
+  if (!Array.isArray(events)) {
+    return console.log('Error: Missing or invalid parameters (events array).');
   }
 
-  events3.forEach((event) => {
-    scheduleEventNotification({ client, event, timeZone });
+  events.forEach((event) => {
+    scheduleEventNotification({ client, event });
   });
 };
 

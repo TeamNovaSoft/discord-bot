@@ -3,10 +3,8 @@ const path = require('path');
 const fs = require('fs');
 const { googleConfig } = require('./firebase-config');
 
-// Carga las credenciales descargadas
 const credentialsPath = path.join(__dirname, 'google-keys.json');
 
-// Verifica que el archivo exista y sea válido
 if (!fs.existsSync(credentialsPath)) {
   throw new Error('El archivo de credenciales no existe. Verifica la ruta.');
 }

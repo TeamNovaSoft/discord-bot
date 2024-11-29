@@ -160,3 +160,37 @@ YYYY-MM-DDTHH:mm
 ```
 SCHEDULED_MESSAGES="canal1,2024-11-15T10:00:00,Hello World!;canal2,2024-11-15T12:00:00,Good Morning!" TIMEZONE="America/Argentina/Buenos_Aires"
 ```
+## Google Calendar Integration
+
+To integrate the bot with Google Calendar, you need to obtain service account keys from Google Cloud. Follow these steps to set it up correctly:
+
+### Create and Configure the Project in Google Cloud
+
+1. **Access Google Cloud Console**:
+   - Go to [Google Cloud Console](https://console.cloud.google.com/) and sign in with your Google account.
+
+2. **Create a New Project**:
+   - Click on the project dropdown at the top and select "New Project."
+   - Assign a name to your project and click "Create."
+
+3. **Enable the Google Calendar API**:
+   - Within your project, go to **API & Services** > **Library**.
+   - Search for "Google Calendar API" and click "Enable."
+
+4. **Create a Service Account**:
+   - Go to **API & Services** > **Credentials**.
+   - Click "Create Credentials" and select "Service Account."
+   - Provide a name for the service account and complete the setup.
+
+5. **Generate a Key for the Service Account**:
+   - After creating the service account, select "Create Key."
+   - Choose the JSON format and download the key file.
+
+6. **Grant Permissions to the Service Account**:
+   - Open Google Calendar with the account you want to integrate.
+   - Share the calendar with the service account email address (something like `your-service-account@your-project.iam.gserviceaccount.com`).
+   - Assign the "Make changes to events" permission.
+
+### Configure the Key File
+
+1. Save the downloaded file (`google-keys.json`) in the root of your project. **Make sure to add it to your `.gitignore` file** to avoid exposing it in your repository.

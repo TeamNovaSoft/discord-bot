@@ -5,7 +5,7 @@ const { firebaseConfig } = require('./firebase-config');
 
 const credentialsPath = path.join(__dirname, 'google-keys.json');
 
-if (!fs.existsSync(credentialsPath)) {
+if (!fs.existsSync(credentialsPath) && firebaseConfig.scheduledCalendarEnabled) {
   throw new Error('The credential file do not exist. Verify route.');
 }
 

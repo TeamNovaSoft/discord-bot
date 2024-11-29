@@ -74,7 +74,7 @@ const scheduleEventNotification = async ({ client, event }) => {
  *
  * @param {Array<{summary: string, start: {dateTime: string, timeZone: string}}>} events - List of event objects.
  */
-const scheduleEventNotifications = async (client) => {
+const scheduleCalendarNotifications = async (client) => {
   const events = await listEvents();
 
   if (!Array.isArray(events)) {
@@ -86,4 +86,4 @@ const scheduleEventNotifications = async (client) => {
   });
 };
 
-module.exports = { scheduleEventNotifications };
+module.exports = { scheduleCalendarNotifications };

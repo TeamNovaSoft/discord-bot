@@ -1,8 +1,7 @@
 const { CronJob } = require('cron');
 const { listEvents } = require('../../calendar');
 const { EmbedBuilder } = require('discord.js');
-
-const channelId = '1306251153855610922';
+const { firebaseConfig } = require('../../firebase-config');
 
 /**
  * Schedules a notification to be sent when an event starts.
@@ -39,15 +38,15 @@ const scheduleEventNotification = async ({ client, event }) => {
   new CronJob(
     cronExpression,
     async () => {
-      const currentChannel = await client.channels.cache.get(channelId);
+      const currentChannel = await client.channels.cache.get(
+        firebaseConfig.channelCalendarId
+      );
       const embed = new EmbedBuilder()
         .setColor('#0099ff')
         .setTitle('📅 Meeting reminder!')
-        .setDescription('Hello! We are meeting in **Task Planning**.')
+        .setDescription(`**${event.summary}**`)
         .setFooter({
           text: 'Meet remember APP',
-          iconURL:
-            'https://static.vecteezy.com/system/resources/previews/007/683/528/non_2x/calendar-calendar-icon-calendar-icon-simple-sign-calendar-symbol-free-vector.jpg',
         });
 
       if (event?.hangoutLink) {

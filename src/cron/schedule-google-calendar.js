@@ -20,7 +20,7 @@ const scheduleEventNotification = async ({ client, event }) => {
     !event.start.dateTime ||
     !event.start.timeZone
   ) {
-    return console.log(
+    throw new Error(
       'Error: Missing one or more required parameters (client, event, event.start.dateTime, or timeZone).'
     );
   }

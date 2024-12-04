@@ -13,7 +13,7 @@ module.exports = {
     const channelId = channel?.id;
     const user = interaction.user;
 
-    if (channel) {
+    if (channelId) {
       const modal = createSendMessageModal(channelId, user);
       await interaction.showModal(modal);
     } else {

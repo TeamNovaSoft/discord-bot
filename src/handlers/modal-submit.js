@@ -86,10 +86,10 @@ async function handleModalSubmit(interaction) {
       }
 
       await channel.send(formattedMessage);
-      //await interaction.reply({
-      //  content: `✅ PR review request has been posted in ${channel}!`,
-      //  ephemeral: true,
-      //});
+      await interaction.reply({
+        content: `✅ PR review request has been posted in ${channel}!`,
+        ephemeral: true,
+      });
     } catch (error) {
       console.error('Error sending PR message:', error);
       await interaction.reply({

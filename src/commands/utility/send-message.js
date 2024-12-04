@@ -16,10 +16,6 @@ module.exports = {
     if (channel) {
       const modal = createSendMessageModal(channelId, user);
       await interaction.showModal(modal);
-      await interaction.reply({
-        content: `Message sent to ${channel.name}`,
-        ephemeral: true,
-      });
     } else {
       const modal = createSendMessageModal(interaction.channelId, user);
       await interaction.showModal(modal);

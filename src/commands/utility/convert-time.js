@@ -1,11 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const moment = require('moment-timezone');
-
-const countriesTimes = [
-  { name: 'Argentina (ART)', value: 'America/Argentina/Buenos_Aires' },
-  { name: 'Colombia (COT)', value: 'America/Bogota' },
-  { name: 'Venezuela (VET)', value: 'America/Caracas' },
-];
+const { TIME_ZONES } = require('../../config');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -16,14 +11,14 @@ module.exports = {
         .setName('from')
         .setDescription('Select the source time zone')
         .setRequired(true)
-        .addChoices(countriesTimes)
+        .addChoices(TIME_ZONES)
     )
     .addStringOption((option) =>
       option
         .setName('to')
         .setDescription('Select the target time zone')
         .setRequired(true)
-        .addChoices(countriesTimes)
+        .addChoices(TIME_ZONES)
     )
     .addStringOption((option) =>
       option

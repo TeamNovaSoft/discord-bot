@@ -41,6 +41,12 @@ module.exports = {
         });
       }
 
+      if (fromTimeZone === toTimeZone) {
+        await interaction.reply(
+          `No conversion needed! The time in ${fromTimeZone} is ${time}`
+        );
+      }
+
       const inputTime = moment.tz(time, 'HH:mm', fromTimeZone);
       const convertedTime = inputTime.clone().tz(toTimeZone).format('HH:mm');
 

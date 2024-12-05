@@ -1,0 +1,10 @@
+{
+  "layout": {
+    "title": "Título",
+    "subtitle": "Subtítulo"
+  },
+  "button": {
+    "save": "Guardar",
+    "cancel": "Cancelar"
+  }
+}

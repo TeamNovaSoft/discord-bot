@@ -14,13 +14,13 @@ function createSendMessageModal(channelId, userName) {
     .setCustomId('titleInput')
     .setLabel(' Message Title')
     .setStyle(TextInputStyle.Short)
-    .setRequired(true);
+    .setRequired(false);
 
   const descriptionInput = new TextInputBuilder()
     .setCustomId('descriptionInput')
     .setLabel('Message Description')
     .setStyle(TextInputStyle.Paragraph)
-    .setRequired(true)
+    .setRequired(false)
     .setMinLength(50);
 
   const rows = [titleInput, descriptionInput].map((input) =>

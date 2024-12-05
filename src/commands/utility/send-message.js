@@ -4,7 +4,7 @@ const { createSendMessageModal } = require('../../modals/send-message-modal');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('send-message')
-    .setDescription('Replies with your input!')
+    .setDescription('Send a message with the bot')
     .addChannelOption((option) =>
       option.setName('channel').setDescription('The channel to message into')
     ),

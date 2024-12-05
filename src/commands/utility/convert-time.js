@@ -42,7 +42,7 @@ module.exports = {
       }
 
       if (fromTimeZone === toTimeZone) {
-        await interaction.reply(
+        return await interaction.reply(
           `No conversion needed! The time in ${fromTimeZone} is ${time}`
         );
       }

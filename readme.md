@@ -194,3 +194,21 @@ To integrate the bot with Google Calendar, you need to obtain service account ke
 ### Configure the Key File
 
 1. Save the downloaded file (`google-keys.json`) in the root of your project. **Make sure to add it to your `.gitignore` file** to avoid exposing it in your repository.
+
+### Environment Variables Configuration
+To ensure the integration works seamlessly, you need to set up the following environment variables in your .env file:
+
+1. GOOGLE_EMAIL:
+
+   - Description: The Google account email associated with the calendar.
+   - Example: GOOGLE_EMAIL=your-google-account@example.com
+
+2. CHANNEL_CALENDAR_ID:
+
+   - Description: The ID of the Discord channel where calendar notifications will be sent.
+   - Example: CHANNEL_CALENDAR_ID=1306251153855610922
+
+3. SCHEDULED_CALENDAR_ENABLED:
+
+   - Description: A boolean flag to enable or disable the scheduled calendar functionality.
+   - Example: SCHEDULED_CALENDAR_ENABLED=false

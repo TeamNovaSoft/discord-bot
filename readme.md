@@ -165,9 +165,15 @@ To send a notification message to the specified channel, informing admins or mod
 
 - **ADMIN_POINT_REQUEST_CHANNEL**: environment variable specifies the ID of the Discord channel where point review requests are sent. This is particularly useful for managing and tracking user actions that require admin review.
 
-When the bot needs to notify or alert the administrators by mentioning them directly. For example, when a user requests a point review, the bot can mention the administrators to ensure they see and act on the request promptly.
+When the bot needs to notify or alert the administrators by mentioning them directly. For example, when a user requests a point review, the bot can mention the administrators to ensure they see and act on the request promptly. To achieve this functionality, you have to configure it in the `env` file:
 
 - **ADMINISTRATOR_TAG_ID**: environment variable specifies the ID or tag that the bot uses to mention administrators in Discord. This is useful in various scenarios where administrative intervention is required, such as when users need help, when certain actions need approval, or when there are issues that require immediate attention.
+
+When someone mentions the QA role, the bot automatically sends a message to the QA request channel, alerting the QA team. In order to permit this, configuration in the `env` file is required:
+
+- **DISCORD_QA_ROLE_ID**: The ID of the role used to mention the QA team in Discord. When this role is mentioned, the bot sends a message to the specified QA request channel.
+
+- **DISCORD_QA_CHANNEL_ID**: The ID or name of the Discord channel where QA requests are sent. This channel receives notifications whenever the QA role is mentioned.
 
 ## Google Calendar Integration
 

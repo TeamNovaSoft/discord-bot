@@ -142,7 +142,7 @@ SCHEDULED_MESSAGES="canal1,2024-11-15T10:00:00,Hello World!;canal2,2024-11-15T12
 This example will schedule two messages:
 - "Hello World!" will be sent to `canal1` on `2024-11-15` at `10:00 AM`.
 - "Good Morning!" will be sent to `canal2` on `2024-11-15` at `12:00 PM`.
-- **TIMEZONE**: The time zone in which the scheduled messages should be executed. For example, `America/Argentina/Buenos_Aires` can be used for Argentina's time zone.
+- **TIME_ZONE**: The time zone in which the scheduled messages should be executed. For example, `America/Argentina/Buenos_Aires` can be used for Argentina's time zone.
 ### Cron Job Time Format
 The `datetime` field in `SCHEDULED_MESSAGES` follows the ISO 8601 format:
 ```
@@ -160,6 +160,15 @@ YYYY-MM-DDTHH:mm
 ```
 SCHEDULED_MESSAGES="canal1,2024-11-15T10:00:00,Hello World!;canal2,2024-11-15T12:00:00,Good Morning!" TIMEZONE="America/Argentina/Buenos_Aires"
 ```
+
+To send a notification message to the specified channel, informing admins or moderators of the point request and providing relevant details the users can use the `/request-point` command in a thread and the bot will do. To allow this, you must configure in the `env` file:
+
+- **ADMIN_POINT_REQUEST_CHANNEL**: environment variable specifies the ID of the Discord channel where point review requests are sent. This is particularly useful for managing and tracking user actions that require admin review.
+
+When the bot needs to notify or alert the administrators by mentioning them directly. For example, when a user requests a point review, the bot can mention the administrators to ensure they see and act on the request promptly.
+
+- **ADMINISTRATOR_TAG_ID**: environment variable specifies the ID or tag that the bot uses to mention administrators in Discord. This is useful in various scenarios where administrative intervention is required, such as when users need help, when certain actions need approval, or when there are issues that require immediate attention.
+
 ## Google Calendar Integration
 
 To integrate the bot with Google Calendar, you need to obtain service account keys from Google Cloud. Follow these steps to set it up correctly:
@@ -199,16 +208,22 @@ To integrate the bot with Google Calendar, you need to obtain service account ke
 To ensure the integration works seamlessly, you need to set up the following environment variables in your .env file:
 
 1. GOOGLE_EMAIL:
-
    - Description: The Google account email associated with the calendar.
-   - Example: GOOGLE_EMAIL=your-google-account@example.com
+   - Example:
+      ```
+      GOOGLE_EMAIL=your-google-account@example.com
+      ```
 
 2. CHANNEL_CALENDAR_ID:
-
    - Description: The ID of the Discord channel where calendar notifications will be sent.
-   - Example: CHANNEL_CALENDAR_ID=1306251153855610922
+   - Example:
+      ```
+      CHANNEL_CALENDAR_ID=1306251153855610922
+      ```
 
 3. SCHEDULED_CALENDAR_ENABLED:
-
    - Description: A boolean flag to enable or disable the scheduled calendar functionality.
-   - Example: SCHEDULED_CALENDAR_ENABLED=false
+   - Example:
+      ```
+      SCHEDULED_CALENDAR_ENABLED=false
+      ```

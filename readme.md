@@ -175,6 +175,14 @@ When someone mentions the QA role, the bot automatically sends a message to the 
 
 - **DISCORD_QA_CHANNEL_ID**: The ID or name of the Discord channel where QA requests are sent. This channel receives notifications whenever the QA role is mentioned.
 
+By setting up these environment variables correctly, you can ensure that your bot properly categorizes and tracks the completion and point assignment for tasks within your Discord server.
+
+- **TASK_COMPLETED_TAG_ID**: environment variable specifies the ID of the tag used for threads related to completed tasks. This helps in categorizing and managing threads where tasks are marked as finished.
+
+- **ADD_POINT_TAG_ID**: environment variable specifies the ID of the tag used to assign points to a completed task or to count the points assigned. This is essential for tracking the points awarded for the completion of tasks.
+
+- **ADD_BOOSTED_POINT_TAG_ID**: environment variable specifies the ID of the tag used to assign boosted points to a completed task or to count the boosted points assigned. This is useful for tasks that are considered with extra points.
+
 ## Google Calendar Integration
 
 To integrate the bot with Google Calendar, you need to obtain service account keys from Google Cloud. Follow these steps to set it up correctly:

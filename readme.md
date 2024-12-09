@@ -142,7 +142,7 @@ SCHEDULED_MESSAGES="canal1,2024-11-15T10:00:00,Hello World!;canal2,2024-11-15T12
 This example will schedule two messages:
 - "Hello World!" will be sent to `canal1` on `2024-11-15` at `10:00 AM`.
 - "Good Morning!" will be sent to `canal2` on `2024-11-15` at `12:00 PM`.
-- **TIMEZONE**: The time zone in which the scheduled messages should be executed. For example, `America/Argentina/Buenos_Aires` can be used for Argentina's time zone.
+- **TIME_ZONE**: The time zone in which the scheduled messages should be executed. For example, `America/Argentina/Buenos_Aires` can be used for Argentina's time zone.
 ### Cron Job Time Format
 The `datetime` field in `SCHEDULED_MESSAGES` follows the ISO 8601 format:
 ```
@@ -160,6 +160,29 @@ YYYY-MM-DDTHH:mm
 ```
 SCHEDULED_MESSAGES="canal1,2024-11-15T10:00:00,Hello World!;canal2,2024-11-15T12:00:00,Good Morning!" TIMEZONE="America/Argentina/Buenos_Aires"
 ```
+
+To send a notification message to the specified channel, informing admins or moderators of the point request and providing relevant details the users can use the `/request-point` command in a thread and the bot will do. To allow this, you must configure in the `env` file:
+
+- **ADMIN_POINT_REQUEST_CHANNEL**: environment variable specifies the ID of the Discord channel where point review requests are sent. This is particularly useful for managing and tracking user actions that require admin review.
+
+When the bot needs to notify or alert the administrators by mentioning them directly. For example, when a user requests a point review, the bot can mention the administrators to ensure they see and act on the request promptly. To achieve this functionality, you have to configure it in the `env` file:
+
+- **ADMINISTRATOR_TAG_ID**: environment variable specifies the ID or tag that the bot uses to mention administrators in Discord. This is useful in various scenarios where administrative intervention is required, such as when users need help, when certain actions need approval, or when there are issues that require immediate attention.
+
+When someone mentions the QA role, the bot automatically sends a message to the QA request channel, alerting the QA team. In order to permit this, configuration in the `env` file is required:
+
+- **DISCORD_QA_ROLE_ID**: The ID of the role used to mention the QA team in Discord. When this role is mentioned, the bot sends a message to the specified QA request channel.
+
+- **DISCORD_QA_CHANNEL_ID**: The ID or name of the Discord channel where QA requests are sent. This channel receives notifications whenever the QA role is mentioned.
+
+By setting up these environment variables correctly, you can ensure that your bot properly categorizes and tracks the completion and point assignment for tasks within your Discord server.
+
+- **TASK_COMPLETED_TAG_ID**: environment variable specifies the ID of the tag used for threads related to completed tasks. This helps in categorizing and managing threads where tasks are marked as finished.
+
+- **ADD_POINT_TAG_ID**: environment variable specifies the ID of the tag used to assign points to a completed task or to count the points assigned. This is essential for tracking the points awarded for the completion of tasks.
+
+- **ADD_BOOSTED_POINT_TAG_ID**: environment variable specifies the ID of the tag used to assign boosted points to a completed task or to count the boosted points assigned. This is useful for tasks that are considered with extra points.
+
 ## Google Calendar Integration
 
 To integrate the bot with Google Calendar, you need to obtain service account keys from Google Cloud. Follow these steps to set it up correctly:
@@ -194,3 +217,27 @@ To integrate the bot with Google Calendar, you need to obtain service account ke
 ### Configure the Key File
 
 1. Save the downloaded file (`google-keys.json`) in the root of your project. **Make sure to add it to your `.gitignore` file** to avoid exposing it in your repository.
+
+### Environment Variables Configuration
+To ensure the integration works seamlessly, you need to set up the following environment variables in your .env file:
+
+1. GOOGLE_EMAIL:
+   - Description: The Google account email associated with the calendar.
+   - Example:
+      ```
+      GOOGLE_EMAIL=your-google-account@example.com
+      ```
+
+2. CHANNEL_CALENDAR_ID:
+   - Description: The ID of the Discord channel where calendar notifications will be sent.
+   - Example:
+      ```
+      CHANNEL_CALENDAR_ID=1306251153855610922
+      ```
+
+3. SCHEDULED_CALENDAR_ENABLED:
+   - Description: A boolean flag to enable or disable the scheduled calendar functionality.
+   - Example:
+      ```
+      SCHEDULED_CALENDAR_ENABLED=false
+      ```

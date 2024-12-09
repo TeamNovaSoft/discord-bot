@@ -22,6 +22,7 @@ This project is a Discord bot built with `discord.js`. The bot includes various 
    ```
 
 3. Install the dependencies:
+
    ```bash
    yarn install
    ```
@@ -118,37 +119,50 @@ Once `Developer Mode` is enabled, you can also follow this documentation for cre
 For detailed instructions on how to create new commands, see [Creating New Commands](docs/creating-commands.md).
 
 ## Additional Permissions Configuration
+
 To correctly install the bot on Discord and ensure it can receive and process messages, certain permissions must be configured both in the Discord Developer Portal and in the bot's code. Here are the steps and necessary permissions:
+
 ### Additional Permissions Configuration
+
 1. Access the Discord Developer Portal:
-   Go to the Discord Developer Portal and select your bot application. 
+   Go to the Discord Developer Portal and select your bot application.
 2. Configure the Bot's Scopes and Permissions:
    - In the `Bot` section and check `Message Content Intent` permission to allow app bot the access to content message.
-   
+
    ![message content intent option](docs/configuration/bot_permissions/message_content_intent_option.png)
    - Navigate to the `Installation` section and then add the select the key permissions.
    ![installation permissions](docs/configuration/bot_permissions/installation_permissions.png)
    - Copy install Link to add your bot in the guild/server.
-   
+
    ![install link](docs/configuration/bot_permissions/install_link.png)
 Configuring these permissions and intents ensures that your bot can operate effectively, receiving and processing messages as needed.
+
 ## Additional Environment Variables
+
 To schedule automated messages, you can configure the following additional environment variables in your `.env` file:
+
 - **SCHEDULED_MESSAGES**: A CSV string where each entry is separated by a semicolon (`;`) and contains three values separated by commas (`channel,datetime,message`). The `channel` is the Discord channel where the message will be sent, `datetime` is the date and time in ISO 8601 format (e.g., `2024-11-15T10:00:00`), and `message` is the content of the message to be sent.
 For example:
+
 ```
 SCHEDULED_MESSAGES="canal1,2024-11-15T10:00:00,Hello World!;canal2,2024-11-15T12:00:00,Good Morning!"
 ```
+
 This example will schedule two messages:
+
 - "Hello World!" will be sent to `canal1` on `2024-11-15` at `10:00 AM`.
 - "Good Morning!" will be sent to `canal2` on `2024-11-15` at `12:00 PM`.
 - **TIME_ZONE**: The time zone in which the scheduled messages should be executed. For example, `America/Argentina/Buenos_Aires` can be used for Argentina's time zone.
+
 ### Cron Job Time Format
+
 The `datetime` field in `SCHEDULED_MESSAGES` follows the ISO 8601 format:
+
 ```
 YYYY-MM-DDTHH:mm
 (e.g., 2024-11-15T10:00:00)
 ```
+
 - **YYYY**: Year (e.g., `2024`)
 - **MM**: Month (e.g., `11` for November)
 - **DD**: Day of the month (e.g., `15`)
@@ -156,7 +170,9 @@ YYYY-MM-DDTHH:mm
 - **HH**: Hour in 24-hour format (e.g., `10` for 10 AM)
 - **mm**: Minutes (e.g., `00` for the start of the hour)
 - **ss**: Seconds (optional, defaults to `00`)
+
 ### Example `.env` Configuration
+
 ```
 SCHEDULED_MESSAGES="canal1,2024-11-15T10:00:00,Hello World!;canal2,2024-11-15T12:00:00,Good Morning!" TIMEZONE="America/Argentina/Buenos_Aires"
 ```
@@ -182,6 +198,12 @@ By setting up these environment variables correctly, you can ensure that your bo
 - **ADD_POINT_TAG_ID**: environment variable specifies the ID of the tag used to assign points to a completed task or to count the points assigned. This is essential for tracking the points awarded for the completion of tasks.
 
 - **ADD_BOOSTED_POINT_TAG_ID**: environment variable specifies the ID of the tag used to assign boosted points to a completed task or to count the boosted points assigned. This is useful for tasks that are considered with extra points.
+
+- **GEMINI_AI_API_KEY**: Your gemini api key to be use for prompt the AI through the bot commands. You can get it from here: <https://aistudio.google.com>
+
+## Gemini AI
+
+To integrate Discord Bot with the Gemini AI you should get your API Key from <https://aistudio.google.com/> and add it to **GEMINI_AI_API_KEY** on the .env.
 
 ## Google Calendar Integration
 
@@ -219,11 +241,13 @@ To integrate the bot with Google Calendar, you need to obtain service account ke
 1. Save the downloaded file (`google-keys.json`) in the root of your project. **Make sure to add it to your `.gitignore` file** to avoid exposing it in your repository.
 
 ### Environment Variables Configuration
+
 To ensure the integration works seamlessly, you need to set up the following environment variables in your .env file:
 
 1. GOOGLE_EMAIL:
    - Description: The Google account email associated with the calendar.
    - Example:
+
       ```
       GOOGLE_EMAIL=your-google-account@example.com
       ```
@@ -231,6 +255,7 @@ To ensure the integration works seamlessly, you need to set up the following env
 2. CHANNEL_CALENDAR_ID:
    - Description: The ID of the Discord channel where calendar notifications will be sent.
    - Example:
+
       ```
       CHANNEL_CALENDAR_ID=1306251153855610922
       ```
@@ -238,6 +263,7 @@ To ensure the integration works seamlessly, you need to set up the following env
 3. SCHEDULED_CALENDAR_ENABLED:
    - Description: A boolean flag to enable or disable the scheduled calendar functionality.
    - Example:
+
       ```
       SCHEDULED_CALENDAR_ENABLED=false
       ```

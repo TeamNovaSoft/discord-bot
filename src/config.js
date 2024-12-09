@@ -58,6 +58,12 @@ const VOTE_POINTS_ANSWERS = [
   },
 ];
 
+const TIME_ZONES = [
+  { name: 'Argentina (ART)', value: 'America/Argentina/Buenos_Aires' },
+  { name: 'Colombia (COT)', value: 'America/Bogota' },
+  { name: 'Venezuela (VET)', value: 'America/Caracas' },
+];
+
 const cronTimes = {
   messageTimes: process.env.SCHEDULED_MESSAGES
     ? csvParser(process.env.SCHEDULED_MESSAGES)
@@ -71,12 +77,13 @@ const tagIds = {
   addPointTagId: process.env.ADD_POINT_TAG_ID || '1258801833191669802',
   boostedPointTagId:
     process.env.ADD_BOOSTED_POINT_TAG_ID || '1263873487953592381',
-}
+};
 
 module.exports = {
   MAPPED_STATUS_COMMANDS,
   VOTE_POINTS_ANSWERS,
   DISCORD_CONFIG,
+  TIME_ZONES,
   cronTimes,
-  tagIds
+  tagIds,
 };

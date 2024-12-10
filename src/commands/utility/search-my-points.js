@@ -60,17 +60,17 @@ module.exports = {
       ? channels.map((channel) => `in:${channel}`).join(' ')
       : '';
 
-    const openedPRs = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} Author: @${escapedUserId}`;
+    const openedPRs = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} Author: ${escapedUserId}`;
     const taskCompletedQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${tagIds.taskCompletedTagId}> ${escapedUserId}`;
     const addPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${tagIds.addPointTagId}> ${escapedUserId}`;
     const boostedPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${tagIds.boostedPointTagId}> ${escapedUserId}`;
 
     await interaction.reply({
       content: `Here are your search queries:
-        \n\n**PRs opened:**\n\`\`\`${openedPRs}\`\`\`
-        \n\n**Tasks completed:**\n\`\`\`${taskCompletedQuery}\`\`\`
-        \n\n**Points obtained:**\n\`\`\`${addPointQuery}\`\`\`
-        \n\n**Boosted Points obtained:**\n\`\`\`${boostedPointQuery}\`\`\``,
+        \n**PRs opened:**\n\`\`\`${openedPRs}\`\`\`
+        \n**Tasks completed:**\n\`\`\`${taskCompletedQuery}\`\`\`
+        \n**Points obtained:**\n\`\`\`${addPointQuery}\`\`\`
+        \n**Boosted Points obtained:**\n\`\`\`${boostedPointQuery}\`\`\``,
       ephemeral: true,
     });
   },

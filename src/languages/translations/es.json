@@ -1,10 +1,5 @@
 {
-  "layout": {
-    "title": "Título",
-    "subtitle": "Subtítulo"
-  },
-  "button": {
-    "save": "Guardar",
-    "cancel": "Cancelar"
+  "pingCommand": {
+    "description": "Responde con Pong!"
   }
 }

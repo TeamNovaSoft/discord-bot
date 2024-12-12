@@ -11,6 +11,8 @@ const DISCORD_CONFIG = {
   discordAdminTagId: process.env.ADMINISTRATOR_TAG_ID,
 };
 
+const botLanguage = process.env.DISCORD_LANGUAGE || 'en';
+
 const MAPPED_STATUS_COMMANDS = {
   'pr-no-merge': '🚫',
   'pr-sos': '🆘',
@@ -71,12 +73,13 @@ const tagIds = {
   addPointTagId: process.env.ADD_POINT_TAG_ID || '1258801833191669802',
   boostedPointTagId:
     process.env.ADD_BOOSTED_POINT_TAG_ID || '1263873487953592381',
-}
+};
 
 module.exports = {
   MAPPED_STATUS_COMMANDS,
   VOTE_POINTS_ANSWERS,
   DISCORD_CONFIG,
   cronTimes,
-  tagIds
+  tagIds,
+  botLanguage,
 };

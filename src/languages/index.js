@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { botLanguage } = require('../config');
 
 const translationsPath = path.join(__dirname, 'translations');
 const translationsCache = {
@@ -48,13 +49,13 @@ function getTranslationByKey(translations, key, lang) {
     : `Invalid translation format for key '${key}' in language '${lang}'.`;
 }
 
-function translateLanguage(lang, key) {
-  const translations = loadTranslations(lang);
+function translateLanguage(key) {
+  const translations = loadTranslations(botLanguage);
   if (!translations || !Object.values(translations).length) {
-    return `Translations not available for language '${lang}'.`;
+    return `Translations not available for language '${botLanguage}'.`;
   }
 
-  return getTranslationByKey(translations, key, lang);
+  return getTranslationByKey(translations, key, botLanguage);
 }
 
 module.exports = { translateLanguage };

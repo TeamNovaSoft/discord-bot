@@ -60,6 +60,12 @@ const VOTE_POINTS_ANSWERS = [
   },
 ];
 
+const TIME_ZONES = [
+  { name: 'Argentina (ART)', value: 'America/Argentina/Buenos_Aires' },
+  { name: 'Colombia (COT)', value: 'America/Bogota' },
+  { name: 'Venezuela (VET)', value: 'America/Caracas' },
+];
+
 const cronTimes = {
   messageTimes: process.env.SCHEDULED_MESSAGES
     ? csvParser(process.env.SCHEDULED_MESSAGES)
@@ -79,6 +85,7 @@ module.exports = {
   MAPPED_STATUS_COMMANDS,
   VOTE_POINTS_ANSWERS,
   DISCORD_CONFIG,
+  TIME_ZONES,
   cronTimes,
   tagIds,
   botLanguage,

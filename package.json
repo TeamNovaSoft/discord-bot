@@ -18,7 +18,8 @@
     "cron": "^3.2.1",
     "discord.js": "^14.15.3",
     "dotenv": "^16.4.5",
-    "googleapis": "^144.0.0"
+    "googleapis": "^144.0.0",
+    "moment-timezone": "^0.5.46"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.6.0",

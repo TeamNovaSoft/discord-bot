@@ -8,7 +8,6 @@ const {
   scheduleCalendarNotifications,
 } = require('./cron/schedule-google-calendar');
 const { firebaseConfig } = require('../firebase-config');
-const { translateLanguage } = require('./languages');
 
 const client = new Client({
   intents: [
@@ -30,7 +29,5 @@ scheduleMessages(client, cronTimes.messageTimes);
 if (firebaseConfig.scheduledCalendarEnabled) {
   scheduleCalendarNotifications(client);
 }
-
-console.log(translateLanguage('en', 'button.save'));
 
 client.login(token);

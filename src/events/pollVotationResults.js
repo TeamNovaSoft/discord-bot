@@ -14,7 +14,7 @@ module.exports = {
       (field) => field.name === 'poll_question_text'
     );
     const parts = userMentionField?.value.split('|').map((part) => part.trim());
-    const userMentioned = `<@${parts[1]}>`;
+    const userMentioned = parts?.[1] ? `<@${parts[1]}>` : null;
 
     const channel = await client.channels.fetch(channelId);
 

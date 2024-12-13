@@ -22,7 +22,7 @@ module.exports = {
       return;
     }
 
-    const parts = userMentionField?.value.split('|').map((part) => part.trim());
+    const parts = userMentionField.value?.split('|').map((part) => part.trim());
     if (!Array.isArray(parts) || !parts[1]) {
       return;
     }

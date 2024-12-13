@@ -7,7 +7,7 @@ module.exports = {
     const { embeds, author, client, channelId } = message;
 
     if (
-      author.bot ||
+      !author.bot ||
       !Array.isArray(embeds[0]?.fields) ||
       embeds[0]?.data?.type !== 'poll_result'
     ) {

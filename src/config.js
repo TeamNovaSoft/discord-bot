@@ -11,6 +11,8 @@ const DISCORD_CONFIG = {
   discordAdminTagId: process.env.ADMINISTRATOR_TAG_ID,
 };
 
+const botLanguage = process.env.DISCORD_LANGUAGE || 'en';
+
 const MAPPED_STATUS_COMMANDS = {
   'pr-no-merge': '🚫',
   'pr-sos': '🆘',
@@ -86,4 +88,5 @@ module.exports = {
   TIME_ZONES,
   cronTimes,
   tagIds,
+  botLanguage,
 };

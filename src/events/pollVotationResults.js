@@ -6,14 +6,27 @@ module.exports = {
   async execute(message) {
     const { embeds, author, client, channelId } = message;
 
-    if (author.bot && embeds[0]?.data?.type !== 'poll_result') {
+    if (
+      !author.bot ||
+      !Array.isArray(embeds[0]?.fields) ||
+      embeds[0]?.data?.type !== 'poll_result'
+    ) {
       return;
     }
 
     const userMentionField = embeds[0]?.fields.find(
       (field) => field.name === 'poll_question_text'
     );
-    const parts = userMentionField?.value.split('|').map((part) => part.trim());
+
+    if (userMentionField === undefined) {
+      return;
+    }
+
+    const parts = userMentionField.value?.split('|').map((part) => part.trim());
+    if (!Array.isArray(parts) || !parts[1]) {
+      return;
+    }
+
     const userMentioned = `<@${parts[1]}>`;
 
     const channel = await client.channels.fetch(channelId);

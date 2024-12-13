@@ -44,12 +44,12 @@ module.exports = {
       ? channelsInput.split(',').map((channel) => channel.trim())
       : [];
 
-    const targetStartDate = new Date(year, month - 1, 1);
+    const targetStartDate = new Date(year, month - 1, 0);
     const targetEndDate = new Date(year, month, 1);
 
     const startDateStr = `${targetStartDate.getFullYear()}-${String(
       targetStartDate.getMonth() + 1
-    ).padStart(2, '0')}-01`;
+    ).padStart(2, '0')}-${String(targetStartDate.getDate())}`;
     const endDateStr = `${targetEndDate.getFullYear()}-${String(
       targetEndDate.getMonth() + 1
     ).padStart(2, '0')}-01`;
@@ -60,12 +60,17 @@ module.exports = {
       ? channels.map((channel) => `in:${channel}`).join(' ')
       : '';
 
+    const openedPRs = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} Author: ${escapedUserId}`;
     const taskCompletedQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${tagIds.taskCompletedTagId}> ${escapedUserId}`;
     const addPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${tagIds.addPointTagId}> ${escapedUserId}`;
     const boostedPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${tagIds.boostedPointTagId}> ${escapedUserId}`;
 
     await interaction.reply({
-      content: `Here are your search queries:\n\n**Tasks completed:**\n\`\`\`${taskCompletedQuery}\`\`\`\n\n**Points obtained:**\n\`\`\`${addPointQuery}\`\`\`\n\n**Boosted Points obtained:**\n\`\`\`${boostedPointQuery}\`\`\``,
+      content: `Here are your search queries:
+        \n**PRs opened:**\n\`\`\`${openedPRs}\`\`\`
+        \n**Tasks completed:**\n\`\`\`${taskCompletedQuery}\`\`\`
+        \n**Points obtained:**\n\`\`\`${addPointQuery}\`\`\`
+        \n**Boosted Points obtained:**\n\`\`\`${boostedPointQuery}\`\`\``,
       ephemeral: true,
     });
   },

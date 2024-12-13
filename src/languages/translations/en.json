@@ -1,0 +1,5 @@
+{
+  "pingCommand": {
+    "description": "Replies with Pong!"
+  }
+}

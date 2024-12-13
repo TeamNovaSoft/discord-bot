@@ -8,7 +8,7 @@ module.exports = {
 
     if (
       author.bot &&
-      Array.isArray(embeds[0]?.fields) &&
+      !Array.isArray(embeds[0]?.fields) &&
       embeds[0]?.data?.type !== 'poll_result'
     ) {
       return;
@@ -23,11 +23,11 @@ module.exports = {
     }
 
     const parts = userMentionField?.value.split('|').map((part) => part.trim());
-    if (!Array.isArray(parts)) {
+    if (!Array.isArray(parts) || !parts[1]) {
       return;
     }
 
-    const userMentioned = parts?.[1] ? `<@${parts[1]}>` : null;
+    const userMentioned = `<@${parts[1]}>`;
 
     const channel = await client.channels.fetch(channelId);
 

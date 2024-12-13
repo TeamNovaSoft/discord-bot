@@ -44,12 +44,12 @@ module.exports = {
       ? channelsInput.split(',').map((channel) => channel.trim())
       : [];
 
-    const targetStartDate = new Date(year, month - 1, 1);
+    const targetStartDate = new Date(year, month - 1, 0);
     const targetEndDate = new Date(year, month, 1);
 
     const startDateStr = `${targetStartDate.getFullYear()}-${String(
       targetStartDate.getMonth() + 1
-    ).padStart(2, '0')}-01`;
+    ).padStart(2, '0')}-${String(targetStartDate.getDate())}`;
     const endDateStr = `${targetEndDate.getFullYear()}-${String(
       targetEndDate.getMonth() + 1
     ).padStart(2, '0')}-01`;

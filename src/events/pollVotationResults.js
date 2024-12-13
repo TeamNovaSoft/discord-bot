@@ -10,6 +10,10 @@ module.exports = {
       return;
     }
 
+    if (!embeds[0]?.fields) {
+      return;
+    }
+
     const userMentionField = embeds[0]?.fields.find(
       (field) => field.name === 'poll_question_text'
     );

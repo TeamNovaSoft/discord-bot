@@ -6,12 +6,10 @@ module.exports = {
   async execute(message) {
     const { embeds, author, client, channelId } = message;
 
-    // Ignore messages that aren't from the bot or aren't poll results
     if (author.bot && embeds[0]?.data?.type !== 'poll_result') {
       return;
     }
 
-    // Extract user and poll details from the embed
     const userMentionField = embeds[0]?.fields.find(
       (field) => field.name === 'poll_question_text'
     );

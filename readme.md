@@ -127,22 +127,24 @@ To correctly install the bot on Discord and ensure it can receive and process me
 1. Access the Discord Developer Portal:
    Go to the Discord Developer Portal and select your bot application.
 2. Configure the Bot's Scopes and Permissions:
+
    - In the `Bot` section and check `Message Content Intent` permission to allow app bot the access to content message.
 
    ![message content intent option](docs/configuration/bot_permissions/message_content_intent_option.png)
+
    - Navigate to the `Installation` section and then add the select the key permissions.
-   ![installation permissions](docs/configuration/bot_permissions/installation_permissions.png)
+     ![installation permissions](docs/configuration/bot_permissions/installation_permissions.png)
    - Copy install Link to add your bot in the guild/server.
 
    ![install link](docs/configuration/bot_permissions/install_link.png)
-Configuring these permissions and intents ensures that your bot can operate effectively, receiving and processing messages as needed.
+   Configuring these permissions and intents ensures that your bot can operate effectively, receiving and processing messages as needed.
 
 ## Additional Environment Variables
 
 To schedule automated messages, you can configure the following additional environment variables in your `.env` file:
 
 - **SCHEDULED_MESSAGES**: A CSV string where each entry is separated by a semicolon (`;`) and contains three values separated by commas (`channel,datetime,message`). The `channel` is the Discord channel where the message will be sent, `datetime` is the date and time in ISO 8601 format (e.g., `2024-11-15T10:00:00`), and `message` is the content of the message to be sent.
-For example:
+  For example:
 
 ```
 SCHEDULED_MESSAGES="canal1,2024-11-15T10:00:00,Hello World!;canal2,2024-11-15T12:00:00,Good Morning!"
@@ -212,22 +214,27 @@ To integrate the bot with Google Calendar, you need to obtain service account ke
 ### Create and Configure the Project in Google Cloud
 
 1. **Access Google Cloud Console**:
+
    - Go to [Google Cloud Console](https://console.cloud.google.com/) and sign in with your Google account.
 
 2. **Create a New Project**:
+
    - Click on the project dropdown at the top and select "New Project."
    - Assign a name to your project and click "Create."
 
 3. **Enable the Google Calendar API**:
+
    - Within your project, go to **API & Services** > **Library**.
    - Search for "Google Calendar API" and click "Enable."
 
 4. **Create a Service Account**:
+
    - Go to **API & Services** > **Credentials**.
    - Click "Create Credentials" and select "Service Account."
    - Provide a name for the service account and complete the setup.
 
 5. **Generate a Key for the Service Account**:
+
    - After creating the service account, select "Create Key."
    - Choose the JSON format and download the key file.
 
@@ -245,25 +252,28 @@ To integrate the bot with Google Calendar, you need to obtain service account ke
 To ensure the integration works seamlessly, you need to set up the following environment variables in your .env file:
 
 1. GOOGLE_EMAIL:
+
    - Description: The Google account email associated with the calendar.
    - Example:
 
-      ```
-      GOOGLE_EMAIL=your-google-account@example.com
-      ```
+     ```
+     GOOGLE_EMAIL=your-google-account@example.com
+     ```
 
 2. CHANNEL_CALENDAR_ID:
+
    - Description: The ID of the Discord channel where calendar notifications will be sent.
    - Example:
 
-      ```
-      CHANNEL_CALENDAR_ID=1306251153855610922
-      ```
+     ```
+     CHANNEL_CALENDAR_ID=1306251153855610922
+     ```
 
 3. SCHEDULED_CALENDAR_ENABLED:
+
    - Description: A boolean flag to enable or disable the scheduled calendar functionality.
    - Example:
 
-      ```
-      SCHEDULED_CALENDAR_ENABLED=false
-      ```
+     ```
+     SCHEDULED_CALENDAR_ENABLED=false
+     ```

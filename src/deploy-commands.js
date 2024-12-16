@@ -51,4 +51,4 @@ module.exports = (client) => {
   };
 
   init();
-}
+};

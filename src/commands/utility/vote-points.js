@@ -41,7 +41,7 @@ module.exports = {
           emoji: { name: '🧮' },
         },
         allowMultiselect: false,
-        duration: 24,
+        duration: 1,
         answers: VOTE_POINTS_ANSWERS,
       },
     });

@@ -6,10 +6,12 @@ module.exports = {
   async execute(message) {
     const { embeds, author, client, channelId } = message;
 
+    // Ignore messages that aren't from the bot or aren't poll results
     if (author.bot && embeds[0]?.data?.type !== 'poll_result') {
       return;
     }
 
+    // Extract user and poll details from the embed
     const userMentionField = embeds[0]?.fields.find(
       (field) => field.name === 'poll_question_text'
     );
@@ -24,15 +26,19 @@ module.exports = {
           (result) => result.name === 'victor_answer_text'
         ).value;
 
+        const pointTag = embeds[0]?.fields.some((field) =>
+          field.name.includes('boosted')
+        )
+          ? tagIds.boostedPointTagId
+          : tagIds.addPointTagId;
+
         await Promise.all(
           Array.from({ length: finalResult }).map(async () => {
-            await channel.send(
-              `<@&${tagIds.boostedPointTagId}> ${userMentioned}`
-            );
+            await channel.send(`<@&${pointTag}> ${userMentioned}`);
           })
         );
       } else {
-        await channel.send(`The draw is not suported`);
+        await channel.send(`The draw is not supported.`);
       }
     } else {
       console.error(`Channel not found: ${channelId}`);

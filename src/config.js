@@ -9,6 +9,49 @@ const DISCORD_CONFIG = {
   discordQAChannelName: process.env.DISCORD_QA_CHANNEL_ID,
   discordAdminPointRequestChannel: process.env.ADMIN_POINT_REQUEST_CHANNEL,
   discordAdminTagId: process.env.ADMINISTRATOR_TAG_ID,
+  VOTE_POINTS: {
+    ANSWERS: [
+      {
+        text: '1',
+        emoji: '🥇',
+      },
+      {
+        text: '2',
+        emoji: '🥈',
+      },
+      {
+        text: '3',
+        emoji: '🥉',
+      },
+      {
+        text: '4',
+        emoji: '4️⃣',
+      },
+      {
+        text: '5',
+        emoji: '5️⃣',
+      },
+      {
+        text: '6',
+        emoji: '6️⃣',
+      },
+      {
+        text: '7',
+        emoji: '7️⃣',
+      },
+      {
+        text: '8',
+        emoji: '🎱',
+      },
+    ],
+    TAG_IDS: {
+      taskCompletedTagId:
+        process.env.TASK_COMPLETED_TAG_ID || '1203085046769262592',
+      addPointTagId: process.env.ADD_POINT_TAG_ID || '1258801833191669802',
+      boostedPointTagId:
+        process.env.ADD_BOOSTED_POINT_TAG_ID || '1263873487953592381',
+    },
+  },
 };
 
 const botLanguage = process.env.DISCORD_LANGUAGE || 'en';
@@ -25,41 +68,6 @@ const MAPPED_STATUS_COMMANDS = {
   'pr-merged-in-dev': '✅',
 };
 
-const VOTE_POINTS_ANSWERS = [
-  {
-    text: '1',
-    emoji: '🥇',
-  },
-  {
-    text: '2',
-    emoji: '🥈',
-  },
-  {
-    text: '3',
-    emoji: '🥉',
-  },
-  {
-    text: '4',
-    emoji: '4️⃣',
-  },
-  {
-    text: '5',
-    emoji: '5️⃣',
-  },
-  {
-    text: '6',
-    emoji: '6️⃣',
-  },
-  {
-    text: '7',
-    emoji: '7️⃣',
-  },
-  {
-    text: '8',
-    emoji: '🎱',
-  },
-];
-
 const TIME_ZONES = [
   { name: 'Argentina (ART)', value: 'America/Argentina/Buenos_Aires' },
   { name: 'Colombia (COT)', value: 'America/Bogota' },
@@ -73,20 +81,10 @@ const cronTimes = {
   timeZone: process.env.TIME_ZONE,
 };
 
-const tagIds = {
-  taskCompletedTagId:
-    process.env.TASK_COMPLETED_TAG_ID || '1203085046769262592',
-  addPointTagId: process.env.ADD_POINT_TAG_ID || '1258801833191669802',
-  boostedPointTagId:
-    process.env.ADD_BOOSTED_POINT_TAG_ID || '1263873487953592381',
-};
-
 module.exports = {
   MAPPED_STATUS_COMMANDS,
-  VOTE_POINTS_ANSWERS,
   DISCORD_CONFIG,
   TIME_ZONES,
   cronTimes,
-  tagIds,
   botLanguage,
 };

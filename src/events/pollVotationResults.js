@@ -1,5 +1,7 @@
 const { Events } = require('discord.js');
-const { tagIds } = require('../config');
+const { DISCORD_CONFIG } = require('../config');
+
+const tagIds = DISCORD_CONFIG.VOTE_POINTS.TAG_IDS;
 
 module.exports = {
   name: Events.MessageCreate,

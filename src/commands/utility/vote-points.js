@@ -1,5 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { VOTE_POINTS_ANSWERS, tagIds } = require('../../config');
+const { DISCORD_CONFIG } = require('../../config');
+
+const tagIds = DISCORD_CONFIG.VOTE_POINTS.TAG_IDS;
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -26,7 +28,7 @@ module.exports = {
         },
         allowMultiselect: false,
         duration: 24,
-        answers: VOTE_POINTS_ANSWERS,
+        answers: DISCORD_CONFIG.VOTE_POINTS.ANSWERS,
       },
     });
   },

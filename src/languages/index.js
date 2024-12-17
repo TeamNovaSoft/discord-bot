@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const { botLanguage } = require('../config');
+const { DISCORD_CONFIG } = require('../config');
 
+const botLanguage = DISCORD_CONFIG.botLanguage;
 const translationsPath = path.join(__dirname, 'translations');
 const translationsCache = {
   es: {},

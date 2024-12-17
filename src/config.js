@@ -9,6 +9,7 @@ const DISCORD_CONFIG = {
   discordQAChannelName: process.env.DISCORD_QA_CHANNEL_ID,
   discordAdminPointRequestChannel: process.env.ADMIN_POINT_REQUEST_CHANNEL,
   discordAdminTagId: process.env.ADMINISTRATOR_TAG_ID,
+  botLanguage: process.env.DISCORD_LANGUAGE || 'en',
   VOTE_POINTS: {
     ANSWERS: [
       {
@@ -54,8 +55,6 @@ const DISCORD_CONFIG = {
   },
 };
 
-const botLanguage = process.env.DISCORD_LANGUAGE || 'en';
-
 const MAPPED_STATUS_COMMANDS = {
   'pr-no-merge': '🚫',
   'pr-sos': '🆘',
@@ -86,5 +85,4 @@ module.exports = {
   DISCORD_CONFIG,
   TIME_ZONES,
   cronTimes,
-  botLanguage,
 };

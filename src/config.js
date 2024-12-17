@@ -10,6 +10,12 @@ const DISCORD_CONFIG = {
   discordAdminPointRequestChannel: process.env.ADMIN_POINT_REQUEST_CHANNEL,
   discordAdminTagId: process.env.ADMINISTRATOR_TAG_ID,
   botLanguage: process.env.DISCORD_LANGUAGE || 'en',
+  cronTimes: {
+    messageTimes: process.env.SCHEDULED_MESSAGES
+      ? csvParser(process.env.SCHEDULED_MESSAGES)
+      : [],
+    timeZone: process.env.TIME_ZONE,
+  },
   VOTE_POINTS: {
     ANSWERS: [
       {
@@ -73,16 +79,8 @@ const TIME_ZONES = [
   { name: 'Venezuela (VET)', value: 'America/Caracas' },
 ];
 
-const cronTimes = {
-  messageTimes: process.env.SCHEDULED_MESSAGES
-    ? csvParser(process.env.SCHEDULED_MESSAGES)
-    : [],
-  timeZone: process.env.TIME_ZONE,
-};
-
 module.exports = {
   MAPPED_STATUS_COMMANDS,
   DISCORD_CONFIG,
   TIME_ZONES,
-  cronTimes,
 };

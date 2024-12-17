@@ -1,5 +1,5 @@
 const { CronJob } = require('cron');
-const { cronTimes } = require('../config');
+const { DISCORD_CONFIG } = require('../config');
 
 /**
  * Schedules a message to be sent to a Discord channel at a specific time.
@@ -48,7 +48,7 @@ const scheduleMessages = (client, scheduledMessages) => {
       channel,
       message,
       datetime,
-      timeZone: cronTimes.timeZone,
+      timeZone: DISCORD_CONFIG.cronTimes.timeZone,
     });
   });
 };

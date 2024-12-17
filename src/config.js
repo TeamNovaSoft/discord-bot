@@ -71,6 +71,8 @@ const cronTimes = {
     ? csvParser(process.env.SCHEDULED_MESSAGES)
     : [],
   timeZone: process.env.TIME_ZONE,
+  scheduledCalendarInterval:
+    process.env.SCHEDULED_CALENDAR_INTERVAL || '*/20 8-17 * * 1-5',
 };
 
 const tagIds = {

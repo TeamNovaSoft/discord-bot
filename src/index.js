@@ -29,7 +29,7 @@ deployEvents(client);
 scheduleMessages(client, cronTimes.messageTimes);
 if (firebaseConfig.scheduledCalendarEnabled) {
   new cron.CronJob(
-    '*/20 8-17 * * 1-5',
+    cronTimes.scheduledCalendarInterval,
     () => {
       console.log('Running scheduled calendar notifications...');
       scheduleCalendarNotifications(client);

@@ -8,6 +8,7 @@ const {
   scheduleCalendarNotifications,
 } = require('./cron/schedule-google-calendar');
 const { firebaseConfig } = require('../firebase-config');
+const cron = require('cron');
 
 const client = new Client({
   intents: [
@@ -27,7 +28,20 @@ deployEvents(client);
 
 scheduleMessages(client, cronTimes.messageTimes);
 if (firebaseConfig.scheduledCalendarEnabled) {
-  scheduleCalendarNotifications(client);
+  new cron.CronJob(
+    '*/20 8-17 * * 1-5',
+    () => {
+      console.log('Running scheduled calendar notifications...');
+      scheduleCalendarNotifications(client);
+    },
+    null,
+    true,
+    cronTimes.timeZone
+  );
+
+  console.log(
+    'Calendar event collector scheduled to run from Monday to Friday, 8 AM to 5 PM each 20 MIN (Colombia time).'
+  );
 }
 
 client.login(token);

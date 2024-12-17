@@ -1,7 +1,7 @@
 require('dotenv').config();
 const csvParser = require('./utils/csv-parser');
 
-const DISCORD_CONFIG = {
+const DISCORD_SERVER = {
   discordToken: process.env.DISCORD_TOKEN,
   discordClientId: process.env.DISCORD_CLIENT_ID,
   discordGuildId: process.env.DISCORD_GUILD_ID,
@@ -81,6 +81,6 @@ const TIME_ZONES = [
 
 module.exports = {
   MAPPED_STATUS_COMMANDS,
-  DISCORD_CONFIG,
+  DISCORD_SERVER,
   TIME_ZONES,
 };

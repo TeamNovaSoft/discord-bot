@@ -1,5 +1,5 @@
 const { Events } = require('discord.js');
-const { DISCORD_CONFIG } = require('../config');
+const { DISCORD_SERVER } = require('../config');
 
 module.exports = {
   name: Events.MessageCreate,
@@ -10,22 +10,22 @@ module.exports = {
 
     const mentionedRoles = message.mentions.roles;
 
-    if (!mentionedRoles.has(DISCORD_CONFIG.discordQARoleId)) {
+    if (!mentionedRoles.has(DISCORD_SERVER.discordQARoleId)) {
       return;
     }
 
     const qaRequestChannel = message.guild.channels.cache.find(
-      (channel) => channel.name === DISCORD_CONFIG.discordQAChannelName
+      (channel) => channel.name === DISCORD_SERVER.discordQAChannelName
     );
 
     if (!qaRequestChannel) {
       return await message.reply({
-        content: `Sorry, the channel: #${DISCORD_CONFIG.discordQAChannelName} for QA requests was not found!`,
+        content: `Sorry, the channel: #${DISCORD_SERVER.discordQAChannelName} for QA requests was not found!`,
         ephemeral: true,
       });
     }
 
-    const qaRole = mentionedRoles.get(DISCORD_CONFIG.discordQARoleId);
+    const qaRole = mentionedRoles.get(DISCORD_SERVER.discordQARoleId);
     const qaRoleIdRef = `<@&${qaRole.id}>`;
     const messageLink = `https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id}`;
 

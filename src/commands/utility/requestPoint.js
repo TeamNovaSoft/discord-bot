@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { DISCORD_SERVER } = require('../../config');
+const { REQUEST_POINT } = require('../../config');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -36,7 +36,7 @@ module.exports = {
       const message = `${escapedUserId} is asking for a point for **${userMessage}**. Check the message here: ${threadLink}`;
 
       const channelSend = await interaction.client.channels.fetch(
-        DISCORD_SERVER.discordAdminPointRequestChannel
+        REQUEST_POINT.discordAdminPointRequestChannel
       );
 
       if (channelSend) {

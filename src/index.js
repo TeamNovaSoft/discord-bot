@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
-const { DISCORD_SERVER } = require('./config');
+const { DISCORD_SERVER, SCHEDULE_MESSAGES } = require('./config');
 const { scheduleMessages } = require('./cron/schedule-messages');
 const deployEvents = require('./deploy-events');
 const deployCommands = require('./deploy-commands');
@@ -25,7 +25,7 @@ const token = DISCORD_SERVER.discordToken;
 deployCommands(client);
 deployEvents(client);
 
-scheduleMessages(client, DISCORD_SERVER.cronTimes.messageTimes);
+scheduleMessages(client, SCHEDULE_MESSAGES.messageTimes);
 if (firebaseConfig.scheduledCalendarEnabled) {
   scheduleCalendarNotifications(client);
 }

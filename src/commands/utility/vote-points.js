@@ -43,6 +43,9 @@ module.exports = {
         allowMultiselect: false,
         duration: 1,
         answers: VOTE_POINTS_ANSWERS,
+        meta: {
+          pointType,
+        },
       },
     });
   },

@@ -1,6 +1,6 @@
 require('dotenv').config();
 const csvParser = require('./utils/csv-parser');
-const { parseAllowedChannels } = require('./utils/csv-parser-allowed-channels');
+const { parseAllowedChannels } = require('./csv-parser-allowed-channels');
 
 const DISCORD_CONFIG = {
   discordToken: process.env.DISCORD_TOKEN,

@@ -1,5 +1,6 @@
 require('dotenv').config();
 const csvParser = require('./utils/csv-parser');
+const { parseAllowedChannels } = require('./csv-parser-allowed-channels');
 
 const DISCORD_SERVER = {
   discordToken: process.env.DISCORD_TOKEN,
@@ -18,6 +19,12 @@ const MAPPED_STATUS_COMMANDS = {
   'pr-working-in-fixes': '🧑‍🔧',
   'pr-approved-by-code-review': '👍',
   'pr-merged-in-dev': '✅',
+};
+
+const PR_TEMPLATE = {
+  allowedChannels: parseAllowedChannels(
+    process.env.PR_TEMPLATE_ALLOWED_CHANNELS
+  ),
 };
 
 const TIME_ZONES = [
@@ -95,4 +102,5 @@ module.exports = {
   REQUEST_POINT,
   SCHEDULE_MESSAGES,
   VOTE_POINTS,
+  PR_TEMPLATE,
 };

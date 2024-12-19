@@ -10,43 +10,54 @@ module.exports = {
       return;
     }
 
-    const userMentionField = embeds[0]?.fields.find(
-      (field) => field.name === 'poll_question_text'
-    );
-    const parts = userMentionField?.value.split('|').map((part) => part.trim());
-    const userMentioned = `<@${parts[1]}>`;
+    try {
+      const questionField = embeds[0]?.fields.find(
+        (field) => field.name === 'poll_question_text'
+      );
 
-    const pollMeta = embeds[0]?.data?.meta;
-    const pointType = pollMeta?.pointType || 'normal';
-    const selectedTagId =
-      pointType === 'boosted' ? tagIds.boostedPointTagId : tagIds.addPointTagId;
-
-    console.log('Point Type:', pointType);
-    console.log('Selected Tag ID:', selectedTagId);
-
-    const finalResultField = embeds[0]?.fields.find(
-      (field) => field.name === 'victor_answer_text'
-    );
-    const finalResult = parseInt(finalResultField?.value || '0', 10);
-
-    const channel = await client.channels.fetch(channelId);
-
-    if (channel) {
-      if (finalResult > 0) {
-        await Promise.all(
-          Array.from({ length: finalResult }).map(async () => {
-            await channel.send(`<@&${selectedTagId}> ${userMentioned}`);
-          })
-        );
-      } else {
-        await channel.send(
-          `The draw is not supported or no points were awarded.`
-        );
+      const parts = questionField?.value.split('|').map((part) => part.trim());
+      if (!parts || parts.length < 2) {
+        return;
       }
-    } else {
-      console.error(`Channel not found: ${channelId}`);
+
+      const userMentioned = `<@${parts[1]}>`;
+      const pointType = parts[0].toLowerCase().includes('boosted')
+        ? 'boosted'
+        : 'normal';
+
+      const selectedTagId =
+        pointType === 'boosted'
+          ? tagIds.boostedPointTagId
+          : tagIds.addPointTagId;
+
+      const finalResultField = embeds[0]?.fields.find(
+        (field) => field.name === 'victor_answer_text'
+      );
+      const finalResult = parseInt(finalResultField?.value || '0', 10);
+
+      const channel = await client.channels.fetch(channelId);
+
+      if (channel) {
+        if (finalResult > 0) {
+          await Promise.all(
+            Array.from({ length: finalResult }).map(async () => {
+              await channel.send(`<@&${selectedTagId}> ${userMentioned}`);
+            })
+          );
+        } else {
+          await channel.send(
+            `The result was not valid or no points were awarded.`
+          );
+        }
+      } else {
+        await message.reply({
+          content: `Could not find the channel: ${channelId}`,
+          ephemeral: true,
+        });
+      }
+    } catch {
       await message.reply({
-        content: `Channel not found: ${channelId}`,
+        content: 'An error occurred while processing the poll result.',
         ephemeral: true,
       });
     }

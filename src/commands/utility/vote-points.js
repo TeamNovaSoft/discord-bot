@@ -37,15 +37,16 @@ module.exports = {
     interaction.followUp({
       poll: {
         question: {
-          text: `How much does this task cost? | ${user.id}`,
+          text: `How much does this task cost? Point type: ${pointType} | ${user.id}`,
           emoji: { name: '🧮' },
         },
         allowMultiselect: false,
         duration: 1,
         answers: VOTE_POINTS_ANSWERS,
-        meta: {
-          pointType,
-        },
+        fields: [
+          { name: 'User', value: `<@${user.id}>`, inline: true },
+          { name: 'Point Type', value: pointType, inline: true },
+        ],
       },
     });
   },

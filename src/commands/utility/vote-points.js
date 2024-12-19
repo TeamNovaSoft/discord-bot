@@ -33,7 +33,7 @@ module.exports = {
       pointType === 'boosted' ? tagIds.boostedPointTagId : tagIds.addPointTagId;
 
     await interaction.reply(`<@&${tagIds.taskCompletedTagId}> <@${user.id}>`);
-    interaction.followUp({
+    await interaction.followUp({
       poll: {
         question: {
           text: `How much does this task cost? Point type: ${selectedTagId} | ${user.id}`,

@@ -3,6 +3,13 @@ const { listEvents } = require('../../calendar');
 const { EmbedBuilder } = require('discord.js');
 const { firebaseConfig } = require('../../firebase-config');
 
+let activeCronJobs = [];
+
+const clearAllCronJobs = () => {
+  activeCronJobs.forEach((job) => job.stop());
+  activeCronJobs = [];
+};
+
 /**
  * Schedules a notification to be sent when an event starts.
  *
@@ -35,7 +42,7 @@ const scheduleEventNotification = async ({ client, event }) => {
   };
 
   const cronExpression = dateToCronExpression(event.start.dateTime);
-  new CronJob(
+  const job = new CronJob(
     cronExpression,
     async () => {
       const currentChannel = await client.channels.cache.get(
@@ -66,7 +73,10 @@ const scheduleEventNotification = async ({ client, event }) => {
     null,
     true,
     event.start.timeZone
-  ).start();
+  );
+
+  job.start();
+  activeCronJobs.push(job);
 };
 
 /**
@@ -80,6 +90,8 @@ const scheduleCalendarNotifications = async (client) => {
   if (!Array.isArray(events)) {
     return console.log('Error: Missing or invalid parameters (events array).');
   }
+
+  clearAllCronJobs();
 
   events.forEach((event) => {
     scheduleEventNotification({ client, event });

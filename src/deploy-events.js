@@ -1,9 +1,7 @@
-
 const fs = require('node:fs');
 const path = require('node:path');
 
 module.exports = (client) => {
-
   const eventsPath = path.join(__dirname, 'events');
   const eventFiles = fs
     .readdirSync(eventsPath)
@@ -17,4 +15,4 @@ module.exports = (client) => {
       client.on(event.name, event.execute);
     }
   }
-}
+};

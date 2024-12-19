@@ -22,7 +22,7 @@ const MAPPED_STATUS_COMMANDS = {
 };
 
 const PR_TEMPLATE = {
-  allowedChannel: parseAllowedChannels(
+  allowedChannels: parseAllowedChannels(
     process.env.PR_TEMPLATE_ALLOWED_CHANNELS
   ),
 };

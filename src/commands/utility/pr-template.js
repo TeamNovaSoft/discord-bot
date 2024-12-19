@@ -11,7 +11,7 @@ module.exports = {
         .setName('channel')
         .setDescription('Select a channel for the PR review request')
         .setRequired(true)
-        .addChoices(PR_TEMPLATE.allowedChannel)
+        .addChoices(PR_TEMPLATE.allowedChannels)
     ),
 
   async execute(interaction) {

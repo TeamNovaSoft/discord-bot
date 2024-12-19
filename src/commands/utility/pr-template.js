@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { createPRModal } = require('../../modals/pr-template-modal');
-const { PR_TEMPLATE_ALLOWED_CHANNELS } = require('../../config');
+const { PR_TEMPLATE } = require('../../config');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -11,7 +11,7 @@ module.exports = {
         .setName('channel')
         .setDescription('Select a channel for the PR review request')
         .setRequired(true)
-        .addChoices(PR_TEMPLATE_ALLOWED_CHANNELS)
+        .addChoices(PR_TEMPLATE.allowedChannel)
     ),
 
   async execute(interaction) {

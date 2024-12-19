@@ -1,5 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { tagIds } = require('../../config');
+const { VOTE_POINTS } = require('../../config');
+
+const tagIds = VOTE_POINTS.TAG_IDS;
 
 module.exports = {
   data: new SlashCommandBuilder()

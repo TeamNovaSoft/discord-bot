@@ -1,5 +1,5 @@
 function parseAllowedChannels(channels) {
-  if (!channels) {
+  if (typeof channels !== 'string') {
     return [];
   }
 

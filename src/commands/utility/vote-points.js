@@ -1,5 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { VOTE_POINTS_ANSWERS, tagIds } = require('../../config');
+const { VOTE_POINTS } = require('../../config');
+
+const tagIds = VOTE_POINTS.TAG_IDS;
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -38,7 +40,7 @@ module.exports = {
         },
         allowMultiselect: false,
         duration: 24,
-        answers: VOTE_POINTS_ANSWERS,
+        answers: VOTE_POINTS.ANSWERS,
         fields: [
           { name: 'User', value: `<@${user.id}>`, inline: true },
           { name: 'Point Type', value: pointType, inline: true },

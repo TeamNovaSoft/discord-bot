@@ -1,5 +1,7 @@
 const { Events } = require('discord.js');
-const { tagIds } = require('../config');
+const { VOTE_POINTS } = require('../config');
+
+const tagIds = VOTE_POINTS.TAG_IDS;
 
 module.exports = {
   name: Events.MessageCreate,
@@ -14,7 +16,21 @@ module.exports = {
       const questionField = embeds[0]?.fields.find(
         (field) => field.name === 'poll_question_text'
       );
+      if (
+        !author.bot ||
+        !Array.isArray(embeds[0]?.fields) ||
+        embeds[0]?.data?.type !== 'poll_result'
+      ) {
+        return;
+      }
 
+      const userMentionField = embeds[0]?.fields.find(
+        (field) => field.name === 'poll_question_text'
+      );
+
+      if (userMentionField === undefined) {
+        return;
+      }
       const parts = questionField?.value.split('|').map((part) => part.trim());
       if (!parts || parts.length < 2) {
         return;

@@ -1,15 +1,15 @@
 const { REST, Routes } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-const { DISCORD_CONFIG } = require('./config');
+const { DISCORD_SERVER } = require('./config');
 
 module.exports = (client) => {
   const commands = [];
   const foldersPath = path.join(__dirname, 'commands');
   const commandFolders = fs.readdirSync(foldersPath);
-  const token = DISCORD_CONFIG.discordToken;
-  const clientId = DISCORD_CONFIG.discordClientId;
-  const guildId = DISCORD_CONFIG.discordGuildId;
+  const token = DISCORD_SERVER.discordToken;
+  const clientId = DISCORD_SERVER.discordClientId;
+  const guildId = DISCORD_SERVER.discordGuildId;
 
   for (const folder of commandFolders) {
     const commandsPath = path.join(foldersPath, folder);

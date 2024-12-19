@@ -32,9 +32,7 @@ module.exports = {
     const selectedTagId =
       pointType === 'boosted' ? tagIds.boostedPointTagId : tagIds.addPointTagId;
 
-    await interaction.reply(
-      `<@&${tagIds.taskCompletedTagId}> <@${user.id}> (Awarding: ${pointType.toUpperCase()} Points with Tag <@&${selectedTagId}>)`
-    );
+    await interaction.reply(`<@&${tagIds.taskCompletedTagId}> <@${user.id}>`);
     interaction.followUp({
       poll: {
         question: {

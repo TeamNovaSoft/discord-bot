@@ -22,7 +22,15 @@
   },
   "prTemplate": {
     "description": "Enviar una solicitud de revisión de PR con formato",
-    "channelOption": "Selecciona un canal para la solicitud de revisión de PR"
+    "channelOption": "Selecciona un canal para la solicitud de revisión de PR",
+    "modal": {
+      "modalTitle": "Solicitud de Revisión de PR",
+      "urlLabel": "URL de GitHub PR",
+      "titleLabel": "Título del PR",
+      "overviewLabel": "Descripción general",
+      "howToTestLabel": "Cómo probar",
+      "required": "Este campo es obligatorio"
+    }
   },
   "requestPoint": {
     "description": "Solicitar un punto en este hilo",
@@ -43,7 +51,12 @@
   },
   "sendMessage": {
     "description": "Enviar un mensaje con el bot",
-    "channelOption": "El canal donde enviar el mensaje"
+    "channelOption": "El canal donde enviar el mensaje",
+    "modal": {
+      "modalTitle": "Solicitud de Envío de Mensaje",
+      "titleLabel": "Título del Mensaje",
+      "descriptionLabel": "Descripción del Mensaje"
+    }
   },
   "server": {
     "description": "Proporciona información sobre el servidor.",

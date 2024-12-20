@@ -22,7 +22,14 @@
   },
   "prTemplate": {
     "description": "Send a formatted PR review request",
-    "channelOption": "Select a channel for the PR review request"
+    "channelOption": "Select a channel for the PR review request",
+    "modal": {
+      "modalTitle": "PR Review Request",
+      "urlLabel": "GitHub PR URL",
+      "titleLabel": "PR Title",
+      "overviewLabel": "Overview",
+      "howToTestLabel": "How to Test"
+    }
   },
   "requestPoint": {
     "description": "Request a point in this thread",
@@ -43,7 +50,12 @@
   },
   "sendMessage": {
     "description": "Send a message with the bot",
-    "channelOption": "The channel to message into"
+    "channelOption": "The channel to message into",
+    "modal": {
+      "modalTitle": "Send Message Request",
+      "titleLabel": "Message Title",
+      "descriptionLabel": "Message Description"
+    }
   },
   "server": {
     "description": "Provides information about the server.",

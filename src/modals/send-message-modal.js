@@ -4,21 +4,22 @@ const {
   TextInputBuilder,
   TextInputStyle,
 } = require('discord.js');
+const { translateLanguage } = require('../languages/index');
 
 function createSendMessageModal(channelId, userName) {
   const modal = new ModalBuilder()
     .setCustomId(`send-message-modal-${channelId}-${userName}`)
-    .setTitle('Send message Request');
+    .setTitle(translateLanguage('sendMessage.modal.modalTitle'));
 
   const titleInput = new TextInputBuilder()
     .setCustomId('titleInput')
-    .setLabel(' Message Title')
+    .setLabel(translateLanguage('sendMessage.modal.titleLabel'))
     .setStyle(TextInputStyle.Short)
     .setRequired(false);
 
   const descriptionInput = new TextInputBuilder()
     .setCustomId('descriptionInput')
-    .setLabel('Message Description')
+    .setLabel(translateLanguage('sendMessage.modal.descriptionLabel'))
     .setStyle(TextInputStyle.Paragraph)
     .setRequired(false)
     .setMinLength(50);

@@ -22,9 +22,10 @@ module.exports = {
   async execute(interaction) {
     try {
       const { options, channel } = interaction;
+      await interaction.deferReply({ ephemeral: true });
 
       if (!channel.isThread()) {
-        return await interaction.reply({
+        return await interaction.editReply({
           content: 'Sorry, this is not a thread!',
           ephemeral: true,
         });
@@ -34,7 +35,7 @@ module.exports = {
       const newStatus = MAPPED_STATUS_COMMANDS[status];
 
       if (!newStatus) {
-        return await interaction.reply('Invalid status command.');
+        return await interaction.editReply('Invalid status command.');
       }
 
       let channelName = channel.name;
@@ -46,12 +47,14 @@ module.exports = {
 
       const updatedChannelName = `${newStatus} ${channelName}`;
       await channel.setName(updatedChannelName);
-      await interaction.reply(
+      await interaction.editReply(
         `Status updated to ${status.replaceAll('-', ' ')}`
       );
     } catch (error) {
       console.error(error);
-      await interaction.reply('An error occurred while updating the status.');
+      await interaction.editReply(
+        'An error occurred while updating the status.'
+      );
     }
   },
 };

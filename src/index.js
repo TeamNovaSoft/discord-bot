@@ -9,7 +9,40 @@ const {
 } = require('./cron/schedule-google-calendar');
 const { firebaseConfig } = require('../firebase-config');
 const cron = require('cron');
+const saveErrorLog = require('./utils/log-error');
 
+async function startClientBot(client) {
+  client.commands = new Collection();
+  deployCommands(client);
+  deployEvents(client);
+
+  scheduleMessages(client, SCHEDULE_MESSAGES.messageTimes);
+  if (firebaseConfig.scheduledCalendarEnabled) {
+    new cron.CronJob(
+      SCHEDULE_MESSAGES.scheduledCalendarInterval,
+      () => {
+        console.log('Running scheduled calendar notifications...');
+        scheduleCalendarNotifications(client);
+      },
+      null,
+      true,
+      SCHEDULE_MESSAGES.timeZone
+    );
+
+    console.log(
+      'Calendar event collector scheduled to run from Monday to Friday, 8 AM to 5 PM each 20 MIN (Colombia time).'
+    );
+  }
+
+  await client.login(token);
+}
+
+function handleCriticalError(error) {
+  saveErrorLog(error);
+  console.error('Critical error occurred:', error);
+}
+
+const token = DISCORD_SERVER.discordToken;
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -19,29 +52,15 @@ const client = new Client({
     GatewayIntentBits.DirectMessagePolls,
   ],
 });
-
 client.commands = new Collection();
-const token = DISCORD_SERVER.discordToken;
 
-deployCommands(client);
-deployEvents(client);
+process.on('uncaughtException', (error) => {
+  handleCriticalError(error);
+});
 
-scheduleMessages(client, SCHEDULE_MESSAGES.messageTimes);
-if (firebaseConfig.scheduledCalendarEnabled) {
-  new cron.CronJob(
-    cronTimes.scheduledCalendarInterval,
-    () => {
-      console.log('Running scheduled calendar notifications...');
-      scheduleCalendarNotifications(client);
-    },
-    null,
-    true,
-    cronTimes.timeZone
-  );
+process.on('unhandledRejection', async (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  handleCriticalError(reason);
+});
 
-  console.log(
-    'Calendar event collector scheduled to run from Monday to Friday, 8 AM to 5 PM each 20 MIN (Colombia time).'
-  );
-}
-
-client.login(token);
+startClientBot(client);

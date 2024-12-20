@@ -29,14 +29,13 @@ module.exports = {
     const user = interaction.options.getUser('user') || interaction.user;
     const pointType = interaction.options.getString('point-type');
 
-    const selectedTagId =
-      pointType === 'boosted' ? tagIds.boostedPointTagId : tagIds.addPointTagId;
+    pointType === 'boosted' ? tagIds.boostedPointTagId : tagIds.addPointTagId;
 
     await interaction.reply(`<@&${tagIds.taskCompletedTagId}> <@${user.id}>`);
     await interaction.followUp({
       poll: {
         question: {
-          text: `How much does this task cost? Point type: ${selectedTagId} | ${user.id}`,
+          text: `How much does this task cost? Point type: ${pointType} | ${user.id}`,
           emoji: { name: '🧮' },
         },
         allowMultiselect: false,

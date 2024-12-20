@@ -42,10 +42,6 @@ module.exports = {
         allowMultiselect: false,
         duration: 24,
         answers: VOTE_POINTS.ANSWERS,
-        fields: [
-          { name: 'User', value: `<@${user.id}>`, inline: true },
-          { name: 'Point Type', value: pointType, inline: true },
-        ],
       },
     });
   },

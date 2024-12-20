@@ -1,16 +1,17 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { MAPPED_STATUS_COMMANDS } = require('../../config');
+const { translateLanguage } = require('../../languages/index');
 
 const COMMAND_KEYS = Object.keys(MAPPED_STATUS_COMMANDS);
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('change-status')
-    .setDescription('Change the status of the thread')
+    .setDescription(translateLanguage('changeStatus.description'))
     .addStringOption((option) =>
       option
         .setName('status')
-        .setDescription('status command')
+        .setDescription(translateLanguage('changeStatus.statusOption'))
         .setRequired(true)
         .addChoices(
           COMMAND_KEYS.map((command) => ({
@@ -25,7 +26,7 @@ module.exports = {
 
       if (!channel.isThread()) {
         return await interaction.reply({
-          content: 'Sorry, this is not a thread!',
+          content: translateLanguage('changeStatus.notAThread'),
           ephemeral: true,
         });
       }
@@ -34,7 +35,9 @@ module.exports = {
       const newStatus = MAPPED_STATUS_COMMANDS[status];
 
       if (!newStatus) {
-        return await interaction.reply('Invalid status command.');
+        return await interaction.reply(
+          translateLanguage('changeStatus.invalidStatus')
+        );
       }
 
       let channelName = channel.name;
@@ -47,11 +50,13 @@ module.exports = {
       const updatedChannelName = `${newStatus} ${channelName}`;
       await channel.setName(updatedChannelName);
       await interaction.reply(
-        `Status updated to ${status.replaceAll('-', ' ')}`
+        translateLanguage('changeStatus.updatedStatus', {
+          status: status.replaceAll('-', ' '),
+        })
       );
     } catch (error) {
       console.error(error);
-      await interaction.reply('An error occurred while updating the status.');
+      await interaction.reply(translateLanguage('changeStatus.error'));
     }
   },
 };

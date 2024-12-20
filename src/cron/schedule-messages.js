@@ -1,5 +1,6 @@
 const { CronJob } = require('cron');
 const { SCHEDULE_MESSAGES } = require('../config');
+const { translateLanguage } = require('../languages/index');
 
 /**
  * Schedules a message to be sent to a Discord channel at a specific time.
@@ -14,7 +15,7 @@ const { SCHEDULE_MESSAGES } = require('../config');
 const scheduleMessage = ({ client, channel, message, datetime, timeZone }) => {
   if (!client || !channel || !message || !datetime || !timeZone) {
     return console.log(
-      'Error: Missing one or more required parameters (client, channel, message, datetime, or timeZone).'
+      translateLanguage('messageSchedules.errorMissingParameters')
     );
   }
 
@@ -25,7 +26,7 @@ const scheduleMessage = ({ client, channel, message, datetime, timeZone }) => {
       if (currentChannel) {
         currentChannel.send(message);
       } else {
-        console.log('Channel not found or client not ready.');
+        console.log(translateLanguage('messageSchedules.errorChannelNotFound'));
       }
     },
     null,

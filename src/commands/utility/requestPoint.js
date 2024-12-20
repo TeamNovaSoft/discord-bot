@@ -1,20 +1,21 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { REQUEST_POINT } = require('../../config');
+const { translateLanguage } = require('../../languages/index');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('request-point')
-    .setDescription('Request a point in this thread')
+    .setDescription(translateLanguage('requestPoint.description'))
     .addUserOption((option) =>
       option
         .setName('user')
-        .setDescription('User to search for')
+        .setDescription(translateLanguage('requestPoint.userOption'))
         .setRequired(true)
     )
     .addStringOption((option) =>
       option
         .setName('reason')
-        .setDescription('Reason for requesting the point')
+        .setDescription(translateLanguage('requestPoint.reasonOption'))
         .setRequired(true)
     ),
   async execute(interaction) {
@@ -23,7 +24,7 @@ module.exports = {
 
       if (!channel.isThread()) {
         return await interaction.reply({
-          content: 'Sorry, this is not a thread!',
+          content: translateLanguage('requestPoint.notAThread'),
           ephemeral: true,
         });
       }
@@ -33,7 +34,11 @@ module.exports = {
       const escapedUserId = `<@${user.id}>`;
 
       const threadLink = `https://discord.com/channels/${guild.id}/${channel.id}`;
-      const message = `${escapedUserId} is asking for a point for **${userMessage}**. Check the message here: ${threadLink}`;
+      const message = translateLanguage('requestPoint.message', {
+        userId: escapedUserId,
+        reason: userMessage,
+        threadLink,
+      });
 
       const channelSend = await interaction.client.channels.fetch(
         REQUEST_POINT.discordAdminPointRequestChannel
@@ -44,15 +49,14 @@ module.exports = {
       }
 
       await interaction.reply({
-        content: 'Your request has been sent successfully.',
+        content: translateLanguage('requestPoint.success'),
         ephemeral: true,
       });
     } catch (error) {
       console.error('Error executing request-point command:', error);
 
       await interaction.reply({
-        content:
-          'An error occurred while submitting your request. Please try again later.',
+        content: translateLanguage('requestPoint.error'),
         ephemeral: true,
       });
     }

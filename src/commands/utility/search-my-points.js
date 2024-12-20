@@ -1,35 +1,35 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { VOTE_POINTS } = require('../../config');
+const { translateLanguage } = require('../../languages/index');
 
 const tagIds = VOTE_POINTS.TAG_IDS;
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('my-points-query')
-    .setDescription(
-      'Get the Discord search query to check points for a specific month'
-    )
+    .setDescription(translateLanguage('searchMyPoints.description'))
     .addIntegerOption((option) =>
-      option.setName('year').setDescription('Year to search').setRequired(false)
+      option
+        .setName('year')
+        .setDescription(translateLanguage('searchMyPoints.yearOption'))
+        .setRequired(false)
     )
     .addIntegerOption((option) =>
       option
         .setName('month')
-        .setDescription('Month to search')
+        .setDescription(translateLanguage('searchMyPoints.monthOption'))
         .setRequired(false)
     )
     .addUserOption((option) =>
       option
         .setName('user')
-        .setDescription('User to search for')
+        .setDescription(translateLanguage('searchMyPoints.userOption'))
         .setRequired(false)
     )
     .addStringOption((option) =>
       option
         .setName('channels')
-        .setDescription(
-          'Enter one or more channels (comma-separated, Ex: novabot,code-review)'
-        )
+        .setDescription(translateLanguage('searchMyPoints.channelsOption'))
         .setRequired(false)
     ),
 
@@ -68,11 +68,12 @@ module.exports = {
     const boostedPointQuery = `before: ${endDateStr} after: ${startDateStr} ${channelQueryParts} <@&${tagIds.boostedPointTagId}> ${escapedUserId}`;
 
     await interaction.reply({
-      content: `Here are your search queries:
-        \n**PRs opened:**\n\`\`\`${openedPRs}\`\`\`
-        \n**Tasks completed:**\n\`\`\`${taskCompletedQuery}\`\`\`
-        \n**Points obtained:**\n\`\`\`${addPointQuery}\`\`\`
-        \n**Boosted Points obtained:**\n\`\`\`${boostedPointQuery}\`\`\``,
+      content: translateLanguage('searchMyPoints.reply', {
+        openedPRs,
+        taskCompletedQuery,
+        addPointQuery,
+        boostedPointQuery,
+      }),
       ephemeral: true,
     });
   },

@@ -42,20 +42,20 @@ module.exports = {
       );
       const finalResult = parseInt(finalResultField?.value || '0', 10);
 
+      if (!finalResult || isNaN(finalResult)) {
+        return await message.reply(
+          `The result was not valid or no points were awarded.`
+        );
+      }
+
       const channel = await client.channels.fetch(channelId);
 
       if (!channel) {
-        await channel.send(`The draw is not supported`);
-        return await message.reply({
-          content: `Could not find the channel: ${channelId}`,
-          ephemeral: true,
-        });
+        return await message.reply(`Could not find the channel: ${channelId}`);
       }
 
-      if (!finalResult || isNaN(finalResult)) {
-        return await channel.send(
-          `The result was not valid or no points were awarded.`
-        );
+      if (embeds[0]?.fields.length <= 3) {
+        return await channel.send(`The draw is not supported.`);
       }
 
       await Promise.all(

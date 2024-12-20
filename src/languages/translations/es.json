@@ -70,5 +70,18 @@
     "description": "Iniciar una votación de Puntos de Estimación de Esfuerzo para el hilo actual.",
     "userDescription": "Usuario a buscar",
     "pollQuestion": "¿Cuánto cuesta esta tarea? | {{userId}}"
+  },
+  "calendarSchedules": {
+    "errorMissingParameters": "Error: Faltan uno o más parámetros requeridos (cliente, evento, event.start.dateTime o timeZone).",
+    "notificationMessage": "📅 ¡Recordatorio de reunión!",
+    "appFooter": "Aplicación de recordatorio de reuniones",
+    "meetingLinkLabel": "Enlace de la reunión:",
+    "clickHere": "Haz clic aquí",
+    "errorChannelNotFound": "Canal no encontrado o cliente no listo.",
+    "errorInvalidEventsArray": "Error: Parámetros faltantes o inválidos (array de eventos)."
+  },
+  "messageSchedules": {
+    "errorMissingParameters": "Error: Falta uno o más parámetros requeridos (client, channel, message, datetime, o timeZone).",
+    "errorChannelNotFound": "Canal no encontrado o cliente no listo."
   }
 }

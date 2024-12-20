@@ -69,5 +69,18 @@
     "description": "Start an Effort Estimation Points voting for the current thread.",
     "userDescription": "User to search for",
     "pollQuestion": "How much does this task cost? | {{userId}}"
+  },
+  "calendarSchedules": {
+    "errorMissingParameters": "Error: Missing one or more required parameters (client, event, event.start.dateTime, or timeZone).",
+    "notificationMessage": "📅 Meeting reminder!",
+    "appFooter": "Meet reminder APP",
+    "meetingLinkLabel": "Meeting link:",
+    "clickHere": "Click here",
+    "errorChannelNotFound": "Channel not found or client not ready.",
+    "errorInvalidEventsArray": "Error: Missing or invalid parameters (events array)."
+  },
+  "messageSchedules": {
+    "errorMissingParameters": "Error: Missing one or more required parameters (client, channel, message, datetime, or timeZone).",
+    "errorChannelNotFound": "Channel not found or client not ready."
   }
 }

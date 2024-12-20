@@ -1,15 +1,16 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { createPRModal } = require('../../modals/pr-template-modal');
 const { PR_TEMPLATE } = require('../../config');
+const { translateLanguage } = require('../../languages/index');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('pr-template')
-    .setDescription('Send a formatted PR review request')
+    .setDescription(translateLanguage('prTemplate.description'))
     .addStringOption((option) =>
       option
         .setName('channel')
-        .setDescription('Select a channel for the PR review request')
+        .setDescription(translateLanguage('prTemplate.channelOption'))
         .setRequired(true)
         .addChoices(PR_TEMPLATE.allowedChannels)
     ),

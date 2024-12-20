@@ -1,12 +1,15 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { createSendMessageModal } = require('../../modals/send-message-modal');
+const { translateLanguage } = require('../../languages/index');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('send-message')
-    .setDescription('Send a message with the bot')
+    .setDescription(translateLanguage('sendMessage.description'))
     .addChannelOption((option) =>
-      option.setName('channel').setDescription('The channel to message into')
+      option
+        .setName('channel')
+        .setDescription(translateLanguage('sendMessage.channelOption'))
     ),
   async execute(interaction) {
     const channel = interaction.options.getChannel('channel');

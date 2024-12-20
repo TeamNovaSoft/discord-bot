@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
-const { DISCORD_SERVER, SCHEDULE_MESSAGES } = require('./config');
+const { DISCORD_SERVER, SCHEDULE_MESSAGES, cronTimes } = require('./config');
 const { scheduleMessages } = require('./cron/schedule-messages');
 const deployEvents = require('./deploy-events');
 const deployCommands = require('./deploy-commands');

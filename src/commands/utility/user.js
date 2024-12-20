@@ -1,12 +1,19 @@
 const { SlashCommandBuilder } = require('discord.js');
+const { translateLanguage } = require('../../languages/index');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('user')
-    .setDescription('Provides information about the user.'),
+    .setDescription(translateLanguage('user.description')),
   async execute(interaction) {
-    await interaction.reply(
-      `This command was run by ${interaction.user.username}, who joined on ${interaction.member.joinedAt}.`
-    );
+    const username = interaction.user.username;
+    const joinedAt = interaction.member.joinedAt.toDateString();
+
+    const replyMessage = translateLanguage('user.reply', {
+      username,
+      joinedAt,
+    });
+
+    await interaction.reply(replyMessage);
   },
 };

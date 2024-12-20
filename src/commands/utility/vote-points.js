@@ -1,33 +1,40 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { VOTE_POINTS } = require('../../config');
+const { translateLanguage } = require('../../languages/index');
 
 const tagIds = VOTE_POINTS.TAG_IDS;
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('vote-points')
-    .setDescription(
-      'Start a Effort Estimation Points votation for current Thread'
-    )
+    .setDescription(translateLanguage('votePoints.description'))
     .addUserOption((option) =>
       option
         .setName('user')
-        .setDescription('User to search for')
+        .setDescription(translateLanguage('votePoints.userDescription'))
         .setRequired(true)
     ),
   async execute(interaction) {
     const user = interaction.options.getUser('user') || interaction.user;
 
-    await interaction.reply(`<@&${tagIds.taskCompletedTagId}> <@${user.id}>`);
+    const roleMention = `<@&${tagIds.taskCompletedTagId}>`;
+    const userMention = `<@${user.id}>`;
+    const question = translateLanguage('votePoints.pollQuestion', {
+      userId: user.id,
+    });
 
-    interaction.followUp({
+    // Reply with the mention of the role and user
+    await interaction.reply(`${roleMention} ${userMention}`);
+
+    // Follow-up with the poll
+    await interaction.followUp({
       poll: {
         question: {
-          text: `How much cost this task? | ${user.id}`,
+          text: question,
           emoji: { name: '🧮' },
         },
         allowMultiselect: false,
-        duration: 24,
+        duration: 24, // Duration in hours
         answers: VOTE_POINTS.ANSWERS,
       },
     });

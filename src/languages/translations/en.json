@@ -1,5 +1,61 @@
 {
-  "pingCommand": {
+  "changeStatus": {
+    "description": "Change the status of the thread",
+    "statusOption": "Choose a status command",
+    "notAThread": "Sorry, this is not a thread!",
+    "invalidStatus": "Invalid status command.",
+    "updatedStatus": "Status updated to {{status}}",
+    "error": "An error occurred while updating the status."
+  },
+  "convertTime": {
+    "description": "Convert time between time zones",
+    "fromOption": "Select the source time zone",
+    "toOption": "Select the target time zone",
+    "timeOption": "Enter the time to convert (HH:MM format)",
+    "invalidTimeFormat": "Please provide a valid time in HH:MM format.",
+    "noConversionNeeded": "No conversion needed! The time in {{timeZone}} is {{time}}.",
+    "conversionSuccess": "The time {{originalTime}} in {{fromTimeZone}} is {{convertedTime}} in {{toTimeZone}}.",
+    "error": "An error occurred while converting the time."
+  },
+  "ping": {
     "description": "Replies with Pong!"
+  },
+  "prTemplate": {
+    "description": "Send a formatted PR review request",
+    "channelOption": "Select a channel for the PR review request"
+  },
+  "requestPoint": {
+    "description": "Request a point in this thread",
+    "userOption": "User to search for",
+    "reasonOption": "Reason for requesting the point",
+    "notAThread": "Sorry, this is not a thread!",
+    "message": "{{userId}} is asking for a point for **{{reason}}**. Check the message here: {{threadLink}}",
+    "success": "Your request has been sent successfully.",
+    "error": "An error occurred while submitting your request. Please try again later."
+  },
+  "searchMyPoints": {
+    "description": "Get the Discord search query to check points for a specific month",
+    "yearOption": "Year to search",
+    "monthOption": "Month to search",
+    "userOption": "User to search for",
+    "channelsOption": "Enter one or more channels (comma-separated, Ex: novabot,code-review)",
+    "reply": "Here are your search queries:\n\n**PRs opened:**\n```\n{{openedPRs}}\n```\n\n**Tasks completed:**\n```\n{{taskCompletedQuery}}\n```\n\n**Points obtained:**\n```\n{{addPointQuery}}\n```\n\n**Boosted Points obtained:**\n```\n{{boostedPointQuery}}\n```"
+  },
+  "sendMessage": {
+    "description": "Send a message with the bot",
+    "channelOption": "The channel to message into"
+  },
+  "server": {
+    "description": "Provides information about the server.",
+    "reply": "This server is {{serverName}} and has {{memberCount}} members."
+  },
+  "user": {
+    "description": "Provides information about the user.",
+    "reply": "This command was run by {{username}}, who joined on {{joinedAt}}."
+  },
+  "votePoints": {
+    "description": "Start an Effort Estimation Points voting for the current thread.",
+    "userDescription": "User to search for",
+    "pollQuestion": "How much does this task cost? | {{userId}}"
   }
 }

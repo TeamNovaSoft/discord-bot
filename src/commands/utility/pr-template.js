@@ -1,21 +1,24 @@
-const { SlashCommandBuilder, ChannelType } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const { createPRModal } = require('../../modals/pr-template-modal');
+const { PR_TEMPLATE } = require('../../config');
+const { translateLanguage } = require('../../languages/index');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('pr-template')
-    .setDescription('Create a formatted PR review request')
-    .addChannelOption((option) =>
+    .setDescription(translateLanguage('prTemplate.description'))
+    .addStringOption((option) =>
       option
         .setName('channel')
-        .setDescription('Select channel to send the PR review request')
+        .setDescription(translateLanguage('prTemplate.channelOption'))
         .setRequired(true)
-        .addChannelTypes(ChannelType.GuildText)
+        .addChoices(PR_TEMPLATE.allowedChannels)
     ),
 
   async execute(interaction) {
-    const channel = interaction.options.getChannel('channel');
-    const modal = createPRModal(channel.id);
+    const selectedChannelId = interaction.options.getString('channel');
+
+    const modal = createPRModal(selectedChannelId);
     await interaction.showModal(modal);
   },
 };

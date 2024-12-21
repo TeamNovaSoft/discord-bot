@@ -1,5 +1,87 @@
 {
-  "pingCommand": {
-    "description": "Responde con Pong!"
+  "changeStatus": {
+    "description": "Cambiar el estado del hilo",
+    "statusOption": "Elige un estado",
+    "notAThread": "¡Lo siento, esto no es un hilo!",
+    "invalidStatus": "Estado no válido.",
+    "updatedStatus": "Estado actualizado a {{status}}",
+    "error": "Ocurrió un error al actualizar el estado."
+  },
+  "convertTime": {
+    "description": "Convertir hora entre zonas horarias",
+    "fromOption": "Selecciona la zona horaria de origen",
+    "toOption": "Selecciona la zona horaria de destino",
+    "timeOption": "Introduce la hora a convertir (formato HH:MM)",
+    "invalidTimeFormat": "Por favor, proporciona una hora válida en formato HH:MM.",
+    "noConversionNeeded": "¡No se necesita conversión! La hora en {{timeZone}} es {{time}}.",
+    "conversionSuccess": "La hora {{originalTime}} en {{fromTimeZone}} es {{convertedTime}} en {{toTimeZone}}.",
+    "error": "Ocurrió un error al convertir la hora."
+  },
+  "ping": {
+    "description": "¡Responde con Pong!"
+  },
+  "prTemplate": {
+    "description": "Enviar una solicitud de revisión de PR con formato",
+    "channelOption": "Selecciona un canal para la solicitud de revisión de PR",
+    "modal": {
+      "modalTitle": "Solicitud de Revisión de PR",
+      "urlLabel": "URL de GitHub PR",
+      "titleLabel": "Título del PR",
+      "overviewLabel": "Descripción general",
+      "howToTestLabel": "Cómo probar",
+      "required": "Este campo es obligatorio"
+    }
+  },
+  "requestPoint": {
+    "description": "Solicitar un punto en este hilo",
+    "userOption": "Usuario a buscar",
+    "reasonOption": "Razón para solicitar el punto",
+    "notAThread": "¡Lo siento, esto no es un hilo!",
+    "message": "{{userId}} está solicitando un punto por **{{reason}}**. Revisa el mensaje aquí: {{threadLink}}",
+    "success": "Tu solicitud ha sido enviada exitosamente.",
+    "error": "Ocurrió un error al enviar tu solicitud. Por favor, inténtalo nuevamente más tarde."
+  },
+  "searchMyPoints": {
+    "description": "Obtener la consulta de búsqueda de Discord para verificar puntos en un mes específico",
+    "yearOption": "Año a buscar",
+    "monthOption": "Mes a buscar",
+    "userOption": "Usuario a buscar",
+    "channelsOption": "Ingresa uno o más canales (separados por comas, Ej: novabot,code-review)",
+    "reply": "Aquí están tus consultas de búsqueda:\n\n**PRs abiertos:**\n```\n{{openedPRs}}\n```\n\n**Tareas completadas:**\n```\n{{taskCompletedQuery}}\n```\n\n**Puntos obtenidos:**\n```\n{{addPointQuery}}\n```\n\n**Puntos potenciados obtenidos:**\n```\n{{boostedPointQuery}}\n```"
+  },
+  "sendMessage": {
+    "description": "Enviar un mensaje con el bot",
+    "channelOption": "El canal donde enviar el mensaje",
+    "modal": {
+      "modalTitle": "Solicitud de Envío de Mensaje",
+      "titleLabel": "Título del Mensaje",
+      "descriptionLabel": "Descripción del Mensaje"
+    }
+  },
+  "server": {
+    "description": "Proporciona información sobre el servidor.",
+    "reply": "Este servidor es {{serverName}} y tiene {{memberCount}} miembros."
+  },
+  "user": {
+    "description": "Proporciona información sobre el usuario.",
+    "reply": "Este comando fue ejecutado por {{username}}, quien se unió el {{joinedAt}}."
+  },
+  "votePoints": {
+    "description": "Iniciar una votación de Puntos de Estimación de Esfuerzo para el hilo actual.",
+    "userDescription": "Usuario a buscar",
+    "pollQuestion": "¿Cuánto cuesta esta tarea? Tipo de Punto: {{pointType}} | {{userId}}"
+  },
+  "calendarSchedules": {
+    "errorMissingParameters": "Error: Faltan uno o más parámetros requeridos (cliente, evento, event.start.dateTime o timeZone).",
+    "notificationMessage": "📅 ¡Recordatorio de reunión!",
+    "appFooter": "Aplicación de recordatorio de reuniones",
+    "meetingLinkLabel": "Enlace de la reunión:",
+    "clickHere": "Haz clic aquí",
+    "errorChannelNotFound": "Canal no encontrado o cliente no listo.",
+    "errorInvalidEventsArray": "Error: Parámetros faltantes o inválidos (array de eventos)."
+  },
+  "messageSchedules": {
+    "errorMissingParameters": "Error: Falta uno o más parámetros requeridos (client, channel, message, datetime, o timeZone).",
+    "errorChannelNotFound": "Canal no encontrado o cliente no listo."
   }
 }

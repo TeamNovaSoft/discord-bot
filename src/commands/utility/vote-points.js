@@ -1,18 +1,17 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { VOTE_POINTS } = require('../../config');
+const { translateLanguage } = require('../../languages/index');
 
 const tagIds = VOTE_POINTS.TAG_IDS;
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('vote-points')
-    .setDescription(
-      'Start an Effort Estimation Points votation for the current Thread'
-    )
+    .setDescription(translateLanguage('votePoints.description'))
     .addUserOption((option) =>
       option
         .setName('user')
-        .setDescription('User to search for')
+        .setDescription(translateLanguage('votePoints.userDescription'))
         .setRequired(true)
     )
     .addStringOption((option) =>
@@ -31,15 +30,25 @@ module.exports = {
 
     pointType === 'boosted' ? tagIds.boostedPointTagId : tagIds.addPointTagId;
 
-    await interaction.reply(`<@&${tagIds.taskCompletedTagId}> <@${user.id}>`);
+    const roleMention = `<@&${tagIds.taskCompletedTagId}>`;
+    const userMention = `<@${user.id}>`;
+    const question = translateLanguage('votePoints.pollQuestion', {
+      pointType: pointType === 'boosted' ? 'boosted' : 'normal',
+      userId: user.id,
+    });
+
+    // Reply with the mention of the role and user
+    await interaction.reply(`${roleMention} ${userMention}`);
+
+    // Follow-up with the poll
     await interaction.followUp({
       poll: {
         question: {
-          text: `How much does this task cost? Point type: ${pointType} | ${user.id}`,
+          text: question,
           emoji: { name: '🧮' },
         },
         allowMultiselect: false,
-        duration: 24,
+        duration: 24, // Duration in hours
         answers: VOTE_POINTS.ANSWERS,
       },
     });

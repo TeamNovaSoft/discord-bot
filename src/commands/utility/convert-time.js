@@ -1,29 +1,30 @@
 const { SlashCommandBuilder } = require('discord.js');
 const moment = require('moment-timezone');
 const { TIME_ZONES } = require('../../config');
+const { translateLanguage } = require('../../languages/index');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('convert-time')
-    .setDescription('Convert time between time zones')
+    .setDescription(translateLanguage('convertTime.description'))
     .addStringOption((option) =>
       option
         .setName('from')
-        .setDescription('Select the source time zone')
+        .setDescription(translateLanguage('convertTime.fromOption'))
         .setRequired(true)
         .addChoices(TIME_ZONES)
     )
     .addStringOption((option) =>
       option
         .setName('to')
-        .setDescription('Select the target time zone')
+        .setDescription(translateLanguage('convertTime.toOption'))
         .setRequired(true)
         .addChoices(TIME_ZONES)
     )
     .addStringOption((option) =>
       option
         .setName('time')
-        .setDescription('Enter the time to convert (HH:MM format)')
+        .setDescription(translateLanguage('convertTime.timeOption'))
         .setRequired(true)
     ),
 
@@ -36,14 +37,17 @@ module.exports = {
       const timeRegex = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/;
       if (!timeRegex.test(time)) {
         return await interaction.reply({
-          content: 'Please provide a valid time in HH:MM format.',
+          content: translateLanguage('convertTime.invalidTimeFormat'),
           ephemeral: true,
         });
       }
 
       if (fromTimeZone === toTimeZone) {
         return await interaction.reply(
-          `No conversion needed! The time in ${fromTimeZone} is ${time}`
+          translateLanguage('convertTime.noConversionNeeded', {
+            time,
+            timeZone: fromTimeZone,
+          })
         );
       }
 
@@ -51,11 +55,16 @@ module.exports = {
       const convertedTime = inputTime.clone().tz(toTimeZone).format('HH:mm');
 
       await interaction.reply(
-        `The time ${time} in ${fromTimeZone} is ${convertedTime} in ${toTimeZone}.`
+        translateLanguage('convertTime.conversionSuccess', {
+          originalTime: time,
+          fromTimeZone,
+          convertedTime,
+          toTimeZone,
+        })
       );
     } catch (error) {
       console.error(error);
-      await interaction.reply('An error occurred while converting the time.');
+      await interaction.reply(translateLanguage('convertTime.error'));
     }
   },
 };

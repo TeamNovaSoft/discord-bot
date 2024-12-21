@@ -68,7 +68,7 @@
   "votePoints": {
     "description": "Start an Effort Estimation Points voting for the current thread.",
     "userDescription": "User to search for",
-    "pollQuestion": "How much does this task cost? | {{userId}}"
+    "pollQuestion": "How much does this task cost? Point Type: {{pointType}} | {{userId}}"
   },
   "calendarSchedules": {
     "errorMissingParameters": "Error: Missing one or more required parameters (client, event, event.start.dateTime, or timeZone).",

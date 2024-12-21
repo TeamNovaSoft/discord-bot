@@ -69,7 +69,7 @@
   "votePoints": {
     "description": "Iniciar una votación de Puntos de Estimación de Esfuerzo para el hilo actual.",
     "userDescription": "Usuario a buscar",
-    "pollQuestion": "¿Cuánto cuesta esta tarea? | {{userId}}"
+    "pollQuestion": "¿Cuánto cuesta esta tarea? Tipo de Punto: {{pointType}} | {{userId}}"
   },
   "calendarSchedules": {
     "errorMissingParameters": "Error: Faltan uno o más parámetros requeridos (cliente, evento, event.start.dateTime o timeZone).",

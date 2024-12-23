@@ -96,6 +96,12 @@ const VOTE_POINTS = {
   },
 };
 
+const cronTimes = {
+  timeZone: process.env.TIME_ZONE || 'America/Bogota',
+  scheduledCalendarInterval:
+    process.env.SCHEDULED_CALENDAR_INTERVAL || '*/20 8-17 * * 1-5',
+};
+
 module.exports = {
   DISCORD_SERVER,
   MAPPED_STATUS_COMMANDS,
@@ -105,4 +111,5 @@ module.exports = {
   SCHEDULE_MESSAGES,
   VOTE_POINTS,
   PR_TEMPLATE,
+  cronTimes,
 };

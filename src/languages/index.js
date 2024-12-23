@@ -50,13 +50,24 @@ function getTranslationByKey(translations, key, lang) {
     : `Invalid translation format for key '${key}' in language '${lang}'.`;
 }
 
-function translateLanguage(key) {
+const interpolateText = (text, props = {}) => {
+  let result = text;
+
+  Object.entries(props).forEach(([key, value]) => {
+    result = result.replaceAll(`{{${key}}}`, value);
+  });
+
+  return result;
+};
+
+function translateLanguage(key, params = {}) {
   const translations = loadTranslations(botLanguage);
   if (!translations || !Object.values(translations).length) {
     return `Translations not available for language '${botLanguage}'.`;
   }
 
-  return getTranslationByKey(translations, key, botLanguage);
+  const translation = getTranslationByKey(translations, key, botLanguage);
+  return interpolateText(translation, params);
 }
 
 module.exports = { translateLanguage };

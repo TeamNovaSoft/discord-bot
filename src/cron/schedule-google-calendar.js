@@ -2,6 +2,7 @@ const { CronJob } = require('cron');
 const { listEvents } = require('../../calendar');
 const { EmbedBuilder } = require('discord.js');
 const { firebaseConfig } = require('../../firebase-config');
+const { translateLanguage } = require('../languages/index');
 
 let activeCronJobs = [];
 
@@ -28,7 +29,7 @@ const scheduleEventNotification = async ({ client, event }) => {
     !event.start.timeZone
   ) {
     throw new Error(
-      'Error: Missing one or more required parameters (client, event, event.start.dateTime, or timeZone).'
+      translateLanguage('calendarSchedules.errorMissingParameters')
     );
   }
 
@@ -50,16 +51,16 @@ const scheduleEventNotification = async ({ client, event }) => {
       );
       const embed = new EmbedBuilder()
         .setColor('#0099ff')
-        .setTitle('📅 Meeting reminder!')
+        .setTitle(translateLanguage('calendarSchedules.notificationMessage'))
         .setDescription(`**${event.summary}**`)
         .setFooter({
-          text: 'Meet remember APP',
+          text: translateLanguage('calendarSchedules.appFooter'),
         });
 
       if (event?.hangoutLink) {
         embed.addFields({
-          name: 'Meeting link:',
-          value: `[Click here](${event.hangoutLink})`,
+          name: translateLanguage('calendarSchedules.meetingLinkLabel'),
+          value: `[${translateLanguage('calendarSchedules.clickHere')}](${event.hangoutLink})`,
           inline: false,
         });
       }
@@ -67,7 +68,9 @@ const scheduleEventNotification = async ({ client, event }) => {
       if (currentChannel) {
         currentChannel.send({ embeds: [embed] });
       } else {
-        console.log('Channel not found or client not ready.');
+        console.log(
+          translateLanguage('calendarSchedules.errorChannelNotFound')
+        );
       }
     },
     null,
@@ -88,7 +91,9 @@ const scheduleCalendarNotifications = async (client) => {
   const events = await listEvents();
 
   if (!Array.isArray(events)) {
-    return console.log('Error: Missing or invalid parameters (events array).');
+    return console.log(
+      translateLanguage('calendarSchedules.errorInvalidEventsArray')
+    );
   }
 
   clearAllCronJobs();

@@ -4,34 +4,35 @@ const {
   TextInputBuilder,
   TextInputStyle,
 } = require('discord.js');
+const { translateLanguage } = require('../languages/index');
 
 function createPRModal(channelId) {
   const modal = new ModalBuilder()
     .setCustomId(`pr-template-modal-${channelId}`)
-    .setTitle('PR Review Request');
+    .setTitle(translateLanguage('prTemplate.modal.modalTitle'));
 
   const urlInput = new TextInputBuilder()
     .setCustomId('urlInput')
-    .setLabel('GitHub PR URL')
+    .setLabel(translateLanguage('prTemplate.modal.urlLabel'))
     .setStyle(TextInputStyle.Short)
     .setRequired(true);
 
   const titleInput = new TextInputBuilder()
     .setCustomId('titleInput')
-    .setLabel('PR Title')
+    .setLabel(translateLanguage('prTemplate.modal.titleLabel'))
     .setStyle(TextInputStyle.Short)
     .setRequired(true);
 
   const overviewInput = new TextInputBuilder()
     .setCustomId('overviewInput')
-    .setLabel('Overview')
+    .setLabel(translateLanguage('prTemplate.modal.overviewLabel'))
     .setStyle(TextInputStyle.Paragraph)
     .setRequired(true)
     .setMinLength(50);
 
   const howToTestInput = new TextInputBuilder()
     .setCustomId('howToTestInput')
-    .setLabel('How to Test')
+    .setLabel(translateLanguage('prTemplate.modal.howToTestLabel'))
     .setStyle(TextInputStyle.Paragraph)
     .setRequired(true)
     .setMinLength(50);

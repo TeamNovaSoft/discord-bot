@@ -28,8 +28,6 @@ module.exports = {
     const user = interaction.options.getUser('user') || interaction.user;
     const pointType = interaction.options.getString('point-type');
 
-    pointType === 'boosted' ? tagIds.boostedPointTagId : tagIds.addPointTagId;
-
     const roleMention = `<@&${tagIds.taskCompletedTagId}>`;
     const userMention = `<@${user.id}>`;
     const question = translateLanguage('votePoints.pollQuestion', {

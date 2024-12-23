@@ -39,7 +39,6 @@ async function startClientBot(client) {
 
 function handleCriticalError(error) {
   saveErrorLog(error);
-  console.error('Critical error occurred:', error);
 }
 
 const token = DISCORD_SERVER.discordToken;
@@ -59,7 +58,7 @@ process.on('uncaughtException', (error) => {
 });
 
 process.on('unhandledRejection', async (reason, promise) => {
-  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  console.error('Unhandled Rejection at:', promise);
   handleCriticalError(reason);
 });
 

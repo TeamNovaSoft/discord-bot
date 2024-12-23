@@ -10,6 +10,8 @@ const logFilePath = path.join(logDir, 'error.log');
  * @param {Error} error - The error object to log.
  */
 function saveErrorLog(error) {
+  console.error('Critical error occurred:', error);
+
   if (!fs.existsSync(logDir)) {
     fs.mkdirSync(logDir);
   }

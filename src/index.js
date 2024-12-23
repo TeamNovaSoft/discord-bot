@@ -10,6 +10,7 @@ const {
 const { firebaseConfig } = require('../firebase-config');
 const cron = require('cron');
 const saveErrorLog = require('./utils/log-error');
+const convertCronToText = require('./utils/cron-to-text-parser');
 
 async function startClientBot(client) {
   client.commands = new Collection();
@@ -28,11 +29,8 @@ async function startClientBot(client) {
       true,
       SCHEDULE_MESSAGES.timeZone
     );
-
-    console.log(
-      'Calendar event collector scheduled to run from Monday to Friday, 8 AM to 5 PM each 20 MIN (Colombia time).'
-    );
   }
+  console.log(convertCronToText(SCHEDULE_MESSAGES.scheduledCalendarInterval));
 
   await client.login(token);
 }

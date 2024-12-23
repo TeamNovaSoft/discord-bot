@@ -2,7 +2,6 @@ const { Events } = require('discord.js');
 const { VOTE_POINTS } = require('../config');
 
 const tagIds = VOTE_POINTS.TAG_IDS;
-
 module.exports = {
   name: Events.MessageCreate,
   async execute(message) {
@@ -37,6 +36,14 @@ module.exports = {
         ? tagIds.boostedPointTagId
         : tagIds.addPointTagId;
 
+      if (embeds[0]?.fields.length <= 3) {
+        return await client.channels.fetch(channelId).then((channel) => {
+          if (channel) {
+            return channel.send(`The draw is not supported.`);
+          }
+        });
+      }
+
       const finalResultField = embeds[0]?.fields.find(
         (field) => field.name === 'victor_answer_text'
       );
@@ -52,10 +59,6 @@ module.exports = {
 
       if (!channel) {
         return await message.reply(`Could not find the channel: ${channelId}`);
-      }
-
-      if (embeds[0]?.fields.length <= 3) {
-        return await channel.send(`The draw is not supported.`);
       }
 
       await Promise.all(

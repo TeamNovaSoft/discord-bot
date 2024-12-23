@@ -17,11 +17,13 @@ module.exports = {
     .addStringOption((option) =>
       option
         .setName('point-type')
-        .setDescription('Select the type of points to award')
+        .setDescription(translateLanguage('Select the type of points to award'))
         .setRequired(true)
         .addChoices(
-          { name: 'Normal Points', value: 'normal' },
-          { name: 'Boosted Points', value: 'boosted' }
+          translateLanguage(
+            { name: 'Normal Points', value: 'normal' },
+            { name: 'Boosted Points', value: 'boosted' }
+          )
         )
     ),
   async execute(interaction) {

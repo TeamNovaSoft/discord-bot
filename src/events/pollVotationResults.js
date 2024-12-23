@@ -1,5 +1,6 @@
 const { Events } = require('discord.js');
 const { VOTE_POINTS } = require('../config');
+const { translateLanguage } = require('../languages');
 
 const tagIds = VOTE_POINTS.TAG_IDS;
 module.exports = {
@@ -39,7 +40,9 @@ module.exports = {
       if (embeds[0]?.fields.length <= 3) {
         return await client.channels.fetch(channelId).then((channel) => {
           if (channel) {
-            return channel.send(`The draw is not supported.`);
+            return channel.send(
+              translateLanguage(`The draw is not supported.`)
+            );
           }
         });
       }
@@ -51,14 +54,18 @@ module.exports = {
 
       if (!finalResult || isNaN(finalResult)) {
         return await message.reply(
-          `The result was not valid or no points were awarded.`
+          translateLanguage(
+            `The result was not valid or no points were awarded.`
+          )
         );
       }
 
       const channel = await client.channels.fetch(channelId);
 
       if (!channel) {
-        return await message.reply(`Could not find the channel: ${channelId}`);
+        return await message.reply(
+          translateLanguage(`Could not find the channel: ${channelId}`)
+        );
       }
 
       await Promise.all(
@@ -68,7 +75,9 @@ module.exports = {
       );
     } catch {
       await message.reply({
-        content: 'An error occurred while processing the poll result.',
+        content: translateLanguage(
+          'An error occurred while processing the poll result.'
+        ),
         ephemeral: true,
       });
     }

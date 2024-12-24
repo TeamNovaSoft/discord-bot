@@ -29,8 +29,8 @@ async function startClientBot(client) {
       true,
       SCHEDULE_MESSAGES.timeZone
     );
+    console.log(convertCronToText(SCHEDULE_MESSAGES.scheduledCalendarInterval));
   }
-  console.log(convertCronToText(SCHEDULE_MESSAGES.scheduledCalendarInterval));
 
   await client.login(token);
 }

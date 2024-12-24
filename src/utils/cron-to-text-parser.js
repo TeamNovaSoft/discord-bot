@@ -1,3 +1,5 @@
+const { translateLanguage } = require('../languages');
+
 /**
  * Converts a cron expression string into a human-readable text description.
  *
@@ -14,21 +16,26 @@ function convertCronToText(cronString) {
   const dayOfWeek = cronParts[4];
 
   const daysOfWeek = {
-    1: 'Monday',
-    2: 'Tuesday',
-    3: 'Wednesday',
-    4: 'Thursday',
-    5: 'Friday',
-    6: 'Saturday',
-    0: 'Sunday',
+    1: translateLanguage('calendarSchedules.monday'),
+    2: translateLanguage('calendarSchedules.tuesday'),
+    3: translateLanguage('calendarSchedules.wednesday'),
+    4: translateLanguage('calendarSchedules.thursday'),
+    5: translateLanguage('calendarSchedules.friday'),
+    6: translateLanguage('calendarSchedules.saturday'),
+    0: translateLanguage('calendarSchedules.sunday'),
   };
 
+  const hoursRange = `${hour.replace('-', ` AM ${translateLanguage('calendarSchedules.to')} `)} PM`;
   const readableDays = dayOfWeek
     .split('-')
     .map((day) => daysOfWeek[day])
-    .join(' to ');
+    .join(` ${translateLanguage('calendarSchedules.to')} `);
 
-  return `Calendar event collector scheduled to run from ${readableDays}, ${hour.replace('-', ' AM to ')} PM each ${minute.split('/')[1]} minutes (Colombia time).`;
+  return translateLanguage('calendarSchedules.calendarEventCollector', {
+    readableDays,
+    hoursRange,
+    eachMinute: minute.split('/')[1],
+  });
 }
 
 module.exports = convertCronToText;

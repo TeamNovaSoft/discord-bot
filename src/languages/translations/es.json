@@ -83,7 +83,16 @@
     "meetingLinkLabel": "Enlace de la reunión:",
     "clickHere": "Haz clic aquí",
     "errorChannelNotFound": "Canal no encontrado o cliente no listo.",
-    "errorInvalidEventsArray": "Error: Parámetros faltantes o inválidos (array de eventos)."
+    "errorInvalidEventsArray": "Error: Parámetros faltantes o inválidos (array de eventos).",
+    "to": "a",
+    "monday": "Lunes",
+    "tuesday": "Martes",
+    "wednesday": "Miércoles",
+    "thursday": "Jueves",
+    "friday": "Viernes",
+    "saturday": "Sábado",
+    "sunday": "Domingo",
+    "calendarEventCollector": "Calendario de eventos programado para ejecutarse de {{readableDays}}, de {{hoursRange}} cada {{eachMinute}} minutos (hora Colombia)."
   },
   "messageSchedules": {
     "errorMissingParameters": "Error: Falta uno o más parámetros requeridos (client, channel, message, datetime, o timeZone).",

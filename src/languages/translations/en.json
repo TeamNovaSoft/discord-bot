@@ -82,7 +82,16 @@
     "meetingLinkLabel": "Meeting link:",
     "clickHere": "Click here",
     "errorChannelNotFound": "Channel not found or client not ready.",
-    "errorInvalidEventsArray": "Error: Missing or invalid parameters (events array)."
+    "errorInvalidEventsArray": "Error: Missing or invalid parameters (events array).",
+    "to": "to",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "calendarEventCollector": "Calendar event collector scheduled to run from {{readableDays}}, {{hoursRange}} every {{eachMinute}} minutes (Colombia time)."
   },
   "messageSchedules": {
     "errorMissingParameters": "Error: Missing one or more required parameters (client, channel, message, datetime, or timeZone).",

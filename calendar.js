@@ -5,7 +5,10 @@ const { firebaseConfig } = require('./firebase-config');
 
 const credentialsPath = path.join(__dirname, 'google-keys.json');
 
-if (!fs.existsSync(credentialsPath) && firebaseConfig.scheduledCalendarEnabled) {
+if (
+  !fs.existsSync(credentialsPath) &&
+  firebaseConfig.scheduledCalendarEnabled
+) {
   throw new Error('The credential file do not exist. Verify route.');
 }
 
@@ -31,12 +34,12 @@ async function listEvents() {
   });
 
   const events = response.data.items;
-  return events.map(event => {
+  return events.map((event) => {
     return {
       summary: event.summary,
-      start: {dateTime: event.start.dateTime, timeZone: event.start.timeZone},
-      end: {dateTime: event.end.dateTime, timeZone: event.end.timeZone},
-      hangoutLink: event.hangoutLink
+      start: { dateTime: event.start.dateTime, timeZone: event.start.timeZone },
+      end: { dateTime: event.end.dateTime, timeZone: event.end.timeZone },
+      hangoutLink: event.hangoutLink,
     };
   });
 }

@@ -13,13 +13,25 @@ module.exports = {
         .setName('user')
         .setDescription(translateLanguage('votePoints.userDescription'))
         .setRequired(true)
+    )
+    .addStringOption((option) =>
+      option
+        .setName('point-type')
+        .setDescription(translateLanguage('votepoints.pointDescription'))
+        .setRequired(true)
+        .addChoices(
+          { name: 'Normal Points', value: 'normal' },
+          { name: 'Boosted Points', value: 'boosted' }
+        )
     ),
   async execute(interaction) {
     const user = interaction.options.getUser('user') || interaction.user;
+    const pointType = interaction.options.getString('point-type');
 
     const roleMention = `<@&${tagIds.taskCompletedTagId}>`;
     const userMention = `<@${user.id}>`;
     const question = translateLanguage('votePoints.pollQuestion', {
+      pointType: pointType === 'boosted' ? 'boosted' : 'normal',
       userId: user.id,
     });
 

@@ -69,7 +69,8 @@
   "votePoints": {
     "description": "Iniciar una votación de Puntos de Estimación de Esfuerzo para el hilo actual.",
     "userDescription": "Usuario a buscar",
-    "pollQuestion": "¿Cuánto cuesta esta tarea? Tipo de Punto: {{pointType}} | {{userId}}"
+    "pollQuestion": "¿Cuánto cuesta esta tarea? Tipo de Punto: {{pointType}} | {{userId}}",
+    "pointDescription": "Seleccione el tipo de puntos a otorgar"
   },
   "calendarSchedules": {
     "errorMissingParameters": "Error: Faltan uno o más parámetros requeridos (cliente, evento, event.start.dateTime o timeZone).",
@@ -83,5 +84,11 @@
   "messageSchedules": {
     "errorMissingParameters": "Error: Falta uno o más parámetros requeridos (client, channel, message, datetime, o timeZone).",
     "errorChannelNotFound": "Canal no encontrado o cliente no listo."
+  },
+  "pollVotationResult": {
+    "drawNotSupported": "El empate no está soportado.",
+    "invalidResult": "El resultado no fue válido o no se otorgaron puntos.",
+    "notFindChannel": "No se pudo encontrar el canal.",
+    "errorOcurred": "Ocurrió un error al procesar el resultado de la votación."
   }
 }

@@ -68,7 +68,8 @@
   "votePoints": {
     "description": "Start an Effort Estimation Points voting for the current thread.",
     "userDescription": "User to search for",
-    "pollQuestion": "How much does this task cost? Point Type: {{pointType}} | {{userId}}"
+    "pollQuestion": "How much does this task cost? Point Type: {{pointType}} | {{userId}}",
+    "pointDescription": "Select the type of points to award"
   },
   "calendarSchedules": {
     "errorMissingParameters": "Error: Missing one or more required parameters (client, event, event.start.dateTime, or timeZone).",
@@ -82,5 +83,11 @@
   "messageSchedules": {
     "errorMissingParameters": "Error: Missing one or more required parameters (client, channel, message, datetime, or timeZone).",
     "errorChannelNotFound": "Channel not found or client not ready."
+  },
+  "pollVotationResult": {
+    "drawNotSupported": "The draw is not supported.",
+    "invalidResult": "The result was not valid or no points were awarded.",
+    "notFindChannel": "Could not find the channel",
+    "errorOcurred": "An error occurred while processing the poll result."
   }
 }

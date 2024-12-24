@@ -41,7 +41,7 @@ module.exports = {
         return await client.channels.fetch(channelId).then((channel) => {
           if (channel) {
             return channel.send(
-              translateLanguage(`The draw is not supported.`)
+              translateLanguage(`pollVotationResult.drawNotSupported`)
             );
           }
         });
@@ -54,9 +54,7 @@ module.exports = {
 
       if (!finalResult || isNaN(finalResult)) {
         return await message.reply(
-          translateLanguage(
-            `The result was not valid or no points were awarded.`
-          )
+          translateLanguage(`pollVotationResult.invalidResult`)
         );
       }
 
@@ -64,7 +62,7 @@ module.exports = {
 
       if (!channel) {
         return await message.reply(
-          translateLanguage(`Could not find the channel: ${channelId}`)
+          translateLanguage(`pollVotationResult.notFindChanne: ${channelId}`)
         );
       }
 
@@ -75,9 +73,7 @@ module.exports = {
       );
     } catch {
       await message.reply({
-        content: translateLanguage(
-          'An error occurred while processing the poll result.'
-        ),
+        content: translateLanguage('pollVotationResult.errorOccurred'),
         ephemeral: true,
       });
     }

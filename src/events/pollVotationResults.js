@@ -41,7 +41,7 @@ module.exports = {
         return await client.channels.fetch(channelId).then((channel) => {
           if (channel) {
             return channel.send(
-              translateLanguage(`pollVotationResult.drawNotSupported`)
+              translateLanguage(`votePoints.drawNotSupported`)
             );
           }
         });
@@ -54,7 +54,7 @@ module.exports = {
 
       if (!finalResult || isNaN(finalResult)) {
         return await message.reply(
-          translateLanguage(`pollVotationResult.invalidResult`)
+          translateLanguage(`votePoints.invalidResult`)
         );
       }
 
@@ -62,7 +62,7 @@ module.exports = {
 
       if (!channel) {
         return await message.reply(
-          translateLanguage(`pollVotationResult.notFindChanne: ${channelId}`)
+          translateLanguage(`votePoints.notFindChanne: ${channelId}`)
         );
       }
 
@@ -73,7 +73,7 @@ module.exports = {
       );
     } catch {
       await message.reply({
-        content: translateLanguage('pollVotationResult.errorOccurred'),
+        content: translateLanguage('votePoints.errorOccurred'),
         ephemeral: true,
       });
     }

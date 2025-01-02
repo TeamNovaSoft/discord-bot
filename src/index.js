@@ -19,6 +19,7 @@ async function startClientBot(client) {
   deployEvents(client);
 
   scheduleMessages(client, SCHEDULE_MESSAGES.messageTimes);
+  scheduleIaContentLogging(client);
   if (firebaseConfig.scheduledCalendarEnabled) {
     new cron.CronJob(
       SCHEDULE_MESSAGES.scheduledCalendarInterval,
@@ -60,9 +61,6 @@ process.on('unhandledRejection', async (reason, promise) => {
   console.error('Unhandled Rejection at:', promise);
   handleCriticalError(reason);
 });
-
-scheduleMessages(client, SCHEDULE_MESSAGES.messageTimes);
-scheduleIaContentLogging(client);
 
 if (firebaseConfig.scheduledCalendarEnabled) {
   new cron.CronJob(

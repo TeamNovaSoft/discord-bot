@@ -104,7 +104,7 @@ const cronTimes = {
 
 const promptConfig = `In the next language: ${DISCORD_SERVER.botLanguage} and a limit of 500 characters`;
 const GEMINI_CONFIG = {
-  genimiSecret: process.env.GEMINI_AI_API_KEY,
+  geminiSecret: process.env.GEMINI_AI_API_KEY,
   scheduleTime: process.env.TIME_BETWEEN_JOKE,
   JOKES_PROMPTS: process.env.JOKES_PROMPTS.split(',').map(
     (prompt) => `${prompt} ${promptConfig}`

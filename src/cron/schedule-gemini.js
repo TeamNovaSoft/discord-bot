@@ -2,7 +2,7 @@ const { CronJob } = require('cron');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { GEMINI_CONFIG, SCHEDULE_MESSAGES } = require('../config');
 
-const genAI = new GoogleGenerativeAI(GEMINI_CONFIG.genimiSecret);
+const genAI = new GoogleGenerativeAI(GEMINI_CONFIG.geminiSecret);
 
 /**
  * Generates content using Google Generative AI.
@@ -22,7 +22,7 @@ const generateIaContent = async (client) => {
       ];
 
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash',
+      model: 'gemini-2.0-flash-exp',
       generationConfig: {
         candidateCount: 1,
         stopSequences: [],

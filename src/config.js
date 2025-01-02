@@ -102,6 +102,13 @@ const cronTimes = {
     process.env.SCHEDULED_CALENDAR_INTERVAL || '*/20 8-17 * * 1-5',
 };
 
+const GEMINI_CONFIG = {
+  genimiSecret: process.env.GEMINI_AI_API_KEY,
+  scheduleTime: process.env.GEMINI_TIME,
+};
+
+const MEMES_AND_OTHERS_THINGS = process.env.MEMES_AND_OTHERS_THINGS;
+
 module.exports = {
   DISCORD_SERVER,
   MAPPED_STATUS_COMMANDS,
@@ -112,4 +119,6 @@ module.exports = {
   VOTE_POINTS,
   PR_TEMPLATE,
   cronTimes,
+  GEMINI_CONFIG,
+  MEMES_AND_OTHERS_THINGS,
 };

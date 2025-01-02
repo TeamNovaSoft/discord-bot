@@ -9,6 +9,7 @@ const {
 } = require('./cron/schedule-google-calendar');
 const { firebaseConfig } = require('../firebase-config');
 const cron = require('cron');
+const { scheduleIaContentLogging } = require('../src/cron/schedule-gemini');
 
 const client = new Client({
   intents: [
@@ -27,6 +28,8 @@ deployCommands(client);
 deployEvents(client);
 
 scheduleMessages(client, SCHEDULE_MESSAGES.messageTimes);
+scheduleIaContentLogging(client);
+
 if (firebaseConfig.scheduledCalendarEnabled) {
   new cron.CronJob(
     cronTimes.scheduledCalendarInterval,

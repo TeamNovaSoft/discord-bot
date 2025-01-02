@@ -102,12 +102,15 @@ const cronTimes = {
     process.env.SCHEDULED_CALENDAR_INTERVAL || '*/20 8-17 * * 1-5',
 };
 
+const promptConfig = `In the next language: ${DISCORD_SERVER.botLanguage} and a limit of 500 characters`;
 const GEMINI_CONFIG = {
   genimiSecret: process.env.GEMINI_AI_API_KEY,
-  scheduleTime: process.env.GEMINI_TIME,
+  scheduleTime: process.env.TIME_BETWEEN_JOKE,
+  JOKES_PROMPTS: process.env.JOKES_PROMPTS.split(',').map(
+    (prompt) => `${prompt} ${promptConfig}`
+  ),
+  channelForJokes: process.env.JOKES_CHANNEL,
 };
-
-const MEMES_AND_OTHERS_THINGS = process.env.MEMES_AND_OTHERS_THINGS;
 
 module.exports = {
   DISCORD_SERVER,
@@ -120,5 +123,4 @@ module.exports = {
   PR_TEMPLATE,
   cronTimes,
   GEMINI_CONFIG,
-  MEMES_AND_OTHERS_THINGS,
 };

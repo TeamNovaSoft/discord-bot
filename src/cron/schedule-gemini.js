@@ -1,11 +1,6 @@
 const { CronJob } = require('cron');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-const {
-  GEMINI_CONFIG,
-  SCHEDULE_MESSAGES,
-  MEMES_AND_OTHERS_THINGS,
-  DISCORD_SERVER,
-} = require('../config');
+const { GEMINI_CONFIG, SCHEDULE_MESSAGES } = require('../config');
 
 const genAI = new GoogleGenerativeAI(GEMINI_CONFIG.genimiSecret);
 
@@ -16,22 +11,22 @@ const genAI = new GoogleGenerativeAI(GEMINI_CONFIG.genimiSecret);
  */
 const generateIaContent = async (client) => {
   try {
-    const currentChannel = await client.channels.fetch(MEMES_AND_OTHERS_THINGS);
+    const currentChannel = await client.channels.fetch(
+      GEMINI_CONFIG.channelForJokes
+    );
     const randomTemperature = Math.random() * (1.5 - 0.7) + 0.7;
-    const promptConfig = `In the next language: ${DISCORD_SERVER.botLanguage} and a limit of 200 characters`;
-    const prompts = [
-      `Tell me a joke about programmers. ${promptConfig}`,
-      `What's a funny story involving developers?. ${promptConfig}`,
-      `Share a humorous programming anecdote. ${promptConfig}`,
-    ];
-    const prompt = prompts[Math.floor(Math.random() * prompts.length)];
+
+    const prompt =
+      GEMINI_CONFIG.JOKES_PROMPTS[
+        Math.floor(Math.random() * GEMINI_CONFIG.JOKES_PROMPTS.length)
+      ];
 
     const model = genAI.getGenerativeModel({
       model: 'gemini-1.5-flash',
       generationConfig: {
         candidateCount: 1,
         stopSequences: [],
-        maxOutputTokens: 200,
+        maxOutputTokens: 500,
         temperature: randomTemperature,
       },
     });

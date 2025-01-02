@@ -10,7 +10,37 @@ const {
 const { firebaseConfig } = require('../firebase-config');
 const cron = require('cron');
 const { scheduleIaContentLogging } = require('../src/cron/schedule-gemini');
+const saveErrorLog = require('./utils/log-error');
+const convertCronToText = require('./utils/cron-to-text-parser');
 
+async function startClientBot(client) {
+  client.commands = new Collection();
+  deployCommands(client);
+  deployEvents(client);
+
+  scheduleMessages(client, SCHEDULE_MESSAGES.messageTimes);
+  if (firebaseConfig.scheduledCalendarEnabled) {
+    new cron.CronJob(
+      SCHEDULE_MESSAGES.scheduledCalendarInterval,
+      () => {
+        console.log('Running scheduled calendar notifications...');
+        scheduleCalendarNotifications(client);
+      },
+      null,
+      true,
+      SCHEDULE_MESSAGES.timeZone
+    );
+    console.log(convertCronToText(SCHEDULE_MESSAGES.scheduledCalendarInterval));
+  }
+
+  await client.login(token);
+}
+
+function handleCriticalError(error) {
+  saveErrorLog(error);
+}
+
+const token = DISCORD_SERVER.discordToken;
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -20,12 +50,16 @@ const client = new Client({
     GatewayIntentBits.DirectMessagePolls,
   ],
 });
-
 client.commands = new Collection();
-const token = DISCORD_SERVER.discordToken;
 
-deployCommands(client);
-deployEvents(client);
+process.on('uncaughtException', (error) => {
+  handleCriticalError(error);
+});
+
+process.on('unhandledRejection', async (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise);
+  handleCriticalError(reason);
+});
 
 scheduleMessages(client, SCHEDULE_MESSAGES.messageTimes);
 scheduleIaContentLogging(client);
@@ -41,10 +75,6 @@ if (firebaseConfig.scheduledCalendarEnabled) {
     true,
     cronTimes.timeZone
   );
-
-  console.log(
-    'Calendar event collector scheduled to run from Monday to Friday, 8 AM to 5 PM each 20 MIN (Colombia time).'
-  );
 }
 
-client.login(token);
+startClientBot(client);

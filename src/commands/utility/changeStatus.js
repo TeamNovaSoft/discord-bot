@@ -23,9 +23,10 @@ module.exports = {
   async execute(interaction) {
     try {
       const { options, channel } = interaction;
+      await interaction.deferReply({ ephemeral: true });
 
       if (!channel.isThread()) {
-        return await interaction.reply({
+        return await interaction.editReply({
           content: translateLanguage('changeStatus.notAThread'),
           ephemeral: true,
         });
@@ -35,7 +36,7 @@ module.exports = {
       const newStatus = MAPPED_STATUS_COMMANDS[status];
 
       if (!newStatus) {
-        return await interaction.reply(
+        return await interaction.editReply(
           translateLanguage('changeStatus.invalidStatus')
         );
       }
@@ -49,14 +50,14 @@ module.exports = {
 
       const updatedChannelName = `${newStatus} ${channelName}`;
       await channel.setName(updatedChannelName);
-      await interaction.reply(
+      await interaction.editReply(
         translateLanguage('changeStatus.updatedStatus', {
           status: status.replaceAll('-', ' '),
         })
       );
     } catch (error) {
       console.error(error);
-      await interaction.reply(translateLanguage('changeStatus.error'));
+      await interaction.editReply(translateLanguage('changeStatus.error'));
     }
   },
 };

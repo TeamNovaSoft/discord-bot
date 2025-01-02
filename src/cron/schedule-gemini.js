@@ -4,6 +4,7 @@ const {
   GEMINI_CONFIG,
   SCHEDULE_MESSAGES,
   MEMES_AND_OTHERS_THINGS,
+  DISCORD_SERVER,
 } = require('../config');
 
 const genAI = new GoogleGenerativeAI(GEMINI_CONFIG.genimiSecret);
@@ -18,9 +19,9 @@ const generateIaContent = async (client) => {
     const currentChannel = await client.channels.fetch(MEMES_AND_OTHERS_THINGS);
     const randomTemperature = Math.random() * (1.5 - 0.7) + 0.7;
     const prompts = [
-      'Tell me a joke about programmers.',
-      "What's a funny story involving developers?",
-      'Share a humorous programming anecdote.',
+      `Tell me a joke about programmers. In the next language: ${DISCORD_SERVER.botLanguage}`,
+      `What's a funny story involving developers?. In the next language: ${DISCORD_SERVER.botLanguage}`,
+      `Share a humorous programming anecdote. In the next language: ${DISCORD_SERVER.botLanguage}`,
     ];
     const prompt = prompts[Math.floor(Math.random() * prompts.length)];
 

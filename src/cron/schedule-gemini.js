@@ -18,10 +18,11 @@ const generateIaContent = async (client) => {
   try {
     const currentChannel = await client.channels.fetch(MEMES_AND_OTHERS_THINGS);
     const randomTemperature = Math.random() * (1.5 - 0.7) + 0.7;
+    const promptConfig = `In the next language: ${DISCORD_SERVER.botLanguage} and a limit of 200 characters`;
     const prompts = [
-      `Tell me a joke about programmers. In the next language: ${DISCORD_SERVER.botLanguage}`,
-      `What's a funny story involving developers?. In the next language: ${DISCORD_SERVER.botLanguage}`,
-      `Share a humorous programming anecdote. In the next language: ${DISCORD_SERVER.botLanguage}`,
+      `Tell me a joke about programmers. ${promptConfig}`,
+      `What's a funny story involving developers?. ${promptConfig}`,
+      `Share a humorous programming anecdote. ${promptConfig}`,
     ];
     const prompt = prompts[Math.floor(Math.random() * prompts.length)];
 
@@ -30,7 +31,7 @@ const generateIaContent = async (client) => {
       generationConfig: {
         candidateCount: 1,
         stopSequences: [],
-        maxOutputTokens: 50,
+        maxOutputTokens: 200,
         temperature: randomTemperature,
       },
     });

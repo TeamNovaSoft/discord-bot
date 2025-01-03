@@ -38,7 +38,7 @@ module.exports = {
     const year =
       interaction.options.getInteger('year') || currentDate.getFullYear();
     const month =
-      interaction.options.getInteger('month') || currentDate.getMonth() || 12;
+      interaction.options.getInteger('month') || currentDate.getMonth() + 1;
     const user = interaction.options.getUser('user') || interaction.user;
 
     const channelsInput = interaction.options.getString('channels');

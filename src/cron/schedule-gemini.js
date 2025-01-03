@@ -9,17 +9,12 @@ const genAI = new GoogleGenerativeAI(GEMINI_CONFIG.geminiSecret);
  *
  * @returns {Promise<string>} The generated content as a string.
  */
-const generateIaContent = async (client) => {
+const generateIaContent = async ({ client, channel, prompts }) => {
   try {
-    const currentChannel = await client.channels.fetch(
-      GEMINI_CONFIG.channelForJokes
-    );
+    const currentChannel = await client.channels.fetch(channel);
     const randomTemperature = Math.random() * (1.5 - 0.7) + 0.7;
 
-    const prompt =
-      GEMINI_CONFIG.JOKES_PROMPTS[
-        Math.floor(Math.random() * GEMINI_CONFIG.JOKES_PROMPTS.length)
-      ];
+    const prompt = prompts[Math.floor(Math.random() * prompts.length)];
 
     const model = genAI.getGenerativeModel({
       model: 'gemini-2.0-flash-exp',
@@ -46,7 +41,11 @@ const scheduleIaContentLogging = (client) => {
   new CronJob(
     GEMINI_CONFIG.scheduleTime,
     () => {
-      generateIaContent(client);
+      generateIaContent({
+        client,
+        channel: GEMINI_CONFIG.interactionChannel,
+        prompts: GEMINI_CONFIG.insteractionsPrompts,
+      });
     },
     null,
     true,

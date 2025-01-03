@@ -1,8 +1,8 @@
 const { CronJob } = require('cron');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-const { GEMINI_CONFIG, SCHEDULE_MESSAGES } = require('../config');
+const { GEMINI_INTEGRATION, SCHEDULE_MESSAGES } = require('../config');
 
-const genAI = new GoogleGenerativeAI(GEMINI_CONFIG.geminiSecret);
+const genAI = new GoogleGenerativeAI(GEMINI_INTEGRATION.geminiSecret);
 
 /**
  * Generates content using Google Generative AI.
@@ -39,12 +39,12 @@ const generateIaContent = async ({ client, channel, prompts }) => {
  */
 const scheduleIaContentLogging = (client) => {
   new CronJob(
-    GEMINI_CONFIG.scheduleTime,
+    GEMINI_INTEGRATION.scheduleTime,
     () => {
       generateIaContent({
         client,
-        channel: GEMINI_CONFIG.interactionChannel,
-        prompts: GEMINI_CONFIG.insteractionsPrompts,
+        channel: GEMINI_INTEGRATION.interactionChannel,
+        prompts: GEMINI_INTEGRATION.insteractionsPrompts,
       });
     },
     null,

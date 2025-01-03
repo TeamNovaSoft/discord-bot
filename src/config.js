@@ -48,8 +48,12 @@ const SCHEDULE_MESSAGES = {
     ? csvParser(process.env.SCHEDULED_MESSAGES)
     : [],
   timeZone: process.env.TIME_ZONE,
+};
+
+const SCHEDULE_CALENDAR = {
   scheduledCalendarInterval:
     process.env.SCHEDULED_CALENDAR_INTERVAL || '*/20 8-17 * * 1-5',
+  timeZone: process.env.TIME_ZONE || 'America/Bogota',
 };
 
 const VOTE_POINTS = {
@@ -96,14 +100,8 @@ const VOTE_POINTS = {
   },
 };
 
-const cronTimes = {
-  timeZone: process.env.TIME_ZONE || 'America/Bogota',
-  scheduledCalendarInterval:
-    process.env.SCHEDULED_CALENDAR_INTERVAL || '*/20 8-17 * * 1-5',
-};
-
 const promptConfig = `In the next language: ${DISCORD_SERVER.botLanguage} and a limit of 500 characters`;
-const GEMINI_CONFIG = {
+const GEMINI_INTEGRATION = {
   geminiSecret: process.env.GEMINI_AI_API_KEY,
   scheduleTime: process.env.TIME_BETWEEN_AI_AUTOMATIC_INTERACTION,
   insteractionsPrompts: process.env.AI_AUTOMATIC_INTERACTION_PROMPTS?.split(
@@ -121,6 +119,6 @@ module.exports = {
   SCHEDULE_MESSAGES,
   VOTE_POINTS,
   PR_TEMPLATE,
-  cronTimes,
-  GEMINI_CONFIG,
+  SCHEDULE_CALENDAR,
+  GEMINI_INTEGRATION,
 };

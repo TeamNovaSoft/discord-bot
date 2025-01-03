@@ -1,6 +1,10 @@
 require('dotenv').config();
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
-const { DISCORD_SERVER, SCHEDULE_MESSAGES, cronTimes } = require('./config');
+const {
+  DISCORD_SERVER,
+  SCHEDULE_MESSAGES,
+  SCHEDULE_CALENDAR,
+} = require('./config');
 const { scheduleMessages } = require('./cron/schedule-messages');
 const deployEvents = require('./deploy-events');
 const deployCommands = require('./deploy-commands');
@@ -22,7 +26,7 @@ async function startClientBot(client) {
   scheduleIaContentLogging(client);
   if (firebaseConfig.scheduledCalendarEnabled) {
     new cron.CronJob(
-      SCHEDULE_MESSAGES.scheduledCalendarInterval,
+      SCHEDULE_CALENDAR.scheduledCalendarInterval,
       () => {
         console.log('Running scheduled calendar notifications...');
         scheduleCalendarNotifications(client);
@@ -31,7 +35,7 @@ async function startClientBot(client) {
       true,
       SCHEDULE_MESSAGES.timeZone
     );
-    console.log(convertCronToText(SCHEDULE_MESSAGES.scheduledCalendarInterval));
+    console.log(convertCronToText(SCHEDULE_CALENDAR.scheduledCalendarInterval));
   }
 
   await client.login(token);
@@ -64,14 +68,14 @@ process.on('unhandledRejection', async (reason, promise) => {
 
 if (firebaseConfig.scheduledCalendarEnabled) {
   new cron.CronJob(
-    cronTimes.scheduledCalendarInterval,
+    SCHEDULE_CALENDAR.scheduledCalendarInterval,
     () => {
       console.log('Running scheduled calendar notifications...');
       scheduleCalendarNotifications(client);
     },
     null,
     true,
-    cronTimes.timeZone
+    SCHEDULE_CALENDAR.timeZone
   );
 }
 

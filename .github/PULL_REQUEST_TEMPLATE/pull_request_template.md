@@ -32,3 +32,4 @@ If applicable, describe the tests that you ran to verify your changes. Provide i
 - [ ] Doesn't have spelling or grammatical problems.
 - [ ] Doesn't have unnecessary comments or debugging code.
 - [ ] The branch is updated with the last dev branch changes.
+- [ ] If you need to present some text to the user (e.g. using `.reply` or `.send`) ensure to add translations to supported languages (check the folder `src/languages/translations`).

@@ -104,7 +104,7 @@ const promptConfig = `In the next language: ${DISCORD_SERVER.botLanguage} and a 
 const GEMINI_INTEGRATION = {
   geminiSecret: process.env.GEMINI_AI_API_KEY,
   scheduleTime: process.env.TIME_BETWEEN_AI_AUTOMATIC_INTERACTION,
-  insteractionsPrompts: process.env.AI_AUTOMATIC_INTERACTION_PROMPTS?.split(
+  interactionsPrompts: process.env.AI_AUTOMATIC_INTERACTION_PROMPTS?.split(
     ','
   ).map((prompt) => `${prompt} ${promptConfig}`),
   interactionChannel: process.env.AI_AUTOMATIC_INTERACTION_CHANNEL,

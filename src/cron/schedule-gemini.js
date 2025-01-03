@@ -44,7 +44,7 @@ const scheduleIaContentLogging = (client) => {
       generateIaContent({
         client,
         channel: GEMINI_INTEGRATION.interactionChannel,
-        prompts: GEMINI_INTEGRATION.insteractionsPrompts,
+        prompts: GEMINI_INTEGRATION.interactionsPrompts,
       });
     },
     null,

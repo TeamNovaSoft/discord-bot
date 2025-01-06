@@ -4,6 +4,7 @@ const {
   DISCORD_SERVER,
   SCHEDULE_MESSAGES,
   SCHEDULE_CALENDAR,
+  GEMINI_INTEGRATION,
 } = require('./config');
 const { scheduleMessages } = require('./cron/schedule-messages');
 const deployEvents = require('./deploy-events');
@@ -23,7 +24,9 @@ async function startClientBot(client) {
   deployEvents(client);
 
   scheduleMessages(client, SCHEDULE_MESSAGES.messageTimes);
-  scheduleIaContentLogging(client);
+  if (GEMINI_INTEGRATION.scheduledGeminiEnabled) {
+    scheduleIaContentLogging(client);
+  }
   if (firebaseConfig.scheduledCalendarEnabled) {
     new cron.CronJob(
       SCHEDULE_CALENDAR.scheduledCalendarInterval,
@@ -65,18 +68,5 @@ process.on('unhandledRejection', async (reason, promise) => {
   console.error('Unhandled Rejection at:', promise);
   handleCriticalError(reason);
 });
-
-if (firebaseConfig.scheduledCalendarEnabled) {
-  new cron.CronJob(
-    SCHEDULE_CALENDAR.scheduledCalendarInterval,
-    () => {
-      console.log('Running scheduled calendar notifications...');
-      scheduleCalendarNotifications(client);
-    },
-    null,
-    true,
-    SCHEDULE_CALENDAR.timeZone
-  );
-}
 
 startClientBot(client);

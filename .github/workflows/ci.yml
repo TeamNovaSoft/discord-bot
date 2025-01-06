@@ -32,7 +32,7 @@ jobs:
           echo "Changed files: ${{ steps.changed-files.outputs.all_changed_files }}"
           if [[ "${{ steps.changed-files.outputs.all_changed_files }}" == *"package.json"* || "${{ steps.changed-files.outputs.all_changed_files }}" == *"yarn.lock"* ]]; then
             echo "Dependencies or lockfile changed, installing..."
-            yarn ci
+            yarn run ci
           else
             echo "No relevant changes to dependencies, skipping install."
           fi

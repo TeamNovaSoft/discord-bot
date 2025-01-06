@@ -38,9 +38,9 @@ jobs:
           fi
   
       - name: Run ESLint
-        run: yarn lint
+        run: yarn run lint
         env:
           CI: true
 
       - name: Run Prettier
-        run: yarn format:check
+        run: yarn run format:check

@@ -27,16 +27,17 @@ jobs:
 
       # Conditionally run yarn install if package.json or yarn.lock is changed
       - name: Install dependencies if necessary
-        if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           echo "Changed files: ${{ steps.changed-files.outputs.all_changed_files }}"
-          if [[ "${{ steps.changed-files.outputs.all_changed_files }}" == *"package.json"* || "${{ steps.changed-files.outputs.all_changed_files }}" == *"yarn.lock"* ]]; then
-            echo "Dependencies or lockfile changed, installing..."
-            yarn run ci
+          
+          # Check if node_modules exists or if relevant files have changed
+          if [[ ! -d "node_modules" ]] || [[ "${{ steps.changed-files.outputs.all_changed_files }}" == *"package.json"* || "${{ steps.changed-files.outputs.all_changed_files }}" == *"yarn.lock"* ]]; then
+            echo "Dependencies or lockfile changed, or no node_modules directory found. Installing..."
+            yarn install --frozen-lockfile
           else
-            echo "No relevant changes to dependencies, skipping install."
+            echo "No relevant changes to dependencies and node_modules exists. Skipping install."
           fi
-  
+
       - name: Run ESLint
         run: yarn run lint
         env:

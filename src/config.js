@@ -101,7 +101,7 @@ const VOTE_POINTS = {
 };
 
 const GEMINI_INTEGRATION = {
-  scheduledGeminiEnabled: process.env.SCHEDULED_GEMINI_ENABLED,
+  scheduledGeminiEnabled: process.env.SCHEDULED_GEMINI_ENABLED === 'true',
   geminiSecret: process.env.GEMINI_AI_API_KEY,
   scheduleTime: process.env.TIME_BETWEEN_AI_AUTOMATIC_INTERACTION,
   interactionsPrompts: process.env.AI_AUTOMATIC_INTERACTION_PROMPTS?.split(

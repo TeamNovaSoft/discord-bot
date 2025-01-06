@@ -38,9 +38,9 @@ jobs:
           fi
   
       - name: Run ESLint
-        run: npm run lint
+        run: yarn lint
         env:
           CI: true
 
       - name: Run Prettier
-        run: npm run format:check
+        run: yarn format:check

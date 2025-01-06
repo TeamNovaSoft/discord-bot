@@ -100,13 +100,15 @@ const VOTE_POINTS = {
   },
 };
 
-const promptConfig = `In the next language: ${DISCORD_SERVER.botLanguage} and a limit of 500 characters`;
 const GEMINI_INTEGRATION = {
   geminiSecret: process.env.GEMINI_AI_API_KEY,
   scheduleTime: process.env.TIME_BETWEEN_AI_AUTOMATIC_INTERACTION,
   interactionsPrompts: process.env.AI_AUTOMATIC_INTERACTION_PROMPTS?.split(
     ','
-  ).map((prompt) => `${prompt} ${promptConfig}`),
+  ).map(
+    (prompt) =>
+      `${prompt}. In the next language: ${DISCORD_SERVER.botLanguage} and a limit of 500 characters`
+  ),
   interactionChannel: process.env.AI_AUTOMATIC_INTERACTION_CHANNEL,
 };
 

@@ -48,8 +48,12 @@ const SCHEDULE_MESSAGES = {
     ? csvParser(process.env.SCHEDULED_MESSAGES)
     : [],
   timeZone: process.env.TIME_ZONE,
+};
+
+const SCHEDULE_CALENDAR = {
   scheduledCalendarInterval:
     process.env.SCHEDULED_CALENDAR_INTERVAL || '*/20 8-17 * * 1-5',
+  timeZone: process.env.TIME_ZONE || 'America/Bogota',
 };
 
 const VOTE_POINTS = {
@@ -96,6 +100,19 @@ const VOTE_POINTS = {
   },
 };
 
+const GEMINI_INTEGRATION = {
+  scheduledGeminiEnabled: process.env.SCHEDULED_GEMINI_ENABLED === 'true',
+  geminiSecret: process.env.GEMINI_AI_API_KEY,
+  scheduleTime: process.env.TIME_BETWEEN_AI_AUTOMATIC_INTERACTION,
+  interactionsPrompts: process.env.AI_AUTOMATIC_INTERACTION_PROMPTS?.split(
+    ','
+  ).map(
+    (prompt) =>
+      `${prompt}. In the next language: ${DISCORD_SERVER.botLanguage} and a limit of 500 characters`
+  ),
+  interactionChannel: process.env.AI_AUTOMATIC_INTERACTION_CHANNEL,
+};
+
 module.exports = {
   DISCORD_SERVER,
   MAPPED_STATUS_COMMANDS,
@@ -105,4 +122,6 @@ module.exports = {
   SCHEDULE_MESSAGES,
   VOTE_POINTS,
   PR_TEMPLATE,
+  SCHEDULE_CALENDAR,
+  GEMINI_INTEGRATION,
 };

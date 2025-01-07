@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google/generative-ai": "^0.21.0",
     "cron": "^3.2.1",
     "discord.js": "^14.15.3",
     "dotenv": "^16.4.5",

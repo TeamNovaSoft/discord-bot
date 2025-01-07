@@ -24,28 +24,17 @@ jobs:
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
       - uses: actions/cache@v4
-        id: yarn-cache 
+        id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v34
-
-      - name: Install dependencies if necessary
+      - name: Install dependencies
         run: |
-          echo "Changed files: ${{ steps.changed-files.outputs.all_changed_files }}"
-
-          # Check if node_modules exists or if relevant files have changed
-          if [[ "${{ steps.changed-files.outputs.all_changed_files }}" == *"package.json"* || "${{ steps.changed-files.outputs.all_changed_files }}" == *"yarn.lock"* ]]; then
-            echo "Dependencies or lockfile changed, or no node_modules directory found. Installing..."
-            yarn run ci
-          else
-            echo "No relevant changes to dependencies and node_modules exists. Skipping install."
-          fi
+          echo "Installing dependencies..."
+          yarn run ci
 
       - name: Run ESLint
         run: yarn run lint

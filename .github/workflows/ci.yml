@@ -40,7 +40,7 @@ jobs:
           echo "Changed files: ${{ steps.changed-files.outputs.all_changed_files }}"
 
           # Check if node_modules exists or if relevant files have changed
-          if [[ ! -d "node_modules" ]] || [[ "${{ steps.changed-files.outputs.all_changed_files }}" == *"package.json"* || "${{ steps.changed-files.outputs.all_changed_files }}" == *"yarn.lock"* ]]; then
+          if [[ "${{ steps.changed-files.outputs.all_changed_files }}" == *"package.json"* || "${{ steps.changed-files.outputs.all_changed_files }}" == *"yarn.lock"* ]]; then
             echo "Dependencies or lockfile changed, or no node_modules directory found. Installing..."
             yarn install --frozen-lockfile
           else

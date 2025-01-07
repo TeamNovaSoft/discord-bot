@@ -42,7 +42,7 @@ jobs:
           # Check if node_modules exists or if relevant files have changed
           if [[ "${{ steps.changed-files.outputs.all_changed_files }}" == *"package.json"* || "${{ steps.changed-files.outputs.all_changed_files }}" == *"yarn.lock"* ]]; then
             echo "Dependencies or lockfile changed, or no node_modules directory found. Installing..."
-            yarn install --frozen-lockfile
+            yarn run ci
           else
             echo "No relevant changes to dependencies and node_modules exists. Skipping install."
           fi

@@ -53,6 +53,7 @@ async function handleModalSubmit(interaction) {
       });
     }
   }
+
   if (interaction.customId.startsWith('send-message-modal-')) {
     const result = interaction.customId.replace('send-message-modal-', '');
     const [channelId, userName] = result.split('-');
@@ -89,13 +90,13 @@ async function handleModalSubmit(interaction) {
 
       await channel.send(formattedMessage);
       await interaction.editReply({
-        content: `✅ PR review request has been posted in ${channel}!`,
+        content: `✅ The announcement has been successfully posted in ${channel}!`,
         ephemeral: true,
       });
     } catch (error) {
-      console.error('Error sending PR message:', error);
+      console.error('Error sending announcement:', error);
       await interaction.editReply({
-        content: '❌ Failed to post PR review request. Please try again.',
+        content: '❌ Failed to post the announcement. Please try again.',
         ephemeral: true,
       });
     }

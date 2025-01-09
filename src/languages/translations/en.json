@@ -28,11 +28,7 @@
       "urlLabel": "GitHub PR URL",
       "titleLabel": "PR Title",
       "overviewLabel": "Overview",
-      "howToTestLabel": "How to Test",
-      "channelNotFound": "❌ The channel you are trying to access was not found.",
-      "noPermissions": "❌ I don't have permission to send messages in that channel.",
-      "postSuccess": "✅ PR review request has been posted in {{channel}}!",
-      "postError": "❌ Failed to post PR review request. Please try again."
+      "howToTestLabel": "How to Test"
     }
   },
   "requestPoint": {
@@ -58,11 +54,7 @@
     "modal": {
       "modalTitle": "Send Message Request",
       "titleLabel": "Message Title",
-      "descriptionLabel": "Message Description",
-      "channelNotFound": "❌ The channel you are trying to access was not found.",
-      "noPermissions": "❌ I don't have permission to send messages in that channel.",
-      "postSuccess": "✅ The announcement has been successfully posted in {{channel}}!",
-      "postError": "❌ Failed to post the announcement. Please try again."
+      "descriptionLabel": "Message Description"
     }
   },
   "server": {

@@ -95,7 +95,7 @@ const processMarkdownFiles = (client) => {
   const absoluteDirectory = path.resolve(__dirname, directoryTest);
   const markdownFiles = getMarkdownFiles(absoluteDirectory);
 
-  const result = markdownFiles
+  const messagesArray = markdownFiles
     .map((filePath) => {
       const content = readMarkdownFile(filePath);
       if (content) {
@@ -107,8 +107,6 @@ const processMarkdownFiles = (client) => {
       return null;
     })
     .filter(Boolean);
-
-  const messagesArray = Array.isArray(result) ? result : [result];
 
   scheduleMessages({ client, scheduledMessage: messagesArray });
 };

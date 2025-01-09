@@ -1,8 +1,8 @@
 ---
 days: 1-5
-hour: 15
-minutes: 00
-timezone: Bogota/Colombia
+hour: 16
+minutes: 26
+timezone: America/Argentina/Buenos_Aires
 channel: 1270770663048613983
 ---
 

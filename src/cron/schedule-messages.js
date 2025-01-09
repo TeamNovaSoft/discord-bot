@@ -70,13 +70,14 @@ const scheduleMessage = ({ client, channel, message, datetime, timeZone }) => {
 const scheduleMessages = ({ client, scheduledMessage }) => {
   scheduledMessage.forEach((scheduledMessage) => {
     const { message, variables } = scheduledMessage;
-    const cronTime = convertToCronExpression(variables);
+    const { channel, cronExpression, timezone } =
+      convertToCronExpression(variables);
     scheduleMessage({
       client,
-      channel: cronTime.channel,
+      channel: channel,
       message: message,
-      datetime: cronTime.cronExpression,
-      timeZone: cronTime.timeZone,
+      datetime: cronExpression,
+      timeZone: timezone,
     });
   });
 };

@@ -29,11 +29,7 @@
       "titleLabel": "Título del PR",
       "overviewLabel": "Descripción general",
       "howToTestLabel": "Cómo probar",
-      "required": "Este campo es obligatorio",
-      "channelNotFound": "❌ No se encontró el canal al que intentas acceder.",
-      "noPermissions": "❌ No tengo permiso para enviar mensajes en ese canal.",
-      "postSuccess": "✅ La solicitud de revisión de PR se ha publicado en {{channel}}.",
-      "postError": "❌ No se pudo publicar la solicitud de revisión de PR. Inténtalo de nuevo."
+      "required": "Este campo es obligatorio"
     }
   },
   "requestPoint": {
@@ -59,11 +55,7 @@
     "modal": {
       "modalTitle": "Solicitud de Envío de Mensaje",
       "titleLabel": "Título del Mensaje",
-      "descriptionLabel": "Descripción del Mensaje",
-      "channelNotFound": "❌ No se encontró el canal al que intentas acceder.",
-      "noPermissions": "❌ No tengo permiso para enviar mensajes en ese canal.",
-      "postSuccess": "✅ El anuncio se ha publicado correctamente en {{channel}}.",
-      "postError": "❌ No se pudo publicar el anuncio. Inténtalo de nuevo."
+      "descriptionLabel": "Descripción del Mensaje"
     }
   },
   "server": {

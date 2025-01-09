@@ -10,7 +10,7 @@ const directoryTest = './markdown-files';
  * @param {object} variables - Extracted variables from the Markdown file.
  * @returns {string} - A valid cron expression.
  */
-function convertToCronExpression(variables) {
+const convertToCronExpression = (variables) => {
   const { days = '*', time = '08:00', timezone = 'UTC', channel } = variables;
 
   const [hour, minute] = time.split(':').map((val) => parseInt(val, 10));
@@ -30,14 +30,14 @@ function convertToCronExpression(variables) {
     timezone,
     channel,
   };
-}
+};
 
 /**
  * Function to search for all Markdown files in a directory.
  * @param {string} directory - Path to the directory to scan.
  * @returns {string[]} - List of Markdown file paths.
  */
-function getMarkdownFiles(directory) {
+const getMarkdownFiles = (directory) => {
   const markdownFiles = [];
 
   try {
@@ -56,28 +56,28 @@ function getMarkdownFiles(directory) {
   }
 
   return markdownFiles;
-}
+};
 
 /**
  * Function to read the content of a Markdown file.
  * @param {string} filePath - Path to the file to read.
  * @returns {string|null} - File content or null if an error occurs.
  */
-function readMarkdownFile(filePath) {
+const readMarkdownFile = (filePath) => {
   try {
     return fs.readFileSync(filePath, 'utf8');
   } catch (error) {
     console.error(`Error reading the file "${filePath}":`, error.message);
     return null;
   }
-}
+};
 
 /**
  * Function to parse a Markdown file with a specific format.
  * @param {string} markdown - Content of the Markdown file.
  * @returns {{variables: object, message: string}|null} - Variables and message, or null if errors occur.
  */
-function parseMarkdownSchedule(markdown) {
+const parseMarkdownSchedule = (markdown) => {
   const lines = markdown.split('\n');
   const variables = {};
   let message = '';
@@ -113,7 +113,7 @@ function parseMarkdownSchedule(markdown) {
   }
 
   return { variables, message: message.trim() };
-}
+};
 
 /**
  * Main function to process all Markdown files in a directory.
@@ -123,22 +123,22 @@ const processMarkdownFiles = (client) => {
   const absoluteDirectory = path.resolve(__dirname, directoryTest);
   const markdownFiles = getMarkdownFiles(absoluteDirectory);
 
-  const result = markdownFiles.forEach((filePath) => {
-    const content = readMarkdownFile(filePath);
-    if (content) {
-      console.log(`Content of the file ${filePath}:`);
-      console.log(content);
-
-      const parsedMessages = parseMarkdownSchedule(content);
-      console.log(parsedMessages);
-
-      if (parsedMessages) {
-        return parsedMessages;
+  const result = markdownFiles
+    .map((filePath) => {
+      const content = readMarkdownFile(filePath);
+      if (content) {
+        const parsedMessages = parseMarkdownSchedule(content);
+        if (parsedMessages) {
+          return parsedMessages;
+        }
       }
-    }
-  });
+      return null;
+    })
+    .filter(Boolean);
 
-  scheduleMessages({ client, scheduledMessage: result });
+  const messagesArray = Array.isArray(result) ? result : [result];
+
+  scheduleMessages({ client, scheduledMessage: messagesArray });
 };
 
 module.exports = { processMarkdownFiles, convertToCronExpression };

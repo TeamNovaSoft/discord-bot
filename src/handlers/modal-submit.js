@@ -1,5 +1,6 @@
 const { formatPRMessage } = require('../utils/pr-formatter');
 const { formatSendMessage } = require('../utils/send-message-formatter');
+const { translateLanguage } = require('../../languages/index');
 
 async function handleModalSubmit(interaction) {
   await interaction.deferReply({ ephemeral: true });
@@ -24,7 +25,7 @@ async function handleModalSubmit(interaction) {
 
       if (!channel) {
         await interaction.editReply({
-          content: '❌ The channel you are trying to access was not found.',
+          content: translateLanguage('prTemplate.modal.channelNotFound'),
           ephemeral: true,
         });
         return;
@@ -33,8 +34,7 @@ async function handleModalSubmit(interaction) {
       const permissions = channel.permissionsFor(interaction.client.user);
       if (!permissions.has('SendMessages')) {
         await interaction.editReply({
-          content:
-            "❌ I don't have permission to send messages in that channel.",
+          content: translateLanguage('prTemplate.modal.noPermissions'),
           ephemeral: true,
         });
         return;
@@ -42,17 +42,20 @@ async function handleModalSubmit(interaction) {
 
       await channel.send(formattedMessage);
       await interaction.editReply({
-        content: `✅ PR review request has been posted in ${channel}!`,
+        content: translateLanguage('prTemplate.modal.postSuccess', {
+          channel: channel.toString(),
+        }),
         ephemeral: true,
       });
     } catch (error) {
       console.error('Error sending PR message:', error);
       await interaction.editReply({
-        content: '❌ Failed to post PR review request. Please try again.',
+        content: translateLanguage('prTemplate.modal.postError'),
         ephemeral: true,
       });
     }
   }
+
   if (interaction.customId.startsWith('send-message-modal-')) {
     const result = interaction.customId.replace('send-message-modal-', '');
     const [channelId, userName] = result.split('-');
@@ -71,7 +74,7 @@ async function handleModalSubmit(interaction) {
 
       if (!channel) {
         await interaction.editReply({
-          content: '❌ The channel you are trying to access was not found.',
+          content: translateLanguage('sendMessage.modal.channelNotFound'),
           ephemeral: true,
         });
         return;
@@ -80,8 +83,7 @@ async function handleModalSubmit(interaction) {
       const permissions = channel.permissionsFor(interaction.client.user);
       if (!permissions.has('SendMessages')) {
         await interaction.editReply({
-          content:
-            "❌ I don't have permission to send messages in that channel.",
+          content: translateLanguage('sendMessage.modal.noPermissions'),
           ephemeral: true,
         });
         return;
@@ -89,13 +91,15 @@ async function handleModalSubmit(interaction) {
 
       await channel.send(formattedMessage);
       await interaction.editReply({
-        content: `✅ PR review request has been posted in ${channel}!`,
+        content: translateLanguage('sendMessage.modal.postSuccess', {
+          channel: channel.toString(),
+        }),
         ephemeral: true,
       });
     } catch (error) {
-      console.error('Error sending PR message:', error);
+      console.error('Error sending announcement:', error);
       await interaction.editReply({
-        content: '❌ Failed to post PR review request. Please try again.',
+        content: translateLanguage('sendMessage.modal.postError'),
         ephemeral: true,
       });
     }

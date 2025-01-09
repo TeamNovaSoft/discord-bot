@@ -1,6 +1,6 @@
 const { CronJob } = require('cron');
-const { SCHEDULE_MESSAGES } = require('../config');
 const { translateLanguage } = require('../languages/index');
+const { convertToCronExpression } = require('./utils/read-markdown-messages');
 
 /**
  * Schedules a message to be sent to a Discord channel at a specific time.
@@ -41,15 +41,16 @@ const scheduleMessage = ({ client, channel, message, datetime, timeZone }) => {
  * @param {Client} client - The Discord.js client instance.
  * @param {Array<{channel: string, datetime: string, messsage: string}>} scheduledMessages - Array of objects containing cron time and message message.
  */
-const scheduleMessages = (client, scheduledMessages) => {
-  scheduledMessages.forEach((scheduledMessage) => {
-    const { channel, datetime, message } = scheduledMessage;
+const scheduleMessages = ({ client, scheduledMessage }) => {
+  scheduledMessage.forEach((scheduledMessage) => {
+    const { message, variables } = scheduledMessage;
+    const cronTime = convertToCronExpression(variables);
     scheduleMessage({
       client,
-      channel,
-      message,
-      datetime,
-      timeZone: SCHEDULE_MESSAGES.timeZone,
+      channel: cronTime.channel,
+      message: message,
+      datetime: cronTime.cronExpression,
+      timeZone: cronTime.timeZone,
     });
   });
 };

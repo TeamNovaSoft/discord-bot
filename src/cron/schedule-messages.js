@@ -62,13 +62,13 @@ const scheduleMessage = ({ client, channel, message, datetime, timeZone }) => {
 };
 
 /**
- * Schedules multiple messages to be sent to a Discord channel based on the provided message times.
+ * Schedules multiple messages to be sent to a Discord channel based on the provided schedule.
  *
  * @param {Client} client - The Discord.js client instance.
- * @param {Array<{channel: string, datetime: string, messsage: string}>} scheduledMessages - Array of objects containing cron time and message message.
+ * @param {Array<{message: string, variables: {channel: string, time: string, timezone: string, days?: string}}>} scheduledMessages -
  */
-const scheduleMessages = ({ client, scheduledMessage }) => {
-  scheduledMessage.forEach((scheduledMessage) => {
+const scheduleMessages = ({ client, scheduledMessages }) => {
+  scheduledMessages.forEach((scheduledMessage) => {
     const { message, variables } = scheduledMessage;
     const { channel, cronExpression, timezone } =
       convertToCronExpression(variables);

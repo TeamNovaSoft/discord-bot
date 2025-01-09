@@ -1,6 +1,32 @@
 const { CronJob } = require('cron');
 const { translateLanguage } = require('../languages/index');
-const { convertToCronExpression } = require('./utils/read-markdown-messages');
+
+/**
+ * Converts extracted variables to a cron expression.
+ * @param {object} variables - Extracted variables from the Markdown file.
+ * @returns {string} - A valid cron expression.
+ */
+const convertToCronExpression = (variables) => {
+  const {
+    days = '*',
+    hour = '08',
+    minutes = '00',
+    timezone = 'UTC',
+    channel,
+  } = variables;
+
+  if (isNaN(hour) || isNaN(minutes)) {
+    throw new Error('Invalid time format. Expected "HH:mm".');
+  }
+
+  const cronExpression = `${minutes} ${hour} * * ${days}`;
+
+  return {
+    cronExpression,
+    timezone,
+    channel,
+  };
+};
 
 /**
  * Schedules a message to be sent to a Discord channel at a specific time.

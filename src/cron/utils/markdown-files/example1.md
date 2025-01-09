@@ -1,6 +1,7 @@
 ---
 days: 1-5
-time: 15:00
+hour: 15
+minutes: 00
 timezone: Bogota/Colombia
 channel: greetings
 ---

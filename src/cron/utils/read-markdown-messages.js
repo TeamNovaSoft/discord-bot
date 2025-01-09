@@ -1,36 +1,8 @@
-const moment = require('moment-timezone');
 const { scheduleMessages } = require('../schedule-messages');
 const fs = require('fs');
 const path = require('path');
 
 const directoryTest = './markdown-files';
-
-/**
- * Converts extracted variables to a cron expression.
- * @param {object} variables - Extracted variables from the Markdown file.
- * @returns {string} - A valid cron expression.
- */
-const convertToCronExpression = (variables) => {
-  const { days = '*', time = '08:00', timezone = 'UTC', channel } = variables;
-
-  const [hour, minute] = time.split(':').map((val) => parseInt(val, 10));
-
-  if (isNaN(hour) || isNaN(minute)) {
-    throw new Error('Invalid time format. Expected "HH:mm".');
-  }
-
-  const cronExpression = `${minute} ${hour} * * ${days}`;
-
-  if (!moment.tz.zone(timezone)) {
-    throw new Error(`Invalid timezone: ${timezone}`);
-  }
-
-  return {
-    cronExpression,
-    timezone,
-    channel,
-  };
-};
 
 /**
  * Function to search for all Markdown files in a directory.
@@ -141,4 +113,4 @@ const processMarkdownFiles = (client) => {
   scheduleMessages({ client, scheduledMessage: messagesArray });
 };
 
-module.exports = { processMarkdownFiles, convertToCronExpression };
+module.exports = { processMarkdownFiles };

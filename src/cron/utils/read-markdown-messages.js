@@ -93,7 +93,7 @@ const parseMarkdownSchedule = (markdown) => {
 const processMarkdownFiles = (client) => {
   const absoluteDirectory = path.resolve(
     __dirname,
-    SCHEDULE_MESSAGES.path_markdown_folder
+    SCHEDULE_MESSAGES.pathMarkdownFolder
   );
   const markdownFiles = getMarkdownFiles(absoluteDirectory);
 

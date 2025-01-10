@@ -108,7 +108,7 @@ const processMarkdownFiles = (client) => {
     })
     .filter(Boolean);
 
-  scheduleMessages({ client, scheduledMessage: messagesArray });
+  scheduleMessages({ client, messages: messagesArray });
 };
 
 module.exports = { processMarkdownFiles };

@@ -1,5 +1,6 @@
 const { CronJob } = require('cron');
 const { translateLanguage } = require('../languages/index');
+const { SCHEDULE_MESSAGES } = require('../config');
 
 /**
  * Converts extracted variables to a cron expression.
@@ -67,9 +68,9 @@ const scheduleMessage = ({ client, channel, message, datetime, timeZone }) => {
  * @param {Client} client - The Discord.js client instance.
  * @param {Array<{message: string, variables: {channel: string, time: string, timezone: string, days?: string}}>} scheduledMessages -
  */
-const scheduleMessages = ({ client, scheduledMessages }) => {
-  scheduledMessages.forEach((scheduledMessage) => {
-    const { message, variables } = scheduledMessage;
+const scheduleMessages = ({ client, messages }) => {
+  messages.forEach((msg) => {
+    const { message, variables } = msg;
     const { channel, cronExpression, timezone } =
       convertToCronExpression(variables);
     scheduleMessage({
@@ -77,7 +78,7 @@ const scheduleMessages = ({ client, scheduledMessages }) => {
       channel: channel,
       message: message,
       datetime: cronExpression,
-      timeZone: timezone,
+      timeZone: timezone || SCHEDULE_MESSAGES.timeZone,
     });
   });
 };

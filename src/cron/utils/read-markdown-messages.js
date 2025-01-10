@@ -1,8 +1,7 @@
 const { scheduleMessages } = require('../schedule-messages');
 const fs = require('fs');
 const path = require('path');
-
-const directoryTest = './markdown-files';
+const { SCHEDULE_MESSAGES } = require('../../config');
 
 /**
  * Function to search for all Markdown files in a directory.
@@ -92,7 +91,10 @@ const parseMarkdownSchedule = (markdown) => {
  * @param {string} directory - Path to the directory containing the Markdown files.
  */
 const processMarkdownFiles = (client) => {
-  const absoluteDirectory = path.resolve(__dirname, directoryTest);
+  const absoluteDirectory = path.resolve(
+    __dirname,
+    SCHEDULE_MESSAGES.path_markdown_folder
+  );
   const markdownFiles = getMarkdownFiles(absoluteDirectory);
 
   const messagesArray = markdownFiles

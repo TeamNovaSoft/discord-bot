@@ -4,7 +4,7 @@ This project is a Discord bot built with `discord.js`. The bot includes various 
 
 ## Requirements
 
-- Node.js (version 20 or higher)
+- Node.js (version 23.6.0 or higher)
 - Yarn (optional, but recommended)
 
 ## Installation

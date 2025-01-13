@@ -1,5 +1,4 @@
 require('dotenv').config();
-const csvParser = require('./utils/csv-parser');
 const { parseAllowedChannels } = require('./csv-parser-allowed-channels');
 
 const DISCORD_SERVER = {
@@ -44,9 +43,6 @@ const REQUEST_POINT = {
 };
 
 const SCHEDULE_MESSAGES = {
-  messageTimes: process.env.SCHEDULED_MESSAGES
-    ? csvParser(process.env.SCHEDULED_MESSAGES)
-    : [],
   timeZone: process.env.TIME_ZONE,
   pathMarkdownFolder: '../../../markdown-files',
 };

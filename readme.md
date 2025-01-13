@@ -21,7 +21,13 @@ This project is a Discord bot built with `discord.js`. The bot includes various 
    cd discord-bot
    ```
 
-3. Install the dependencies:
+3. Use the correct version of Node.js:
+
+   ```bash
+   nvm use 23.6.0
+   ```
+
+4. Install the dependencies:
 
    ```bash
    yarn install

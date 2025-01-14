@@ -1,6 +1,33 @@
 const { CronJob } = require('cron');
-const { SCHEDULE_MESSAGES } = require('../config');
 const { translateLanguage } = require('../languages/index');
+const { SCHEDULE_MESSAGES } = require('../config');
+
+/**
+ * Converts extracted variables to a cron expression.
+ * @param {object} variables - Extracted variables from the Markdown file.
+ * @returns {string} - A valid cron expression.
+ */
+const convertToCronExpression = (variables) => {
+  const {
+    days = '*',
+    hour = '08',
+    minutes = '00',
+    timezone = 'UTC',
+    channel,
+  } = variables;
+
+  if (isNaN(hour) || isNaN(minutes)) {
+    throw new Error('Invalid time format. Expected "HH:mm".');
+  }
+
+  const cronExpression = `${minutes} ${hour} * * ${days}`;
+
+  return {
+    cronExpression,
+    timezone,
+    channel,
+  };
+};
 
 /**
  * Schedules a message to be sent to a Discord channel at a specific time.
@@ -36,20 +63,22 @@ const scheduleMessage = ({ client, channel, message, datetime, timeZone }) => {
 };
 
 /**
- * Schedules multiple messages to be sent to a Discord channel based on the provided message times.
+ * Schedules multiple messages to be sent to a Discord channel based on the provided schedule.
  *
  * @param {Client} client - The Discord.js client instance.
- * @param {Array<{channel: string, datetime: string, messsage: string}>} scheduledMessages - Array of objects containing cron time and message message.
+ * @param {Array<{message: string, variables: {channel: string, time: string, timezone: string, days?: string}}>} scheduledMessages -
  */
-const scheduleMessages = (client, scheduledMessages) => {
-  scheduledMessages.forEach((scheduledMessage) => {
-    const { channel, datetime, message } = scheduledMessage;
+const scheduleMessages = ({ client, messages }) => {
+  messages.forEach((msg) => {
+    const { message, variables } = msg;
+    const { channel, cronExpression, timezone } =
+      convertToCronExpression(variables);
     scheduleMessage({
       client,
       channel,
       message,
-      datetime,
-      timeZone: SCHEDULE_MESSAGES.timeZone,
+      datetime: cronExpression,
+      timeZone: timezone || SCHEDULE_MESSAGES.timeZone,
     });
   });
 };

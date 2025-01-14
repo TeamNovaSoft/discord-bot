@@ -6,7 +6,6 @@ const {
   SCHEDULE_CALENDAR,
   GEMINI_INTEGRATION,
 } = require('./config');
-const { scheduleMessages } = require('./cron/schedule-messages');
 const deployEvents = require('./deploy-events');
 const deployCommands = require('./deploy-commands');
 const {
@@ -17,13 +16,14 @@ const cron = require('cron');
 const { scheduleIaContentLogging } = require('../src/cron/schedule-gemini');
 const saveErrorLog = require('./utils/log-error');
 const convertCronToText = require('./utils/cron-to-text-parser');
+const { processMarkdownFiles } = require('./cron/utils/read-markdown-messages');
 
 async function startClientBot(client) {
   client.commands = new Collection();
   deployCommands(client);
   deployEvents(client);
 
-  scheduleMessages(client, SCHEDULE_MESSAGES.messageTimes);
+  processMarkdownFiles(client);
   if (GEMINI_INTEGRATION.scheduledGeminiEnabled) {
     scheduleIaContentLogging(client);
   }

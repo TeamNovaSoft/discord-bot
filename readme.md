@@ -149,44 +149,6 @@ To correctly install the bot on Discord and ensure it can receive and process me
 
 To schedule automated messages, you can configure the following additional environment variables in your `.env` file:
 
-- **SCHEDULED_MESSAGES**: A CSV string where each entry is separated by a semicolon (`;`) and contains three values separated by commas (`channel,datetime,message`). The `channel` is the Discord channel where the message will be sent, `datetime` is the date and time in ISO 8601 format (e.g., `2024-11-15T10:00:00`), and `message` is the content of the message to be sent.
-  For example:
-
-```
-SCHEDULED_MESSAGES="canal1,2024-11-15T10:00:00,Hello World!;canal2,2024-11-15T12:00:00,Good Morning!"
-```
-
-This example will schedule two messages:
-
-- "Hello World!" will be sent to `canal1` on `2024-11-15` at `10:00 AM`.
-- "Good Morning!" will be sent to `canal2` on `2024-11-15` at `12:00 PM`.
-- **TIME_ZONE**: The time zone in which the scheduled messages should be executed. For example, `America/Argentina/Buenos_Aires` can be used for Argentina's time zone.
-
-### Cron Job Time Format
-
-The `datetime` field in `SCHEDULED_MESSAGES` follows the ISO 8601 format:
-
-```
-YYYY-MM-DDTHH:mm
-(e.g., 2024-11-15T10:00:00)
-```
-
-- **YYYY**: Year (e.g., `2024`)
-- **MM**: Month (e.g., `11` for November)
-- **DD**: Day of the month (e.g., `15`)
-- **T**: Separator between the date and time components
-- **HH**: Hour in 24-hour format (e.g., `10` for 10 AM)
-- **mm**: Minutes (e.g., `00` for the start of the hour)
-- **ss**: Seconds (optional, defaults to `00`)
-
-### Example `.env` Configuration
-
-```
-SCHEDULED_MESSAGES="canal1,2024-11-15T10:00:00,Hello World!;canal2,2024-11-15T12:00:00,Good Morning!" TIMEZONE="America/Argentina/Buenos_Aires"
-```
-
-To send a notification message to the specified channel, informing admins or moderators of the point request and providing relevant details the users can use the `/request-point` command in a thread and the bot will do. To allow this, you must configure in the `env` file:
-
 - **ADMIN_POINT_REQUEST_CHANNEL**: environment variable specifies the ID of the Discord channel where point review requests are sent. This is particularly useful for managing and tracking user actions that require admin review.
 
 When the bot needs to notify or alert the administrators by mentioning them directly. For example, when a user requests a point review, the bot can mention the administrators to ensure they see and act on the request promptly. To achieve this functionality, you have to configure it in the `env` file:
@@ -283,3 +245,49 @@ To ensure the integration works seamlessly, you need to set up the following env
      ```
      SCHEDULED_CALENDAR_ENABLED=false
      ```
+
+## Markdown-Based Scheduled Messages Configuration
+
+Instead of using a CSV string, you can define scheduled messages with Markdown files in the following format:
+
+```
+---
+days: 1-5
+channel: 1306251153855610922
+hour: 08
+minutes: 00
+timezone: America/Bogota
+---
+
+Good morning!
+```
+
+### Explanation of Markdown Fields
+
+days: Defines the days of the week when the message will be sent. Use a range (e.g., 1-5 for Monday to Friday) or specific days separated by commas (e.g., 1,3,5 for Monday, Wednesday, and Friday). Days are numbered from 1 (Monday) to 7 (Sunday).
+
+channel: The Discord channel ID where the message will be sent.
+
+hour: The hour (in 24-hour format) when the message will be sent.
+
+minutes: The minute of the hour when the message will be sent.
+
+timezone: Specifies the time zone for scheduling the message. Use a valid time zone string (e.g., America/Bogota).
+
+The content after the metadata block (the --- lines) is the body of the message to be sent.
+
+Example Markdown Scheduled Message
+
+```
+---
+days: 1-5
+channel: 1306251153855610922
+hour: 08
+minutes: 00
+timezone: America/Bogota
+---
+
+Good morning!
+```
+
+This example schedules a message saying "Good morning!" to be sent to the specified channel every weekday (Monday to Friday) at 8:00 AM in the America/Bogota time zone.

@@ -75,8 +75,8 @@ const scheduleMessages = ({ client, messages }) => {
       convertToCronExpression(variables);
     scheduleMessage({
       client,
-      channel: channel,
-      message: message,
+      channel,
+      message,
       datetime: cronExpression,
       timeZone: timezone || SCHEDULE_MESSAGES.timeZone,
     });

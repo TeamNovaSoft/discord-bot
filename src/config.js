@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { parseAllowedChannels } = require('./csv-parser-allowed-channels');
+const path = require('path');
 
 const DISCORD_SERVER = {
   discordToken: process.env.DISCORD_TOKEN,
@@ -44,7 +45,7 @@ const REQUEST_POINT = {
 
 const SCHEDULE_MESSAGES = {
   timeZone: process.env.TIME_ZONE,
-  pathMarkdownFolder: '../../../markdown-files',
+  pathMarkdownFolder: path.join(process.cwd(), '/markdown-files'),
 };
 
 const SCHEDULE_CALENDAR = {

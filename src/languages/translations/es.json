@@ -105,5 +105,15 @@
   "messageSchedules": {
     "errorMissingParameters": "Error: Falta uno o más parámetros requeridos (client, channel, message, datetime, o timeZone).",
     "errorChannelNotFound": "Canal no encontrado o cliente no listo."
+  },
+
+  "checkReview": {
+    "description": "Verificar PRs que necesitan revisión de código",
+    "channelOption": "Selecciona el canal para verificar PRs",
+    "invalidChannel": "El canal seleccionado no es válido. Por favor, selecciona un canal de texto o hilo.",
+    "noPendingReviews": "No hay PRs en estado 'request-review' que necesiten recordatorios en el canal {{channelName}}",
+    "reminder": "🔔 Recordatorio: El PR en el hilo {{threadName}} lleva demasiado tiempo en estado 'request-review'. Por favor, realiza tu revisión.",
+    "remindersSent": "Se enviaron recordatorios para {count} PR(s) que necesitan revisión en el canal {{channelName}}",
+    "error": "Ocurrió un error al verificar los PRs. Por favor, intenta nuevamente más tarde."
   }
 }

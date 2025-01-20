@@ -5,7 +5,7 @@ const path = require('path');
 const DISCORD_SERVER = {
   discordToken: process.env.DISCORD_TOKEN,
   discordClientId: process.env.DISCORD_CLIENT_ID,
-  discordGuildId: process.env.DISCORD_GUILD_ID,
+  discordGuildId: process.env.DISCORD_GUILD_ID || '1270770662222463026',
   botLanguage: process.env.DISCORD_LANGUAGE || 'en',
 };
 

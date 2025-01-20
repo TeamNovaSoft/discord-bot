@@ -17,6 +17,7 @@ const { scheduleIaContentLogging } = require('../src/cron/schedule-gemini');
 const saveErrorLog = require('./utils/log-error');
 const convertCronToText = require('./utils/cron-to-text-parser');
 const { processMarkdownFiles } = require('./cron/utils/read-markdown-messages');
+const { scheduleReviewCheck } = require('./cron/schedule-code-review');
 
 async function startClientBot(client) {
   client.commands = new Collection();
@@ -40,6 +41,16 @@ async function startClientBot(client) {
     );
     console.log(convertCronToText(SCHEDULE_CALENDAR.scheduledCalendarInterval));
   }
+
+  const cronExpression = '* * * * *'; // Cron para ejecutarse de lunes a viernes a las 7:00 AM
+  const timeZone = 'America/Bogota'; // Hora de Colombia
+
+  // Llama a la función que ejecutará el check-review a la hora programada
+  scheduleReviewCheck({
+    client,
+    cronExpression,
+    timeZone,
+  });
 
   await client.login(token);
 }

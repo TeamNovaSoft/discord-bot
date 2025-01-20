@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, ChannelType } = require('discord.js');
 const { translateLanguage } = require('../../languages/index');
-const { MAPPED_STATUS_COMMANDS } = require('../../config');
+const { MAPPED_STATUS_COMMANDS } = require('../../config'); // Mantenemos esta importación
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -25,23 +25,26 @@ module.exports = {
         return;
       }
 
-      const now = Date.now();
-      const threshold = 24 * 60 * 60 * 1000;
+      const statusText = MAPPED_STATUS_COMMANDS['pr-request-review']; // Usar el mapeo
+      if (!statusText) {
+        throw new Error('Mapped status for pr-request-review not found.');
+      }
+
       const reminders = [];
-      const statusEmoji = MAPPED_STATUS_COMMANDS['pr-request-review'];
 
-      const messages = await channel.messages.fetch({ limit: 50 });
+      // Fetch active threads in the channel
+      const threads = await channel.threads.fetchActive();
 
-      const pendingReviews = messages.filter(
-        (msg) =>
-          msg.content.includes(statusEmoji) &&
-          msg.createdTimestamp < now - threshold
+      // Filter threads where the title contains the desired status text
+      const pendingReviews = threads.threads.filter((thread) =>
+        thread.name.includes(statusText)
       );
 
       if (pendingReviews.size > 0) {
-        for (const msg of pendingReviews.values()) {
+        // Create reminders for each pending review thread
+        for (const thread of pendingReviews.values()) {
           reminders.push(
-            `🔔 **Reminder**: The message from [${msg.author.tag}] with status \`pr-request-review\` has not been reviewed:\n${msg.url}`
+            `🔔 **Reminder**: The thread [${thread.name}] has not been reviewed:\n${thread.url}`
           );
         }
 

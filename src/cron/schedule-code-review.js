@@ -1,7 +1,11 @@
 const { CronJob } = require('cron');
 const { ChannelType } = require('discord.js');
 const { translateLanguage } = require('../languages/index');
-const { MAPPED_STATUS_COMMANDS, DISCORD_SERVER } = require('../config');
+const {
+  MAPPED_STATUS_COMMANDS,
+  DISCORD_SERVER,
+  CRON_SHECDULE_REVIEW,
+} = require('../config');
 
 /**
  * Checks threads for a specific status and sends reminders in all text channels.
@@ -81,7 +85,7 @@ const scheduleReviewCheck = (client, timeZone) => {
   }
 
   new CronJob(
-    '0 7 * * 1,5',
+    CRON_SHECDULE_REVIEW.scheduleReview,
     () => {
       checkThreadsForReview(client, statusText);
     },

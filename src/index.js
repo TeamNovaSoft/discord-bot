@@ -5,6 +5,7 @@ const {
   SCHEDULE_MESSAGES,
   SCHEDULE_CALENDAR,
   GEMINI_INTEGRATION,
+  TIME_ZONES,
 } = require('./config');
 const deployEvents = require('./deploy-events');
 const deployCommands = require('./deploy-commands');
@@ -42,7 +43,7 @@ async function startClientBot(client) {
     console.log(convertCronToText(SCHEDULE_CALENDAR.scheduledCalendarInterval));
   }
 
-  const timeZone = 'America/Bogota';
+  const timeZone = TIME_ZONES.timeZone;
   scheduleReviewCheck(client, timeZone);
 
   await client.login(token);

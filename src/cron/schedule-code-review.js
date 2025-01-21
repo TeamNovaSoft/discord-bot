@@ -4,7 +4,7 @@ const { translateLanguage } = require('../languages/index');
 const {
   MAPPED_STATUS_COMMANDS,
   DISCORD_SERVER,
-  CRON_SHEDULE_REVIEW,
+  CRON_SCHEDULE_REVIEW,
 } = require('../config');
 
 const STATUS_KEY = 'pr-request-review';
@@ -99,7 +99,7 @@ const scheduleReviewCheck = (client) => {
     return;
   }
 
-  const schedule = CRON_SHEDULE_REVIEW.scheduleReview;
+  const schedule = CRON_SCHEDULE_REVIEW.scheduleReview;
 
   if (typeof schedule !== 'string' || !schedule.trim()) {
     console.error('Invalid or missing cron schedule in configuration.');
@@ -114,7 +114,7 @@ const scheduleReviewCheck = (client) => {
       },
       null,
       true,
-      CRON_SHEDULE_REVIEW.timeZone
+      CRON_SCHEDULE_REVIEW.timeZone
     );
   } catch (error) {
     console.error('Failed to create CronJob:', error.message);

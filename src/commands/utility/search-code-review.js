@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, ChannelType } = require('discord.js');
 const { translateLanguage } = require('../../languages/index');
-const { MAPPED_STATUS_COMMANDS } = require('../../config'); // Mantenemos esta importación
+const { MAPPED_STATUS_COMMANDS } = require('../../config');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -25,7 +25,7 @@ module.exports = {
         return;
       }
 
-      const statusText = MAPPED_STATUS_COMMANDS['pr-request-review']; // Usar el mapeo
+      const statusText = MAPPED_STATUS_COMMANDS['pr-request-review'];
       if (!statusText) {
         throw new Error('Mapped status for pr-request-review not found.');
       }

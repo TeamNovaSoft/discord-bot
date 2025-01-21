@@ -4,7 +4,7 @@ const { translateLanguage } = require('../languages/index');
 const {
   MAPPED_STATUS_COMMANDS,
   DISCORD_SERVER,
-  CRON_SHECDULE_REVIEW,
+  CRON_SHEDULE_REVIEW,
 } = require('../config');
 
 /**
@@ -77,7 +77,7 @@ const checkThreadsForReview = async (client, statusText) => {
  * @param {Client} client - The Discord.js client instance.
  * @param {string} timeZone - The timezone for the cron job.
  */
-const scheduleReviewCheck = (client, timeZone) => {
+const scheduleReviewCheck = (client) => {
   const statusText = MAPPED_STATUS_COMMANDS['pr-request-review'];
   if (!statusText) {
     console.error('Mapped status for pr-request-review not found.');
@@ -85,13 +85,13 @@ const scheduleReviewCheck = (client, timeZone) => {
   }
 
   new CronJob(
-    CRON_SHECDULE_REVIEW.scheduleReview,
+    CRON_SHEDULE_REVIEW.scheduleReview,
     () => {
       checkThreadsForReview(client, statusText);
     },
     null,
     true,
-    timeZone
+    CRON_SHEDULE_REVIEW.timeZone
   );
 };
 

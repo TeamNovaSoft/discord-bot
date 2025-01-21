@@ -5,7 +5,7 @@ const path = require('path');
 const DISCORD_SERVER = {
   discordToken: process.env.DISCORD_TOKEN,
   discordClientId: process.env.DISCORD_CLIENT_ID,
-  discordGuildId: process.env.DISCORD_GUILD_ID || '1270770662222463026',
+  discordGuildId: process.env.DISCORD_GUILD_ID,
   botLanguage: process.env.DISCORD_LANGUAGE || 'en',
 };
 
@@ -38,8 +38,9 @@ const QA_MENTION = {
   discordQAChannelName: process.env.DISCORD_QA_CHANNEL_ID,
 };
 
-const CRON_SHECDULE_REVIEW = {
+const CRON_SHEDULE_REVIEW = {
   scheduleReview: process.env.CRON_EXPRESSION_REVIEW_MENTION,
+  timeZone: process.env.TIME_ZONE || 'America/Bogota',
 };
 
 const REQUEST_POINT = {
@@ -126,5 +127,5 @@ module.exports = {
   PR_TEMPLATE,
   SCHEDULE_CALENDAR,
   GEMINI_INTEGRATION,
-  CRON_SHECDULE_REVIEW,
+  CRON_SHEDULE_REVIEW,
 };

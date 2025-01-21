@@ -75,7 +75,7 @@ const checkThreadsForReview = async (client, statusText) => {
  * Schedules a cron job to run `checkThreadsForReview` at specified intervals.
  *
  * @param {Client} client - The Discord.js client instance.
- * @param {string} timeZone - The timezone for the cron job.
+ *
  */
 const scheduleReviewCheck = (client) => {
   const statusText = MAPPED_STATUS_COMMANDS['pr-request-review'];

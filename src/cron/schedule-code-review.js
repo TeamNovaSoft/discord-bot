@@ -7,6 +7,23 @@ const {
   CRON_SHEDULE_REVIEW,
 } = require('../config');
 
+const STATUS_KEY = 'pr-request-review';
+
+/**
+ * Retrieves the mapped status text for the given key.
+ *
+ * @param {string} key - The key to retrieve the mapped status for.
+ * @returns {string|null} - The mapped status text or null if not found.
+ */
+const getMappedStatusText = (key) => {
+  const statusText = MAPPED_STATUS_COMMANDS[key];
+  if (!statusText) {
+    console.error(`Mapped status for ${key} not found.`);
+    return null;
+  }
+  return statusText;
+};
+
 /**
  * Checks threads for a specific status and sends reminders in all text channels.
  *
@@ -75,24 +92,33 @@ const checkThreadsForReview = async (client, statusText) => {
  * Schedules a cron job to run `checkThreadsForReview` at specified intervals.
  *
  * @param {Client} client - The Discord.js client instance.
- *
  */
 const scheduleReviewCheck = (client) => {
-  const statusText = MAPPED_STATUS_COMMANDS['pr-request-review'];
+  const statusText = getMappedStatusText(STATUS_KEY);
   if (!statusText) {
-    console.error('Mapped status for pr-request-review not found.');
     return;
   }
 
-  new CronJob(
-    CRON_SHEDULE_REVIEW.scheduleReview,
-    () => {
-      checkThreadsForReview(client, statusText);
-    },
-    null,
-    true,
-    CRON_SHEDULE_REVIEW.timeZone
-  );
+  const schedule = CRON_SHEDULE_REVIEW.scheduleReview;
+
+  if (typeof schedule !== 'string' || !schedule.trim()) {
+    console.error('Invalid or missing cron schedule in configuration.');
+    return;
+  }
+
+  try {
+    new CronJob(
+      schedule,
+      () => {
+        checkThreadsForReview(client, statusText);
+      },
+      null,
+      true,
+      CRON_SHEDULE_REVIEW.timeZone
+    );
+  } catch (error) {
+    console.error('Failed to create CronJob:', error.message);
+  }
 };
 
 module.exports = { scheduleReviewCheck };

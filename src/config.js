@@ -39,7 +39,7 @@ const QA_MENTION = {
 };
 
 const CRON_SHEDULE_REVIEW = {
-  scheduleReview: process.env.CRON_EXPRESSION_REVIEW_MENTION,
+  scheduleReview: process.env.CRON_SCHEDULE_REVIEW || '0 7 * * 1,5',
   timeZone: process.env.TIME_ZONE || 'America/Bogota',
 };
 

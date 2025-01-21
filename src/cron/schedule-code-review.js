@@ -11,10 +11,6 @@ const { MAPPED_STATUS_COMMANDS, DISCORD_SERVER } = require('../config');
  */
 const checkThreadsForReview = async (client, statusText) => {
   try {
-    // Log the guild ID to check if it's correct
-    console.log(`Fetching guild with ID: ${DISCORD_SERVER.discordGuildId}`);
-
-    // Fetch the guild
     const guild = await client.guilds.fetch(DISCORD_SERVER.discordGuildId);
 
     if (!guild) {
@@ -24,9 +20,6 @@ const checkThreadsForReview = async (client, statusText) => {
       return;
     }
 
-    console.log('Guild found:', guild.name);
-
-    // Fetch all channels in the guild
     const channels = await guild.channels.fetch();
     const textChannels = channels.filter(
       (channel) => channel.type === ChannelType.GuildText
@@ -39,19 +32,20 @@ const checkThreadsForReview = async (client, statusText) => {
 
     for (const channel of textChannels.values()) {
       try {
-        // Fetch active threads in the channel
         const threads = await channel.threads.fetchActive();
         const pendingReviews = threads.threads.filter((thread) =>
           thread.name.includes(statusText)
         );
 
         if (pendingReviews.size > 0) {
+          let messageContent = `🔔 **Pending Threads in ${channel.name}**:\n\n`;
           for (const thread of pendingReviews.values()) {
-            await thread.send(
-              `🔔 **Reminder**: This thread has been marked with \`${statusText}\` and needs attention.`
-            );
+            messageContent += `The thread [${thread.name}] has not been reviewed:\n${thread.url}\n`;
           }
-          console.log(translateLanguage('checkReview.remindersSent'));
+
+          await channel.send({
+            content: messageContent,
+          });
         } else {
           console.log(
             translateLanguage('checkReview.noPendingReviews').replace(
@@ -86,19 +80,15 @@ const scheduleReviewCheck = (client, timeZone) => {
     return;
   }
 
-  // Schedule a cron job to run every minute
   new CronJob(
-    '* * * * *', // Cron expression for every minute
+    '0 7 * * 1,5',
     () => {
-      console.log('Running check-review cron job...');
       checkThreadsForReview(client, statusText);
     },
     null,
     true,
     timeZone
-  ).start();
-
-  console.log(`Scheduled check-review for every minute (${timeZone})`);
+  );
 };
 
 module.exports = { scheduleReviewCheck };

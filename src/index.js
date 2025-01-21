@@ -42,15 +42,8 @@ async function startClientBot(client) {
     console.log(convertCronToText(SCHEDULE_CALENDAR.scheduledCalendarInterval));
   }
 
-  const cronExpression = '* * * * *'; // Cron para ejecutarse de lunes a viernes a las 7:00 AM
-  const timeZone = 'America/Bogota'; // Hora de Colombia
-
-  // Llama a la función que ejecutará el check-review a la hora programada
-  scheduleReviewCheck({
-    client,
-    cronExpression,
-    timeZone,
-  });
+  const timeZone = 'America/Bogota';
+  scheduleReviewCheck(client, timeZone);
 
   await client.login(token);
 }
@@ -65,8 +58,6 @@ const client = new Client({
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
-    GatewayIntentBits.GuildMessagePolls,
-    GatewayIntentBits.DirectMessagePolls,
   ],
 });
 client.commands = new Collection();
@@ -75,7 +66,7 @@ process.on('uncaughtException', (error) => {
   handleCriticalError(error);
 });
 
-process.on('unhandledRejection', async (reason, promise) => {
+process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise);
   handleCriticalError(reason);
 });

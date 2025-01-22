@@ -7,6 +7,7 @@ const DISCORD_SERVER = {
   discordClientId: process.env.DISCORD_CLIENT_ID,
   discordGuildId: process.env.DISCORD_GUILD_ID,
   botLanguage: process.env.DISCORD_LANGUAGE || 'en',
+  discordAnnouncementsChannel: process.env.DISCORD_ANNOUNCEMENTS_CHANNEL_ID,
 };
 
 const MAPPED_STATUS_COMMANDS = {

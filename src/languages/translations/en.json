@@ -5,7 +5,8 @@
     "notAThread": "Sorry, this is not a thread!",
     "invalidStatus": "Invalid status command.",
     "updatedStatus": "Status updated to {{status}}",
-    "error": "An error occurred while updating the status."
+    "error": "An error occurred while updating the status.",
+    "messageOption": "Send a message to detail your changes"
   },
   "convertTime": {
     "description": "Convert time between time zones",

@@ -10,10 +10,6 @@ const {
 
 const STATUS_KEY = 'pr-request-review';
 
-function handleCriticalError(error) {
-  saveErrorLog(error);
-}
-
 /**
  * Retrieves the mapped status text for the given key.
  *
@@ -87,11 +83,11 @@ const checkThreadsForReview = async (client, statusText) => {
           );
         }
       } catch (error) {
-        console.error(handleCriticalError(error));
+        console.error(saveErrorLog(error));
       }
     }
   } catch (error) {
-    console.error(handleCriticalError(error));
+    console.error(saveErrorLog(error));
   }
 };
 

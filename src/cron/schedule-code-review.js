@@ -1,6 +1,7 @@
 const { CronJob } = require('cron');
 const { ChannelType } = require('discord.js');
 const { translateLanguage } = require('../languages/index');
+const saveErrorLog = require('./utils/log-error');
 const {
   MAPPED_STATUS_COMMANDS,
   DISCORD_SERVER,
@@ -8,6 +9,10 @@ const {
 } = require('../config');
 
 const STATUS_KEY = 'pr-request-review';
+
+function handleCriticalError(error) {
+  saveErrorLog(error);
+}
 
 /**
  * Retrieves the mapped status text for the given key.
@@ -81,16 +86,12 @@ const checkThreadsForReview = async (client, statusText) => {
             )
           );
         }
-      } catch (channelError) {
-        console.error(
-          `Error processing channel ${channel.name}: ${channelError.message}`
-        );
+      } catch (error) {
+        console.error(handleCriticalError(error));
       }
     }
   } catch (error) {
-    console.error(
-      `Error fetching guild or processing threads: ${error.message}`
-    );
+    console.error(handleCriticalError(error));
   }
 };
 

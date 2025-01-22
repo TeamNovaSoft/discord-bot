@@ -3,6 +3,7 @@ const { DISCORD_SERVER } = require('../config');
 const { translateLanguage } = require('../languages/index');
 const dateToCronExpression = require('../utils/date-to-cron-expression');
 const { SCHEDULE_MESSAGES } = require('../config');
+const saveErrorLog = require('../utils/log-error');
 
 const hoursInMilliseconds = 60 * 60 * 1000;
 const dayInMilliseconds = 24 * hoursInMilliseconds;
@@ -46,16 +47,22 @@ const scheduleEventReminder = ({ client, event, channelId, timeZone }) => {
   const job = new CronJob(
     cronExpression,
     async () => {
-      const eventAnnouncementChannel = await client.channels.fetch(channelId);
-      if (eventAnnouncementChannel) {
-        eventAnnouncementChannel.send(
-          translateLanguage('calendarSchedules.reminderDiscordEvent', {
-            eventName: event.name,
-          })
-        );
-      } else {
-        console.log(
-          translateLanguage('calendarSchedules.errorChannelNotFound')
+      try {
+        const eventAnnouncementChannel = await client.channels.fetch(channelId);
+        if (eventAnnouncementChannel) {
+          await eventAnnouncementChannel.send(
+            translateLanguage('calendarSchedules.reminderDiscordEvent', {
+              eventName: event.name,
+            })
+          );
+        } else {
+          console.log(
+            translateLanguage('calendarSchedules.errorChannelNotFound')
+          );
+        }
+      } catch (error) {
+        saveErrorLog(
+          `Error sending event reminder in channel - '${channelId}': ${error.message}`
         );
       }
     },

@@ -59,9 +59,15 @@ const checkThreadsForReview = async (client, statusText) => {
         );
 
         if (pendingReviews.size > 0) {
-          let messageContent = `🔔 **Pending Threads in ${channel.name}**:\n\n`;
+          let messageContent = `${translateLanguage(
+            'checkReview.pendingThreads'
+          ).replace('{{channelName}}', channel.name)}\n\n`;
           for (const thread of pendingReviews.values()) {
-            messageContent += `The thread [${thread.name}] has not been reviewed:\n${thread.url}\n`;
+            messageContent += `${translateLanguage(
+              'checkReview.threadNotReviewed'
+            )
+              .replace('{{threadName}}', thread.name)
+              .replace('{{threadUrl}}', thread.url)}\n`;
           }
 
           await channel.send({
@@ -121,4 +127,4 @@ const scheduleReviewCheck = (client) => {
   }
 };
 
-module.exports = { scheduleReviewCheck };
+module.exports = { scheduleReviewCheck, getMappedStatusText, STATUS_KEY };

@@ -108,12 +108,13 @@
   },
 
   "checkReview": {
-    "description": "Verificar PRs que necesitan revisión de código",
-    "channelOption": "Selecciona el canal para verificar PRs",
+    "description": "Revisar los PR que necesitan revisiones de código",
+    "channelOption": "Selecciona el canal para verificar los PR",
     "invalidChannel": "El canal seleccionado no es válido. Por favor, selecciona un canal de texto o hilo.",
-    "noPendingReviews": "No hay PRs en estado 'request-review' que necesiten recordatorios en el canal {{channelName}}",
-    "reminder": "🔔 Recordatorio: El PR en el hilo {{threadName}} lleva demasiado tiempo en estado 'request-review'. Por favor, realiza tu revisión.",
-    "remindersSent": "Se enviaron recordatorios para {count} PR(s) que necesitan revisión en el canal {{channelName}}",
-    "error": "Ocurrió un error al verificar los PRs. Por favor, intenta nuevamente más tarde."
+    "noPendingReviews": "No hay PR en estado 'request-review' que necesiten recordatorios en el canal {{channelName}}.",
+    "pendingThreads": "🔔 **Hilos pendientes en {{channelName}}:**",
+    "remindersSent": "Se enviaron recordatorios para {count} PR(s) que requieren revisión en el canal {{channelName}}.",
+    "threadNotReviewed": "El hilo {{threadName}} no ha sido revisado:\n {{threadUrl}}",
+    "error": "Ocurrió un error al verificar los PR. Por favor, intenta nuevamente más tarde."
   }
 }

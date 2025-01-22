@@ -1,6 +1,10 @@
 const { SlashCommandBuilder, ChannelType } = require('discord.js');
 const { translateLanguage } = require('../../languages/index');
-const { MAPPED_STATUS_COMMANDS } = require('../../config');
+// const { MAPPED_STATUS_COMMANDS } = require('../../config');
+const {
+  getMappedStatusText,
+  STATUS_KEY,
+} = require('../../cron/schedule-code-review');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -25,7 +29,7 @@ module.exports = {
         return;
       }
 
-      const statusText = MAPPED_STATUS_COMMANDS['pr-request-review'];
+      const statusText = getMappedStatusText(STATUS_KEY);
       if (!statusText) {
         throw new Error('Mapped status for pr-request-review not found.');
       }
@@ -44,7 +48,9 @@ module.exports = {
         // Create reminders for each pending review thread
         for (const thread of pendingReviews.values()) {
           reminders.push(
-            `🔔 **Reminder**: The thread [${thread.name}] has not been reviewed:\n${thread.url}`
+            translateLanguage('checkReview.threadNotReviewed')
+              .replace('{{threadName}}', thread.name)
+              .replace('{{threadUrl}}', thread.url)
           );
         }
 

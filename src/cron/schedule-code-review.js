@@ -83,11 +83,11 @@ const checkThreadsForReview = async (client, statusText) => {
           );
         }
       } catch (error) {
-        console.error(saveErrorLog(error));
+        saveErrorLog(error);
       }
     }
   } catch (error) {
-    console.error(saveErrorLog(error));
+    saveErrorLog(error);
   }
 };
 

@@ -8,6 +8,7 @@ const DISCORD_SERVER = {
   discordGuildId: process.env.DISCORD_GUILD_ID,
   botLanguage: process.env.DISCORD_LANGUAGE || 'en',
   discordAnnouncementsChannel: process.env.DISCORD_ANNOUNCEMENTS_CHANNEL_ID,
+  scheduledDiscordEventsEnabled: process.env.SCHEDULED_DISCORD_EVENTS_ENABLED,
 };
 
 const MAPPED_STATUS_COMMANDS = {

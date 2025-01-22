@@ -8,7 +8,9 @@ const {
 } = require('./config');
 const deployEvents = require('./deploy-events');
 const deployCommands = require('./deploy-commands');
-const { scheduleEventReminders } = require('./cron/schedule-event-reminder');
+const {
+  scheduledEventNotifications,
+} = require('./cron/schedule-event-reminder');
 const {
   scheduleCalendarNotifications,
 } = require('./cron/schedule-google-calendar');
@@ -43,7 +45,19 @@ async function startClientBot(client) {
   }
 
   await client.login(token);
-  scheduleEventReminders(client);
+
+  if (DISCORD_SERVER.scheduledDiscordEventsEnabled) {
+    new cron.CronJob(
+      SCHEDULE_CALENDAR.scheduledCalendarInterval,
+      () => {
+        console.log('Running scheduled event notifications...');
+        scheduledEventNotifications(client);
+      },
+      null,
+      true,
+      SCHEDULE_MESSAGES.timeZone
+    );
+  }
 }
 
 function handleCriticalError(error) {

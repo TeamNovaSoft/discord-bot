@@ -28,7 +28,7 @@ module.exports = {
     ),
   async execute(interaction) {
     try {
-      const { options, channel } = interaction;
+      const { options, channel, user } = interaction;
       await interaction.deferReply({ ephemeral: true });
 
       if (!channel.isThread()) {
@@ -58,7 +58,13 @@ module.exports = {
       const updatedChannelName = `${newStatus} ${channelName}`;
       await channel.setName(updatedChannelName);
 
-      if (message) await channel.send(message);
+      if (message) {
+        const markdownMessage =
+          `# ${MAPPED_STATUS_COMMANDS[status]} ${status.replaceAll('-', ' ')}\n\n` +
+          `${message}\n\n` +
+          `> ${user}`;
+        await channel.send(markdownMessage);
+      }
 
       await interaction.editReply(
         translateLanguage('changeStatus.updatedStatus', {

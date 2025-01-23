@@ -58,9 +58,7 @@ module.exports = {
       const updatedChannelName = `${newStatus} ${channelName}`;
       await channel.setName(updatedChannelName);
 
-      if (message) {
-        await channel.send(message);
-      }
+      if (message) await channel.send(message);
 
       await interaction.editReply(
         translateLanguage('changeStatus.updatedStatus', {

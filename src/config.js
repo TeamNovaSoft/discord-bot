@@ -38,6 +38,11 @@ const QA_MENTION = {
   discordQAChannelName: process.env.DISCORD_QA_CHANNEL_ID,
 };
 
+const CRON_SCHEDULE_REVIEW = {
+  scheduleReview: process.env.CRON_SCHEDULE_REVIEW || '0 7 * * 1,5',
+  timeZone: process.env.TIME_ZONE || 'America/Bogota',
+};
+
 const REQUEST_POINT = {
   discordAdminPointRequestChannel: process.env.ADMIN_POINT_REQUEST_CHANNEL,
   discordAdminTagId: process.env.ADMINISTRATOR_TAG_ID,
@@ -122,4 +127,5 @@ module.exports = {
   PR_TEMPLATE,
   SCHEDULE_CALENDAR,
   GEMINI_INTEGRATION,
+  CRON_SCHEDULE_REVIEW,
 };

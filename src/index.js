@@ -5,6 +5,7 @@ const {
   SCHEDULE_MESSAGES,
   SCHEDULE_CALENDAR,
   GEMINI_INTEGRATION,
+  CRON_SCHEDULE_REVIEW,
 } = require('./config');
 const deployEvents = require('./deploy-events');
 const deployCommands = require('./deploy-commands');
@@ -17,6 +18,7 @@ const { scheduleIaContentLogging } = require('../src/cron/schedule-gemini');
 const saveErrorLog = require('./utils/log-error');
 const convertCronToText = require('./utils/cron-to-text-parser');
 const { processMarkdownFiles } = require('./cron/utils/read-markdown-messages');
+const { scheduleReviewCheck } = require('./cron/schedule-code-review');
 
 async function startClientBot(client) {
   client.commands = new Collection();
@@ -41,6 +43,9 @@ async function startClientBot(client) {
     console.log(convertCronToText(SCHEDULE_CALENDAR.scheduledCalendarInterval));
   }
 
+  const timeZone = CRON_SCHEDULE_REVIEW.timeZone;
+  scheduleReviewCheck(client, timeZone);
+
   await client.login(token);
 }
 
@@ -54,8 +59,6 @@ const client = new Client({
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
-    GatewayIntentBits.GuildMessagePolls,
-    GatewayIntentBits.DirectMessagePolls,
   ],
 });
 client.commands = new Collection();
@@ -64,7 +67,7 @@ process.on('uncaughtException', (error) => {
   handleCriticalError(error);
 });
 
-process.on('unhandledRejection', async (reason, promise) => {
+process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise);
   handleCriticalError(reason);
 });

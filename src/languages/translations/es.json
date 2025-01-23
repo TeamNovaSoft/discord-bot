@@ -112,6 +112,10 @@
     "monthOption": "Especifica el mes para filtrar (1-12).",
     "userOption": "Especifica el usuario para filtrar.",
     "channelsOption": "Especifica uno o más canales para filtrar (separados por comas, por ejemplo: novabot,code-review).",
-    "errorFetching": "Ocurrió un error al obtener los puntos. Por favor, inténtalo de nuevo más tarde."
+    "errorFetching": "Ocurrió un error al obtener los puntos. Por favor, inténtalo de nuevo más tarde.",
+    "taskComplete": "Tareas completadas",
+    "addPoints": "Puntos normales",
+    "boostedPoints": "Puntos potenciados",
+    "totalPoints": "Total de puntos"
   }
 }

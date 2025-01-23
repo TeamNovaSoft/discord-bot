@@ -35,6 +35,8 @@ module.exports = {
 
   async execute(interaction) {
     try {
+      await interaction.deferReply({ ephemeral: true });
+
       const currentDate = new Date();
       const year =
         interaction.options.getInteger('year') || currentDate.getFullYear();
@@ -47,7 +49,6 @@ module.exports = {
         ? channelsInput.split(',').map((channel) => channel.trim())
         : [];
 
-      // Calculate date range for the specified month
       const targetStartDate = new Date(year, month - 1, 1);
       const targetEndDate = new Date(year, month, 0);
 
@@ -57,66 +58,66 @@ module.exports = {
         boostedPoint: 0,
       };
 
-      for (const channelName of channels) {
+      function calculatePoints(messages, user, tagIds, fetchedPoints) {
+        messages.forEach((message) => {
+          if (message.author.id === user.id) {
+            if (message.content.includes(`<@&${tagIds.taskCompletedTagId}>`)) {
+              fetchedPoints.taskCompleted += 1;
+            }
+            if (message.content.includes(`<@&${tagIds.addPointTagId}>`)) {
+              fetchedPoints.addPoint += 1;
+            }
+            if (message.content.includes(`<@&${tagIds.boostedPointTagId}>`)) {
+              fetchedPoints.boostedPoint += 1;
+            }
+          }
+        });
+      }
+
+      async function processChannel(channelName) {
         const channel = interaction.guild.channels.cache.find(
-          (ch) => ch.name === channelName.trim()
+          (ch) => ch.name === channelName && ch.isTextBased()
         );
-        if (!channel || !channel.isTextBased()) {
-          continue;
+        if (!channel) {
+          return;
         }
 
         const threads = await channel.threads.fetchActive();
-
         for (const thread of threads.threads.values()) {
           if (
             new Date(thread.createdAt) >= targetStartDate &&
             new Date(thread.createdAt) <= targetEndDate
           ) {
             const messages = await thread.messages.fetch();
-
-            messages.forEach((message) => {
-              if (message.author.id === user.id) {
-                if (
-                  message.content.includes(`<@&${tagIds.taskCompletedTagId}>`)
-                ) {
-                  fetchedPoints.taskCompleted += 1;
-                }
-                if (message.content.includes(`<@&${tagIds.addPointTagId}>`)) {
-                  fetchedPoints.addPoint += 1;
-                }
-                if (
-                  message.content.includes(`<@&${tagIds.boostedPointTagId}>`)
-                ) {
-                  fetchedPoints.boostedPoint += 1;
-                }
-              }
-            });
+            calculatePoints(messages, user, tagIds, fetchedPoints);
           }
         }
       }
+
+      // Process channels concurrently
+      await Promise.all(channels.map(processChannel));
+
       const monthName = new Intl.DateTimeFormat(interaction.locale, {
         month: 'long',
       }).format(new Date(year, month - 1));
       const responseContent = [
         `${user.tag} - ${monthName.charAt(0).toUpperCase() + monthName.slice(1)} - ${year}`,
-        `Task Completed Points: ${fetchedPoints.taskCompleted || 0}`,
-        `Add Points: ${fetchedPoints.addPoint || 0}`,
-        `Boosted Points: ${fetchedPoints.boostedPoint || 0}`,
-        `Total Points: ${fetchedPoints.addPoint + fetchedPoints.boostedPoint || 0}`,
+        `${translateLanguage('myPoints.taskComplete')}: ${fetchedPoints.taskCompleted || 0}`,
+        `${translateLanguage('myPoints.addPoints')}: ${fetchedPoints.addPoint || 0}`,
+        `${translateLanguage('myPoints.boostedPoints')}: ${fetchedPoints.boostedPoint || 0}`,
+        `${translateLanguage('myPoints.totalPoints')}: ${fetchedPoints.addPoint + fetchedPoints.boostedPoint || 0}`,
       ].join('\n');
 
-      await interaction.reply({
+      await interaction.editReply({
         content: responseContent,
-        ephemeral: true,
       });
     } catch (error) {
       console.error(`Error in my-points command: ${error}`);
-      await interaction.reply({
+      await interaction.editReply({
         content: translateLanguage(
           'myPoints.errorFetching',
           interaction.locale
         ),
-        ephemeral: true,
       });
     }
   },

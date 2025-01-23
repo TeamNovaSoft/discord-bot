@@ -111,6 +111,10 @@
     "monthOption": "Specify the month to filter (1-12).",
     "userOption": "Specify the user to filter.",
     "channelsOption": "Specify one or more channels to filter (comma-separated, e.g., novabot,code-review).",
-    "errorFetching": "An error occurred while fetching the points. Please try again later."
+    "errorFetching": "An error occurred while fetching the points. Please try again later.",
+    "taskComplete": "completed tasks",
+    "addPoints": "Normal Points",
+    "boostedPoints": "Boosted Points",
+    "totalPoints": "Total Points"
   }
 }

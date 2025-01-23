@@ -1,7 +1,7 @@
 const { CronJob } = require('cron');
 const { ChannelType } = require('discord.js');
 const { translateLanguage } = require('../languages/index');
-const saveErrorLog = require('./utils/log-error');
+const saveErrorLog = require('../utils/log-error');
 const {
   MAPPED_STATUS_COMMANDS,
   DISCORD_SERVER,

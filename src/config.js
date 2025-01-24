@@ -10,15 +10,13 @@ const DISCORD_SERVER = {
 };
 
 const MAPPED_STATUS_COMMANDS = {
-  'pr-no-merge': '🚫',
-  'pr-sos': '🆘',
-  'pr-draft': '🚧',
-  'pr-reviewing': '👀',
-  'pr-request-changes': '🔁',
   'pr-request-review': '❗',
-  'pr-working-in-fixes': '🧑‍🔧',
+  'pr-request-changes': '🔁',
   'pr-approved-by-code-review': '👍',
-  'pr-merged-in-dev': '✅',
+  'pr-task-cancelled': '🚫',
+  'pr-work-in-progress': '👷🏾',
+  'pr-merged-on-staging': '✔',
+  'pr-merged-in-prod': '✅',
 };
 
 const PR_TEMPLATE = {

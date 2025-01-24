@@ -116,5 +116,16 @@
     "addPoints": "Normal Points",
     "boostedPoints": "Boosted Points",
     "totalPoints": "Total Points"
+  },
+
+  "checkReview": {
+    "description": "Check for PRs that need code reviews",
+    "channelOption": "Select the channel to check for PRs",
+    "invalidChannel": "The selected channel is not valid. Please select a text channel or thread.",
+    "noPendingReviews": "There are no PRs in 'request-review' status that need reminders in channel {{channelName}}.",
+    "pendingThreads": "🔔 **Pending Threads in {{channelName}} :",
+    "remindersSent": "Sent reminders for {count} PR(s) requiring review in channel {{channelName}}.",
+    "threadNotReviewed": "The thread {{threadName}} has not been reviewed:\n {{threadUrl}}",
+    "error": "An error occurred while checking for PRs. Please try again later."
   }
 }

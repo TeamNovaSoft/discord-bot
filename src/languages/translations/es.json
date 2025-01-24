@@ -117,5 +117,16 @@
     "addPoints": "Puntos normales",
     "boostedPoints": "Puntos potenciados",
     "totalPoints": "Total de puntos"
+  },
+
+  "checkReview": {
+    "description": "Revisar los PR que necesitan revisiones de código",
+    "channelOption": "Selecciona el canal para verificar los PR",
+    "invalidChannel": "El canal seleccionado no es válido. Por favor, selecciona un canal de texto o hilo.",
+    "noPendingReviews": "No hay PR en estado 'request-review' que necesiten recordatorios en el canal {{channelName}}.",
+    "pendingThreads": "🔔 **Hilos pendientes en {{channelName}}:**",
+    "remindersSent": "Se enviaron recordatorios para {count} PR(s) que requieren revisión en el canal {{channelName}}.",
+    "threadNotReviewed": "El hilo {{threadName}} no ha sido revisado:\n {{threadUrl}}",
+    "error": "Ocurrió un error al verificar los PR. Por favor, intenta nuevamente más tarde."
   }
 }

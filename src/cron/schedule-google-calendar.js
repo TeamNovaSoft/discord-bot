@@ -3,6 +3,7 @@ const { listEvents } = require('../../calendar');
 const { EmbedBuilder } = require('discord.js');
 const { firebaseConfig } = require('../../firebase-config');
 const { translateLanguage } = require('../languages/index');
+const dateToCronExpression = require('../utils/date-to-cron-expression');
 
 let activeCronJobs = [];
 
@@ -32,15 +33,6 @@ const scheduleEventNotification = async ({ client, event }) => {
       translateLanguage('calendarSchedules.errorMissingParameters')
     );
   }
-
-  const dateToCronExpression = (dateString) => {
-    const date = new Date(dateString);
-    const minutes = date.getMinutes();
-    const hours = date.getHours();
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    return `${minutes} ${hours} ${day} ${month} *`;
-  };
 
   const cronExpression = dateToCronExpression(event.start.dateTime);
   const job = new CronJob(

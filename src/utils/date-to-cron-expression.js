@@ -1,8 +1,16 @@
 /**
- * Parses a CSV string into an array of objects containing cron time and message.
+ * Converts a date string into a CRON expression.
  *
- * @param {string} csvString - The CSV string where each entry is separated by semicolons (`;`) and contains `cronTime,message`.
- * @returns {Array<{channel: string, datetime: string, message: string}>} An array of objects, each containing `cronTime` and `message` properties.
+ * @param {string} dateString - A string representing a date.
+ * @returns {string} A CRON expression derived from the provided date.
+ *
+ * @example
+ * dateToCronExpression('2022-01-22T15:30:00');
+ * // Returns '30 15 22 1 *'
+ *
+ * @example
+ * dateToCronExpression('2022-01-01T00:00:00');
+ * // Returns '0 0 1 1 *'
  */
 function dateToCronExpression(dateString) {
   const date = new Date(dateString);

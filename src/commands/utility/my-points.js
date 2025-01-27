@@ -57,20 +57,36 @@ module.exports = {
         addPoint: 0,
         boostedPoint: 0,
       };
-
       function calculatePoints(messages, user, tagIds, fetchedPoints) {
         messages.forEach((message) => {
-          if (message.author.id === user.id) {
-            if (message.content.includes(`<@&${tagIds.taskCompletedTagId}>`)) {
-              fetchedPoints.taskCompleted += 1;
-            }
-            if (message.content.includes(`<@&${tagIds.addPointTagId}>`)) {
-              fetchedPoints.addPoint += 1;
-            }
-            if (message.content.includes(`<@&${tagIds.boostedPointTagId}>`)) {
-              fetchedPoints.boostedPoint += 1;
-            }
+          if (message.author.id !== interaction.client.user.id) {
+            return;
           }
+
+          const userMentionRegex = /<@(\d+)>/g;
+          const mentionedUsers = Array.from(
+            message.content.matchAll(userMentionRegex),
+            (match) => match[1]
+          );
+
+          mentionedUsers.forEach((mentionedUserId) => {
+            if (mentionedUserId === user.id) {
+              if (
+                message.content.includes(`<@&${tagIds.taskCompletedTagId}>`)
+              ) {
+                fetchedPoints.taskCompleted += 1;
+                console.log('taskCompleted', fetchedPoints.taskCompleted);
+              }
+              if (message.content.includes(`<@&${tagIds.addPointTagId}>`)) {
+                fetchedPoints.addPoint += 1;
+                console.log('addPoint', fetchedPoints.addPoint);
+              }
+              if (message.content.includes(`<@&${tagIds.boostedPointTagId}>`)) {
+                fetchedPoints.boostedPoint += 1;
+                console.log('boostedPoint', fetchedPoints.boostedPoint);
+              }
+            }
+          });
         });
       }
 
@@ -82,11 +98,12 @@ module.exports = {
           return;
         }
 
-        const threads = await channel.threads.fetchActive();
-        for (const thread of threads.threads.values()) {
+        const activeThreads = await channel.threads.fetchActive();
+        for (const thread of activeThreads.threads.values()) {
+          const threadCreationDate = new Date(thread.createdAt);
           if (
-            new Date(thread.createdAt) >= targetStartDate &&
-            new Date(thread.createdAt) <= targetEndDate
+            threadCreationDate >= targetStartDate &&
+            threadCreationDate <= targetEndDate
           ) {
             const messages = await thread.messages.fetch();
             calculatePoints(messages, user, tagIds, fetchedPoints);

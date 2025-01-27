@@ -8,6 +8,9 @@ const DISCORD_SERVER = {
   discordGuildId: process.env.DISCORD_GUILD_ID,
   botLanguage: process.env.DISCORD_LANGUAGE || 'en',
 };
+const CHANNEL_NAME = {
+  announcements: process.env.ANNOUNCEMENTS_CHANNEL_ID,
+};
 
 const MAPPED_STATUS_COMMANDS = {
   'pr-no-merge': '🚫',
@@ -117,6 +120,7 @@ const GEMINI_INTEGRATION = {
 };
 
 module.exports = {
+  CHANNEL_NAME,
   DISCORD_SERVER,
   MAPPED_STATUS_COMMANDS,
   TIME_ZONES,

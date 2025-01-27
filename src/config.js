@@ -7,18 +7,19 @@ const DISCORD_SERVER = {
   discordClientId: process.env.DISCORD_CLIENT_ID,
   discordGuildId: process.env.DISCORD_GUILD_ID,
   botLanguage: process.env.DISCORD_LANGUAGE || 'en',
+  discordAnnouncementsChannel: process.env.DISCORD_ANNOUNCEMENTS_CHANNEL_ID,
+  scheduledDiscordEventsEnabled:
+    process.env.SCHEDULED_DISCORD_EVENTS_ENABLED === 'true',
 };
 
 const MAPPED_STATUS_COMMANDS = {
-  'pr-no-merge': '🚫',
-  'pr-sos': '🆘',
-  'pr-draft': '🚧',
-  'pr-reviewing': '👀',
-  'pr-request-changes': '🔁',
   'pr-request-review': '❗',
-  'pr-working-in-fixes': '🧑‍🔧',
+  'pr-request-changes': '🔁',
   'pr-approved-by-code-review': '👍',
-  'pr-merged-in-dev': '✅',
+  'pr-task-cancelled': '🚫',
+  'pr-work-in-progress': '👷🏾',
+  'pr-merged-on-staging': '✔',
+  'pr-merged-in-prod': '✅',
 };
 
 const PR_TEMPLATE = {

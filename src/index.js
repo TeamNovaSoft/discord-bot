@@ -10,6 +10,9 @@ const {
 const deployEvents = require('./deploy-events');
 const deployCommands = require('./deploy-commands');
 const {
+  scheduledEventNotifications,
+} = require('./cron/schedule-event-reminder');
+const {
   scheduleCalendarNotifications,
 } = require('./cron/schedule-google-calendar');
 const { firebaseConfig } = require('../firebase-config');
@@ -47,6 +50,19 @@ async function startClientBot(client) {
   scheduleReviewCheck(client, timeZone);
 
   await client.login(token);
+
+  if (DISCORD_SERVER.scheduledDiscordEventsEnabled) {
+    new cron.CronJob(
+      SCHEDULE_CALENDAR.scheduledCalendarInterval,
+      () => {
+        console.log('Running scheduled event notifications...');
+        scheduledEventNotifications(client);
+      },
+      null,
+      true,
+      SCHEDULE_MESSAGES.timeZone
+    );
+  }
 }
 
 function handleCriticalError(error) {

@@ -5,7 +5,8 @@
     "notAThread": "¡Lo siento, esto no es un hilo!",
     "invalidStatus": "Estado no válido.",
     "updatedStatus": "Estado actualizado a {{status}}",
-    "error": "Ocurrió un error al actualizar el estado."
+    "error": "Ocurrió un error al actualizar el estado.",
+    "messageOption": "Envia un mensage para detallar tus cambios"
   },
   "convertTime": {
     "description": "Convertir hora entre zonas horarias",
@@ -100,7 +101,8 @@
     "friday": "Viernes",
     "saturday": "Sábado",
     "sunday": "Domingo",
-    "calendarEventCollector": "Calendario de eventos programado para ejecutarse de {{readableDays}}, de {{hoursRange}} cada {{eachMinute}} minutos (hora Colombia)."
+    "calendarEventCollector": "Calendario de eventos programado para ejecutarse de {{readableDays}}, de {{hoursRange}} cada {{eachMinute}} minutos (hora Colombia).",
+    "reminderDiscordEvent": "Recordatorio: el evento \"{{eventName}}\" está a punto de finalizar pronto. ¡Únete o finaliza tus actividades si quieres participar!"
   },
   "messageSchedules": {
     "errorMissingParameters": "Error: Falta uno o más parámetros requeridos (client, channel, message, datetime, o timeZone).",

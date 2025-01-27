@@ -19,10 +19,16 @@ module.exports = {
             value: command,
           }))
         )
+    )
+    .addStringOption((option) =>
+      option
+        .setName('message')
+        .setDescription(translateLanguage('changeStatus.messageOption'))
+        .setRequired(false)
     ),
   async execute(interaction) {
     try {
-      const { options, channel } = interaction;
+      const { options, channel, user } = interaction;
       await interaction.deferReply({ ephemeral: true });
 
       if (!channel.isThread()) {
@@ -33,6 +39,7 @@ module.exports = {
       }
 
       const status = options.getString('status');
+      const message = options.getString('message');
       const newStatus = MAPPED_STATUS_COMMANDS[status];
 
       if (!newStatus) {
@@ -50,6 +57,15 @@ module.exports = {
 
       const updatedChannelName = `${newStatus} ${channelName}`;
       await channel.setName(updatedChannelName);
+
+      if (message) {
+        const markdownMessage =
+          `# ${MAPPED_STATUS_COMMANDS[status]} ${status.replaceAll('-', ' ')}\n\n` +
+          `${message}\n\n` +
+          `> ${user}`;
+        await channel.send(markdownMessage);
+      }
+
       await interaction.editReply(
         translateLanguage('changeStatus.updatedStatus', {
           status: status.replaceAll('-', ' '),

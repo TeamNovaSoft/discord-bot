@@ -75,15 +75,12 @@ module.exports = {
                 message.content.includes(`<@&${tagIds.taskCompletedTagId}>`)
               ) {
                 fetchedPoints.taskCompleted += 1;
-                console.log('taskCompleted', fetchedPoints.taskCompleted);
               }
               if (message.content.includes(`<@&${tagIds.addPointTagId}>`)) {
                 fetchedPoints.addPoint += 1;
-                console.log('addPoint', fetchedPoints.addPoint);
               }
               if (message.content.includes(`<@&${tagIds.boostedPointTagId}>`)) {
                 fetchedPoints.boostedPoint += 1;
-                console.log('boostedPoint', fetchedPoints.boostedPoint);
               }
             }
           });

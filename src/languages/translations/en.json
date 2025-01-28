@@ -107,6 +107,18 @@
     "errorMissingParameters": "Error: Missing one or more required parameters (client, channel, message, datetime, or timeZone).",
     "errorChannelNotFound": "Channel not found or client not ready."
   },
+  "myPoints": {
+    "description": "Retrieve the total points added to a user in a specific year and month, broken down by type.",
+    "yearOption": "Specify the year to filter.",
+    "monthOption": "Specify the month to filter (1-12).",
+    "userOption": "Specify the user to filter.",
+    "channelsOption": "Specify one or more channels to filter (comma-separated, e.g., novabot,code-review).",
+    "errorFetching": "An error occurred while fetching the points. Please try again later.",
+    "taskComplete": "completed tasks",
+    "addPoints": "Normal Points",
+    "boostedPoints": "Boosted Points",
+    "totalPoints": "Total Points"
+  },
 
   "checkReview": {
     "description": "Check for PRs that need code reviews",

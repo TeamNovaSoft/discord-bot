@@ -109,7 +109,7 @@
     "errorChannelNotFound": "Canal no encontrado o cliente no listo."
   },
   "myPoints": {
-    "description": "Recuperar el total de puntos añadidos a un usuario en un año y mes específicos, desglosados por tipo.",
+    "description": "Recuperar el total de puntos añadidos a un usuario en un año y mes específicos, desglosados por tipo",
     "yearOption": "Especifica el año para filtrar.",
     "monthOption": "Especifica el mes para filtrar (1-12).",
     "userOption": "Especifica el usuario para filtrar.",

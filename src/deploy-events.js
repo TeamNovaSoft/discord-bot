@@ -9,10 +9,17 @@ module.exports = (client) => {
 
   for (const file of eventFiles) {
     const event = require(path.join(eventsPath, file));
-    if (event.once) {
-      client.once(event.name, event.execute);
-    } else {
-      client.on(event.name, event.execute);
-    }
+
+    const eventHandler = (...args) => {
+      if (event.name === 'interactionCreate') {
+        event.execute(...args);
+      } else {
+        event.execute(client, ...args);
+      }
+    };
+
+    event.once
+      ? client.once(event.name, eventHandler)
+      : client.on(event.name, eventHandler);
   }
 };

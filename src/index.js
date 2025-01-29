@@ -57,6 +57,7 @@ const token = DISCORD_SERVER.discordToken;
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildScheduledEvents,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
   ],

@@ -115,5 +115,16 @@
     "remindersSent": "Sent reminders for {count} PR(s) requiring review in channel {{channelName}}.",
     "threadNotReviewed": "The thread {{threadName}} has not been reviewed:\n {{threadUrl}}",
     "error": "An error occurred while checking for PRs. Please try again later."
+  },
+  "eventCreated": {
+    "announcementTitle": "New Scheduled Event! 🎉",
+    "eventNameLabel": "Event Name",
+    "eventDescriptionLabel": "Description",
+    "noDescription": "No description available",
+    "joinEvent": "For more details, join the event at {{url}}",
+    "announcementChannelNotFound": "Announcement channel not found or is not a text channel",
+    "discordEventError": "Error handling the Discord event",
+    "messageSent": "Event message sent to the announcement channel",
+    "linkEvent": "Here"
   }
 }

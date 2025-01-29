@@ -5,6 +5,9 @@ const { firebaseConfig } = require('./firebase-config');
 
 const credentialsPath = path.join(__dirname, 'google-keys.json');
 
+console.log('test');
+
+
 if (
   !fs.existsSync(credentialsPath) &&
   firebaseConfig.scheduledCalendarEnabled

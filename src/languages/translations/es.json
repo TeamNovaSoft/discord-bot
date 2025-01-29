@@ -5,7 +5,8 @@
     "notAThread": "¡Lo siento, esto no es un hilo!",
     "invalidStatus": "Estado no válido.",
     "updatedStatus": "Estado actualizado a {{status}}",
-    "error": "Ocurrió un error al actualizar el estado."
+    "error": "Ocurrió un error al actualizar el estado.",
+    "messageOption": "Envia un mensage para detallar tus cambios"
   },
   "convertTime": {
     "description": "Convertir hora entre zonas horarias",
@@ -100,11 +101,24 @@
     "friday": "Viernes",
     "saturday": "Sábado",
     "sunday": "Domingo",
-    "calendarEventCollector": "Calendario de eventos programado para ejecutarse de {{readableDays}}, de {{hoursRange}} cada {{eachMinute}} minutos (hora Colombia)."
+    "calendarEventCollector": "Calendario de eventos programado para ejecutarse de {{readableDays}}, de {{hoursRange}} cada {{eachMinute}} minutos (hora Colombia).",
+    "reminderDiscordEvent": "Recordatorio: el evento \"{{eventName}}\" está a punto de finalizar pronto. ¡Únete o finaliza tus actividades si quieres participar!"
   },
   "messageSchedules": {
     "errorMissingParameters": "Error: Falta uno o más parámetros requeridos (client, channel, message, datetime, o timeZone).",
     "errorChannelNotFound": "Canal no encontrado o cliente no listo."
+  },
+  "myPoints": {
+    "description": "Recuperar el total de puntos añadidos a un usuario en un año y mes específicos, desglosados por tipo",
+    "yearOption": "Especifica el año para filtrar.",
+    "monthOption": "Especifica el mes para filtrar (1-12).",
+    "userOption": "Especifica el usuario para filtrar.",
+    "channelsOption": "Especifica uno o más canales para filtrar (separados por comas, por ejemplo: novabot,code-review).",
+    "errorFetching": "Ocurrió un error al obtener los puntos. Por favor, inténtalo de nuevo más tarde.",
+    "taskComplete": "Tareas completadas",
+    "addPoints": "Puntos normales",
+    "boostedPoints": "Puntos potenciados",
+    "totalPoints": "Total de puntos"
   },
 
   "checkReview": {

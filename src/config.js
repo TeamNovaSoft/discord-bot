@@ -20,7 +20,7 @@ const MAPPED_STATUS_COMMANDS = {
   'pr-work-in-progress': '👷🏾',
   'pr-merged-on-staging': '✔',
   'pr-merged-in-prod': '☑️',
-  'pr-done': '✅'
+  'pr-done': '✅',
 };
 
 const PR_TEMPLATE = {

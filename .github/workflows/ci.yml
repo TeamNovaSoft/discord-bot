@@ -1,6 +1,9 @@
 name: Lint Check
 
-on: pull_request
+push:
+  branches: [ $default-branch ]
+pull_request:
+  branches: [ $default-branch ]
 
 jobs:
   lint:

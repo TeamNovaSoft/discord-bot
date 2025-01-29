@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { MAPPED_STATUS_COMMANDS, DISCORD_SERVER } = require('../../config');
+const { MAPPED_STATUS_COMMANDS } = require('../../config');
 const { translateLanguage } = require('../../languages/index');
 
 const COMMAND_KEYS = Object.keys(MAPPED_STATUS_COMMANDS);

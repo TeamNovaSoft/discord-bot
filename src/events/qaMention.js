@@ -12,7 +12,7 @@ module.exports = {
 
       const mentionedRoles = message.mentions.roles;
 
-      if (!mentionedRoles || !mentionedRoles.has(QA_MENTION.discordQARoleId)) {
+      if (!mentionedRoles?.has(QA_MENTION.discordQARoleId)) {
         return;
       }
 
@@ -22,10 +22,9 @@ module.exports = {
 
       if (!qaRequestChannel) {
         return await message.reply({
-          content: translateLanguage('qaChannelNotFound').replace(
-            '{{channelName}}',
-            QA_MENTION.discordQAChannelName
-          ),
+          content: translateLanguage('qaChannelNotFound', {
+            channelName: QA_MENTION.discordQAChannelName,
+          }),
           ephemeral: true,
         });
       }
@@ -35,10 +34,11 @@ module.exports = {
       const messageLink = `https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id}`;
 
       await qaRequestChannel.send(
-        translateLanguage('qaMention.qaRequest')
-          .replace('{{role}}', qaRoleIdRef)
-          .replace('{{link}}', messageLink)
-          .replace('{{content}}', message.content)
+        translateLanguage('qaMention.qaRequest', {
+          role: qaRoleIdRef,
+          link: messageLink,
+          content: message.content,
+        })
       );
     } catch (error) {
       console.error('Error processing the mention:', error);

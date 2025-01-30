@@ -12,7 +12,7 @@ module.exports = {
 
       if (
         !author ||
-        !author.bot ||
+        !author?.bot ||
         !embeds ||
         !Array.isArray(embeds[0]?.fields) ||
         embeds[0]?.data?.type !== 'poll_result'

@@ -12,7 +12,7 @@ module.exports = {
 
       if (
         !author ||
-        author.bot ||
+        !author.bot ||
         !embeds ||
         !Array.isArray(embeds[0]?.fields) ||
         embeds[0]?.data?.type !== 'poll_result'
@@ -71,7 +71,7 @@ module.exports = {
         })
       );
     } catch (error) {
-      console.error('Error al manejar el evento:', error);
+      console.error('Error handling event:', error);
       await message.reply({
         content: translateLanguage('votePoints.errorOccurred'),
         ephemeral: true,

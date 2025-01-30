@@ -1,9 +1,9 @@
-const { ChannelType } = require('discord.js');
+const { ChannelType, Events } = require('discord.js');
 const { CHANNEL_NAME } = require('../config');
-const { translateLanguage } = require('../languages/index'); // Import translation function
+const { translateLanguage } = require('../languages/index');
 
 module.exports = {
-  name: 'guildScheduledEventCreate',
+  name: Events.GuildScheduledEventCreate,
   once: false,
   async execute(client, event) {
     try {

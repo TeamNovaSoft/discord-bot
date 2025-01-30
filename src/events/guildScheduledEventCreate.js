@@ -1,5 +1,5 @@
 const { ChannelType, Events } = require('discord.js');
-const { CHANNEL_NAME } = require('../config');
+const { LISTEN_NEW_EVENTS_REPORT_CHANNEL } = require('../config');
 const { translateLanguage } = require('../languages/index');
 
 module.exports = {
@@ -7,7 +7,9 @@ module.exports = {
   once: false,
   async execute(client, event) {
     try {
-      const channel = await client.channels.fetch(CHANNEL_NAME.announcements);
+      const channel = await client.channels.fetch(
+        LISTEN_NEW_EVENTS_REPORT_CHANNEL.announcements
+      );
 
       if (!channel || channel.type !== ChannelType.GuildText) {
         console.error(translateLanguage('errors.announcementChannelNotFound'));

@@ -11,7 +11,7 @@ const DISCORD_SERVER = {
   scheduledDiscordEventsEnabled:
     process.env.SCHEDULED_DISCORD_EVENTS_ENABLED === 'true',
 };
-const CHANNEL_NAME = {
+const LISTEN_NEW_EVENTS_REPORT_CHANNEL = {
   announcements: process.env.ANNOUNCEMENTS_CHANNEL_ID,
 };
 
@@ -122,7 +122,7 @@ const GEMINI_INTEGRATION = {
 };
 
 module.exports = {
-  CHANNEL_NAME,
+  LISTEN_NEW_EVENTS_REPORT_CHANNEL,
   DISCORD_SERVER,
   MAPPED_STATUS_COMMANDS,
   TIME_ZONES,

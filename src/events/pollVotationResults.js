@@ -10,13 +10,14 @@ module.exports = {
     try {
       const { embeds, author, client, channelId } = message;
 
-      if (
+      const isInvalidPollResultMessage =
         !author ||
         !author?.bot ||
         !embeds ||
         !Array.isArray(embeds[0]?.fields) ||
-        embeds[0]?.data?.type !== 'poll_result'
-      ) {
+        embeds[0]?.data?.type !== 'poll_result';
+
+      if (isInvalidPollResultMessage) {
         return;
       }
 

@@ -28,7 +28,9 @@ module.exports = {
         return;
       }
 
-      const parts = questionField.value.split('|').map((part) => part.trim());
+      const parts = (questionField.value || '')
+        .split('|')
+        .map((part) => part.trim());
       if (parts.length < 2) {
         return;
       }

@@ -6,7 +6,7 @@ const tagIds = VOTE_POINTS.TAG_IDS;
 
 module.exports = {
   name: Events.MessageCreate,
-  async execute(message) {
+  async execute(_client, message) {
     try {
       const { embeds, author, client, channelId } = message;
 

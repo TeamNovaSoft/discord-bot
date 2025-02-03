@@ -5,7 +5,7 @@ const { translateLanguage } = require('../languages/index');
 module.exports = {
   name: Events.GuildScheduledEventCreate,
   once: false,
-  async execute(event, client) {
+  async execute(client, event) {
     try {
       const channel = await client.channels.fetch(
         LISTEN_NEW_EVENTS_REPORT_CHANNEL.announcements

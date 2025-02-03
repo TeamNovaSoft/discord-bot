@@ -10,10 +10,12 @@ module.exports = (client) => {
   for (const file of eventFiles) {
     const event = require(path.join(eventsPath, file));
 
-    const eventHandler = (...args) => event.execute(...args, client);
+    const eventHandler = (...args) => event.execute(client, ...args);
 
-    event.once
-      ? client.once(event.name, eventHandler)
-      : client.on(event.name, eventHandler);
+    if (event.once) {
+      client.once(event.name, eventHandler);
+    } else {
+      client.on(event.name, eventHandler);
+    }
   }
 };

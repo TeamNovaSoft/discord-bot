@@ -5,7 +5,7 @@ const { translateLanguage } = require('../languages/index');
 module.exports = {
   name: Events.GuildScheduledEventCreate,
   once: false,
-  async execute(client, event) {
+  async execute(event, client) {
     try {
       const channel = await client.channels.fetch(
         LISTEN_NEW_EVENTS_REPORT_CHANNEL.announcements
@@ -24,7 +24,6 @@ module.exports = {
         `${translateLanguage('eventCreated.joinEvent', { url: `[${linkEvent}](${event.url})` }).trim()}`;
 
       await channel.send(eventMessage);
-      console.log(translateLanguage('eventCreated.messageSent'));
     } catch (error) {
       console.error(translateLanguage('eventCreated.discordEventError'), error);
     }

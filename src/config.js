@@ -18,7 +18,7 @@ const MAPPED_STATUS_COMMANDS = {
   'pr-approved-by-code-review': '👍',
   'pr-task-cancelled': '🚫',
   'pr-work-in-progress': '👷🏾',
-  'pr-merged-on-staging': '✔',
+  'pr-merged-on-staging': '🤟',
   'pr-merged-in-prod': '☑️',
   'pr-done': '✅',
 };

@@ -1,5 +1,5 @@
 const { ChannelType, Events } = require('discord.js');
-const { LISTEN_NEW_EVENTS_REPORT_CHANNEL } = require('../config');
+const { LISTEN_NEW_EVENTS } = require('../config');
 const { translateLanguage } = require('../languages/index');
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
   async execute(client, event) {
     try {
       const channel = await client.channels.fetch(
-        LISTEN_NEW_EVENTS_REPORT_CHANNEL.announcements
+        LISTEN_NEW_EVENTS.report_channel
       );
 
       if (!channel || channel.type !== ChannelType.GuildText) {

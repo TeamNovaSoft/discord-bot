@@ -4,7 +4,7 @@ const { translateLanguage } = require('../languages');
 
 module.exports = {
   name: Events.MessageCreate,
-  async execute(message) {
+  async execute(_client, message) {
     try {
       if (!message?.author?.bot || !message.guild) {
         return;

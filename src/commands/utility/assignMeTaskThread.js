@@ -3,14 +3,17 @@ const { DISCORD_SERVER } = require('../../config');
 const { translateLanguage } = require('../../languages/index');
 
 const ASSIGN_EMOJI = '⚔';
-const ASSIGNED_PATTERN = /\|⚔ @[\w-]+\|/;
+const ASSIGNED_PATTERN = new RegExp(`|${ASSIGN_EMOJI} @[w-]+|`);
 const userAssignedPattern = (username) =>
   new RegExp(`\\|${ASSIGN_EMOJI} \\@(${username})\\|`, 'g');
+const generateAssignedThreadName = (username) =>
+  `|${ASSIGN_EMOJI} @${username}|`;
 
 const getAssignReply = async ({ originalChannelName, user, client }) => {
   const assignedUsername = user.username;
   const escapedNewUserId = `<@${user.id}>`;
-  const currentUserAssignationString = `|${ASSIGN_EMOJI} @${assignedUsername}|`;
+  const currentUserAssignationString =
+    generateAssignedThreadName(assignedUsername);
 
   if (originalChannelName.includes(currentUserAssignationString)) {
     return {
@@ -35,7 +38,7 @@ const getAssignReply = async ({ originalChannelName, user, client }) => {
   );
   const escapedOriginalUserId = `<@${previousAssignedMember?.id}>`;
   const previousAssignedUsername = previousAssignedMember?.user?.username;
-  const userAssignationString = `|${ASSIGN_EMOJI} @${assignedUsername}|`;
+  const userAssignationString = generateAssignedThreadName(assignedUsername);
   const updatedChannelName = `${userAssignationString} ${originalChannelName.replace(userAssignedPattern(previousAssignedUsername), '')}`;
 
   return {

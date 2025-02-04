@@ -13,7 +13,7 @@ const DISCORD_SERVER = {
 };
 
 const LISTEN_NEW_EVENTS = {
-  report_channel: process.env.ANNOUNCEMENTS_CHANNEL_ID,
+  report_channel: process.env.DISCORD_ANNOUNCEMENTS_CHANNEL_ID,
 };
 
 const MAPPED_STATUS_COMMANDS = {

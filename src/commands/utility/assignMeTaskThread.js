@@ -20,10 +20,8 @@ const getAssignReply = async ({ originalChannelName, user, client }) => {
   }
 
   if (originalChannelName.search(ASSIGNED_PATTERN) < 0) {
-    const updatedChannelName = `${currentUserAssignationString} ${originalChannelName}`;
-
     return {
-      channelName: updatedChannelName,
+      channelName: `${currentUserAssignationString} ${originalChannelName}`,
       content: translateLanguage('tasksThread.taskAssignedTo', {
         newUserId: escapedNewUserId,
       }),
@@ -40,19 +38,13 @@ const getAssignReply = async ({ originalChannelName, user, client }) => {
   const previousAssignedUsername = previousAssignedMember?.user?.username;
   const userAssignationString = `|${ASSIGN_EMOJI} @${assignedUsername}|`;
   const updatedChannelName = `${userAssignationString} ${originalChannelName.replace(userAssignedPattern(previousAssignedUsername), '')}`;
-  const hasPreviousAssign =
-    previousAssignedMember && previousAssignedUsername !== user.username;
 
   return {
     channelName: updatedChannelName,
-    content: hasPreviousAssign
-      ? translateLanguage('tasksThread.reassignedTaskTo', {
-          originalUserAssigned: escapedOriginalUserId,
-          newUserAssigned: escapedNewUserId,
-        })
-      : translateLanguage('tasksThread.taskAssignedTo', {
-          newUserId: escapedNewUserId,
-        }),
+    content: translateLanguage('tasksThread.reassignedTaskTo', {
+      originalUserAssigned: escapedOriginalUserId,
+      newUserAssigned: escapedNewUserId,
+    }),
   };
 };
 

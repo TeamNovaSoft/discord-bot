@@ -48,10 +48,12 @@ module.exports = {
         );
       }
 
+      // This line escapes special regex characters in the emoji values from MAPPED_STATUS_COMMANDS.
+      // It ensures that symbols like *, +, or ? are treated as literals when used in a regex.
       const escapedEmojis = Object.values(MAPPED_STATUS_COMMANDS)
         .map((emoji) => emoji.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
         .join('|');
-      const emojisRegExp = new RegExp(`^(${escapedEmojis})\\s?`, 'i');
+      const emojisRegExp = new RegExp(`^(${escapedEmojis})\\s?`, 'ig');
 
       const channelName = channel.name.replace(emojisRegExp, '').trim();
 

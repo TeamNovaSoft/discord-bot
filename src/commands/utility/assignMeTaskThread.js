@@ -3,7 +3,7 @@ const { DISCORD_SERVER } = require('../../config');
 const { translateLanguage } = require('../../languages/index');
 
 const ASSIGN_EMOJI = '⚔';
-const ASSIGNED_PATTERN = new RegExp(`|${ASSIGN_EMOJI} @[w-]+|`);
+const ASSIGNED_PATTERN = new RegExp(`\\|${ASSIGN_EMOJI} @[\\w-]+\\|`);
 const userAssignedPattern = (username) =>
   new RegExp(`\\|${ASSIGN_EMOJI} \\@(${username})\\|`, 'g');
 const generateAssignedThreadName = (username) =>

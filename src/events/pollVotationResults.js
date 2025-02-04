@@ -3,31 +3,32 @@ const { VOTE_POINTS } = require('../config');
 const { translateLanguage } = require('../languages');
 
 const tagIds = VOTE_POINTS.TAG_IDS;
+
 module.exports = {
   name: Events.MessageCreate,
-  async execute(message) {
-    const { embeds, author, client, channelId } = message;
-
-    if (
-      !author.bot ||
-      !embeds ||
-      !Array.isArray(embeds[0]?.fields) ||
-      embeds[0]?.data?.type !== 'poll_result'
-    ) {
-      return;
-    }
-
+  async execute(_client, message) {
     try {
+      const { embeds, author, client, channelId } = message;
+
+      const isBotAuthor = author?.bot;
+      const isTypePoll = embeds?.[0]?.data?.type === 'poll_result';
+      const havePollData = Array.isArray(embeds[0]?.fields);
+
+      if (!isBotAuthor || !isTypePoll || !havePollData) {
+        return;
+      }
+
       const questionField = embeds[0]?.fields.find(
         (field) => field.name === 'poll_question_text'
       );
-
       if (!questionField) {
         return;
       }
 
-      const parts = questionField.value.split('|').map((part) => part.trim());
-      if (!parts || parts.length < 2) {
+      const parts = (questionField.value || '')
+        .split('|')
+        .map((part) => part.trim());
+      if (parts.length < 2) {
         return;
       }
 
@@ -38,13 +39,12 @@ module.exports = {
         : tagIds.addPointTagId;
 
       if (embeds[0]?.fields.length <= 3) {
-        return await client.channels.fetch(channelId).then((channel) => {
-          if (channel) {
-            return channel.send(
-              translateLanguage(`votePoints.drawNotSupported`)
-            );
-          }
-        });
+        const channel = await client.channels.fetch(channelId);
+        if (channel) {
+          return await channel.send(
+            translateLanguage(`votePoints.drawNotSupported`)
+          );
+        }
       }
 
       const finalResultField = embeds[0]?.fields.find(
@@ -59,7 +59,6 @@ module.exports = {
       }
 
       const channel = await client.channels.fetch(channelId);
-
       if (!channel) {
         return await message.reply(
           translateLanguage(`votePoints.notFindChanne: ${channelId}`)
@@ -71,7 +70,8 @@ module.exports = {
           await channel.send(`<@&${selectedTagId}> ${userMentioned}`);
         })
       );
-    } catch {
+    } catch (error) {
+      console.error('Error handling event:', error);
       await message.reply({
         content: translateLanguage('votePoints.errorOccurred'),
         ephemeral: true,

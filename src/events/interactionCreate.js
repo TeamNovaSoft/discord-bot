@@ -3,7 +3,7 @@ const { handleModalSubmit } = require('../handlers/modal-submit');
 
 module.exports = {
   name: Events.InteractionCreate,
-  async execute(interaction) {
+  async execute(_client, interaction) {
     if (interaction.isChatInputCommand()) {
       const command = interaction.client.commands.get(interaction.commandName);
 

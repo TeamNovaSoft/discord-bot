@@ -15,7 +15,6 @@ const getAssignReply = async ({ originalChannelName, user, client }) => {
   if (originalChannelName.includes(currentUserAssignationString)) {
     return {
       content: translateLanguage('tasksThread.taskAssigned'),
-      ephemeral: true,
     };
   }
 
@@ -57,12 +56,11 @@ module.exports = {
   async execute(interaction) {
     try {
       const { channel, client, user } = interaction;
-      await interaction.deferReply({ ephemeral: true });
+      await interaction.deferReply();
 
       if (!channel.isThread()) {
         return await interaction.editReply({
           content: translateLanguage('changeStatus.notAThread'),
-          ephemeral: true,
         });
       }
       const channelName = channel.name;
@@ -70,7 +68,10 @@ module.exports = {
         { client, originalChannelName: channelName, user }
       );
 
-      await channel.setName(updatedChannelName);
+      if (updatedChannelName) {
+        await channel.setName(updatedChannelName);
+      }
+
       await interaction.editReply({
         content,
       });

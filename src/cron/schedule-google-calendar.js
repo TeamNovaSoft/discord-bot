@@ -1,9 +1,9 @@
 const { CronJob } = require('cron');
 const { listEvents } = require('../../calendar');
 const { EmbedBuilder } = require('discord.js');
-const { firebaseConfig } = require('../../firebase-config');
 const { translateLanguage } = require('../languages/index');
 const dateToCronExpression = require('../utils/date-to-cron-expression');
+const { FIREBASE_CONFIG } = require('../config');
 
 let activeCronJobs = [];
 
@@ -39,7 +39,7 @@ const scheduleEventNotification = async ({ client, event }) => {
     cronExpression,
     async () => {
       const currentChannel = await client.channels.cache.get(
-        firebaseConfig.channelCalendarId
+        FIREBASE_CONFIG.channelCalendarId
       );
       const embed = new EmbedBuilder()
         .setColor('#0099ff')

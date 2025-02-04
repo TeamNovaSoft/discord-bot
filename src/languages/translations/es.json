@@ -120,7 +120,6 @@
     "boostedPoints": "Puntos potenciados",
     "totalPoints": "Total de puntos"
   },
-
   "checkReview": {
     "description": "Revisar los PR que necesitan revisiones de código",
     "channelOption": "Selecciona el canal para verificar los PR",
@@ -130,5 +129,10 @@
     "remindersSent": "Se enviaron recordatorios para {count} PR(s) que requieren revisión en el canal {{channelName}}.",
     "threadNotReviewed": "El hilo {{threadName}} no ha sido revisado:\n {{threadUrl}}",
     "error": "Ocurrió un error al verificar los PR. Por favor, intenta nuevamente más tarde."
+  },
+  "task_assigned": "Esta tarea ha sido asignada a este usuario ya",
+  "taskAssignedTo": "Tarea asignada a {{newUserID}}!",
+  "tasksThread": {
+    "reassignedTaskTo": "{{originalUserAssigned}}, {{newUserAssigned}} se ha reasignado esta tarea"
   }
 }

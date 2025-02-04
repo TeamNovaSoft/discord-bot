@@ -48,14 +48,12 @@ module.exports = {
         );
       }
 
-      // This line escapes special regex characters in the emoji values from MAPPED_STATUS_COMMANDS.
-      // It ensures that symbols like *, +, or ? are treated as literals when used in a regex.
-      const escapedEmojis = Object.values(MAPPED_STATUS_COMMANDS).map((emoji) =>
-        emoji.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-      );
-      const emojisRegExp = new RegExp(`^(${escapedEmojis})\\s?`, 'ig');
-
-      const channelName = channel.name.replace(emojisRegExp, '').trim();
+      let channelName = channel.name;
+      Object.values(MAPPED_STATUS_COMMANDS).forEach((emoji) => {
+        if (channelName.startsWith(emoji)) {
+          channelName = channelName.replace(emoji, '').trim();
+        }
+      });
 
       const updatedChannelName = `${newStatus} ${channelName}`;
       await channel.setName(updatedChannelName);

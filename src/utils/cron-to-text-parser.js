@@ -1,4 +1,4 @@
-const { translateLanguage } = require('../languages');
+import { translateLanguage } from '../languages/index.js';
 
 /**
  * Converts a cron expression string into a human-readable text description.
@@ -9,7 +9,7 @@ const { translateLanguage } = require('../languages');
  * @returns {string} - A human-readable description of the cron schedule.
  * Example: "Calendar event collector scheduled to run from Monday to Friday, 8 AM to 5 PM every 20 minutes (Colombia time)."
  */
-function convertCronToText(cronString) {
+export default function convertCronToText(cronString) {
   const cronParts = cronString.split(' ');
   const minute = cronParts[0];
   const hour = cronParts[1];
@@ -37,5 +37,3 @@ function convertCronToText(cronString) {
     eachMinute: minute.split('/')[1],
   });
 }
-
-module.exports = convertCronToText;

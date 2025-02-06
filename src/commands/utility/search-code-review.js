@@ -1,11 +1,11 @@
-const { SlashCommandBuilder, ChannelType } = require('discord.js');
-const { translateLanguage } = require('../../languages/index');
-const {
+import { ChannelType, SlashCommandBuilder } from 'discord.js';
+import { translateLanguage } from '../../languages/index.js';
+import {
   getMappedStatusText,
   STATUS_KEY,
-} = require('../../cron/schedule-code-review');
+} from '../../cron/schedule-code-review.js';
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('check-review')
     .setDescription(translateLanguage('checkReview.description'))

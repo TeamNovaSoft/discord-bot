@@ -1,7 +1,7 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
-const logDir = path.join(__dirname, '../log');
+const logDir = path.join(import.meta.url, '../log'); // Cambié __dirname por import.meta.url, ya que en módulos ES no tienes acceso a __dirname
 const logFilePath = path.join(logDir, 'error.log');
 
 /**
@@ -9,7 +9,7 @@ const logFilePath = path.join(logDir, 'error.log');
  *
  * @param {Error} error - The error object to log.
  */
-function saveErrorLog(error) {
+export default function saveErrorLog(error) {
   console.error('Critical error occurred:', error);
 
   if (!fs.existsSync(logDir)) {
@@ -19,5 +19,3 @@ function saveErrorLog(error) {
   const errorMessage = `${new Date().toISOString()} - ${error.stack || error.message}\n`;
   fs.appendFileSync(logFilePath, errorMessage, 'utf8');
 }
-
-module.exports = saveErrorLog;

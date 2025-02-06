@@ -1,6 +1,6 @@
-const { CronJob } = require('cron');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
-const { GEMINI_INTEGRATION, SCHEDULE_MESSAGES } = require('../config');
+import { CronJob } from 'cron';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GEMINI_INTEGRATION, SCHEDULE_MESSAGES } from '../config.ts';
 
 const genAI = new GoogleGenerativeAI(GEMINI_INTEGRATION.geminiSecret);
 
@@ -37,7 +37,7 @@ const generateIaContent = async ({ client, channel, prompts }) => {
 /**
  * Schedules a recurring task to generate and log AI content at a specific interval.
  */
-const scheduleIaContentLogging = (client) => {
+export const scheduleIaContentLogging = (client) => {
   new CronJob(
     GEMINI_INTEGRATION.scheduleTime,
     () => {
@@ -52,5 +52,3 @@ const scheduleIaContentLogging = (client) => {
     SCHEDULE_MESSAGES.timeZone
   ).start();
 };
-
-module.exports = { scheduleIaContentLogging };

@@ -1,8 +1,8 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { createSendMessageModal } = require('../../modals/send-message-modal');
-const { translateLanguage } = require('../../languages/index');
+import { SlashCommandBuilder } from 'discord.js';
+import { createSendMessageModal } from '../../modals/send-message-modal.js';
+import { translateLanguage } from '../../languages/index.js';
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('send-message')
     .setDescription(translateLanguage('sendMessage.description'))

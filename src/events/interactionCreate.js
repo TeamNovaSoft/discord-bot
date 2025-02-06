@@ -1,5 +1,5 @@
-const { Events } = require('discord.js');
-const { handleModalSubmit } = require('../handlers/modal-submit');
+import { Events } from 'discord.js';
+import { handleModalSubmit } from '../handlers/modal-submit';
 
 module.exports = {
   name: Events.InteractionCreate,

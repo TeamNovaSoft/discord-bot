@@ -1,6 +1,6 @@
-const { Events } = require('discord.js');
-const { VOTE_POINTS } = require('../config');
-const { translateLanguage } = require('../languages');
+import { Events } from 'discord.js';
+import { VOTE_POINTS } from '../config';
+import { translateLanguage } from '../languages';
 
 const tagIds = VOTE_POINTS.TAG_IDS;
 

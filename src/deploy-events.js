@@ -1,14 +1,17 @@
-const fs = require('node:fs');
-const path = require('node:path');
+import fs from 'node:fs';
+import path from 'node:path';
 
-module.exports = (client) => {
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
+const deployEvents = async (client) => {
   const eventsPath = path.join(__dirname, 'events');
   const eventFiles = fs
     .readdirSync(eventsPath)
     .filter((file) => file.endsWith('.js'));
 
   for (const file of eventFiles) {
-    const event = require(path.join(eventsPath, file));
+    const eventPath = path.join(eventsPath, file);
+    const event = await import(eventPath);
 
     const eventHandler = (...args) => event.execute(client, ...args);
 
@@ -19,3 +22,5 @@ module.exports = (client) => {
     }
   }
 };
+
+export default deployEvents;

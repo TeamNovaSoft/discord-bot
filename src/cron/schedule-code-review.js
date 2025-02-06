@@ -1,14 +1,14 @@
-const { CronJob } = require('cron');
-const { ChannelType } = require('discord.js');
-const { translateLanguage } = require('../languages/index');
-const saveErrorLog = require('../utils/log-error');
-const {
-  MAPPED_STATUS_COMMANDS,
-  DISCORD_SERVER,
+import { CronJob } from 'cron';
+import { ChannelType } from 'discord.js';
+import { translateLanguage } from '../languages/index.js';
+import saveErrorLog from '../utils/log-error.js';
+import {
   CRON_SCHEDULE_REVIEW,
-} = require('../config');
+  DISCORD_SERVER,
+  MAPPED_STATUS_COMMANDS,
+} from '../config.ts';
 
-const STATUS_KEY = 'pr-request-review';
+export const STATUS_KEY = 'pr-request-review';
 
 /**
  * Retrieves the mapped status text for the given key.
@@ -16,7 +16,7 @@ const STATUS_KEY = 'pr-request-review';
  * @param {string} key - The key to retrieve the mapped status for.
  * @returns {string|null} - The mapped status text or null if not found.
  */
-const getMappedStatusText = (key) => {
+export const getMappedStatusText = (key) => {
   const statusText = MAPPED_STATUS_COMMANDS[key];
   if (!statusText) {
     console.error(`Mapped status for ${key} not found.`);
@@ -96,7 +96,7 @@ const checkThreadsForReview = async (client, statusText) => {
  *
  * @param {Client} client - The Discord.js client instance.
  */
-const scheduleReviewCheck = (client) => {
+export const scheduleReviewCheck = (client) => {
   const statusText = getMappedStatusText(STATUS_KEY);
   if (!statusText) {
     return;
@@ -123,5 +123,3 @@ const scheduleReviewCheck = (client) => {
     console.error('Failed to create CronJob:', error.message);
   }
 };
-
-module.exports = { scheduleReviewCheck, getMappedStatusText, STATUS_KEY };

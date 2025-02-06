@@ -1,8 +1,8 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { REQUEST_POINT } = require('../../config');
-const { translateLanguage } = require('../../languages/index');
+import { SlashCommandBuilder } from 'discord.js';
+import { REQUEST_POINT } from '../../config.ts';
+import { translateLanguage } from '../../languages/index.js';
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('request-point')
     .setDescription(translateLanguage('requestPoint.description'))

@@ -12,7 +12,7 @@
  * dateToCronExpression('2022-01-01T00:00:00');
  * // Returns '0 0 1 1 *'
  */
-function dateToCronExpression(dateString) {
+export default function dateToCronExpression(dateString) {
   const date = new Date(dateString);
   const minutes = date.getMinutes();
   const hours = date.getHours();
@@ -20,5 +20,3 @@ function dateToCronExpression(dateString) {
   const month = date.getMonth() + 1;
   return `${minutes} ${hours} ${day} ${month} *`;
 }
-
-module.exports = dateToCronExpression;

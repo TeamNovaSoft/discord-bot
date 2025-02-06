@@ -1,10 +1,10 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { translateLanguage } = require('../../languages/index');
-const { VOTE_POINTS } = require('../../config');
+import { SlashCommandBuilder } from 'discord.js';
+import { translateLanguage } from '../../languages/index.js';
+import { VOTE_POINTS } from '../../config.ts';
 
 const tagIds = VOTE_POINTS.TAG_IDS;
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('my-points')
     .setDescription(translateLanguage('myPoints.description'))

@@ -1,9 +1,9 @@
-const { CronJob } = require('cron');
-const { DISCORD_SERVER } = require('../config');
-const { translateLanguage } = require('../languages/index');
-const dateToCronExpression = require('../utils/date-to-cron-expression');
-const { SCHEDULE_MESSAGES } = require('../config');
-const saveErrorLog = require('../utils/log-error');
+import { CronJob } from 'cron';
+import { DISCORD_SERVER } from '../config.ts';
+import { translateLanguage } from '../languages/index.js';
+import dateToCronExpression from '../utils/date-to-cron-expression.js';
+import { SCHEDULE_MESSAGES } from '../config.ts';
+import saveErrorLog from '../utils/log-error.js';
 
 const hoursInMilliseconds = 60 * 60 * 1000;
 const dayInMilliseconds = 24 * hoursInMilliseconds;
@@ -80,7 +80,7 @@ const scheduleEventReminder = ({ client, event, channelId, timeZone }) => {
  *
  * @param {Client} client - The Discord.js client instance.
  */
-const scheduledEventNotifications = async (client) => {
+export const scheduledEventNotifications = async (client) => {
   const guild = await client.guilds.fetch(DISCORD_SERVER.discordGuildId);
   const events = await guild.scheduledEvents.fetch();
 
@@ -101,5 +101,3 @@ const scheduledEventNotifications = async (client) => {
     });
   });
 };
-
-module.exports = { scheduledEventNotifications };

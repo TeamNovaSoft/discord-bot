@@ -12,7 +12,7 @@ export default [
       prettier: prettierPlugin,
     },
     languageOptions: {
-      sourceType: 'commonjs',
+      sourceType: 'module',
       globals: {
         ...node,
         filePath: 'readonly',

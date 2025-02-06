@@ -1,6 +1,6 @@
-const { ChannelType, Events } = require('discord.js');
-const { LISTEN_NEW_EVENTS } = require('../config');
-const { translateLanguage } = require('../languages/index');
+import { ChannelType, Events } from 'discord.js';
+import { LISTEN_NEW_EVENTS } from '../config.ts';
+import { translateLanguage } from '../languages/index.js';
 
 module.exports = {
   name: Events.GuildScheduledEventCreate,

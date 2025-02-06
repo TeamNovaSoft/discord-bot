@@ -1,32 +1,37 @@
-require('dotenv').config();
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
-const {
+import dotenv from 'dotenv';
+dotenv.config();
+
+import { Client, Collection, GatewayIntentBits } from 'discord.js';
+
+import {
   DISCORD_SERVER,
   SCHEDULE_MESSAGES,
   SCHEDULE_CALENDAR,
   GEMINI_INTEGRATION,
   CRON_SCHEDULE_REVIEW,
-} = require('./config');
-const deployEvents = require('./deploy-events');
-const deployCommands = require('./deploy-commands');
-const {
-  scheduledEventNotifications,
-} = require('./cron/schedule-event-reminder');
-const {
-  scheduleCalendarNotifications,
-} = require('./cron/schedule-google-calendar');
-const { firebaseConfig } = require('../firebase-config');
-const cron = require('cron');
-const { scheduleIaContentLogging } = require('../src/cron/schedule-gemini');
-const saveErrorLog = require('./utils/log-error');
-const convertCronToText = require('./utils/cron-to-text-parser');
-const { processMarkdownFiles } = require('./cron/utils/read-markdown-messages');
-const { scheduleReviewCheck } = require('./cron/schedule-code-review');
+} from './config.ts';
 
-async function startClientBot(client) {
+import deployEvents from './deploy-events.js';
+import deployCommands from './deploy-commands.js';
+
+import { scheduledEventNotifications } from './cron/schedule-event-reminder.js';
+import { scheduleCalendarNotifications } from './cron/schedule-google-calendar.js';
+import { firebaseConfig } from '../firebase-config.js';
+
+import cron from 'cron';
+
+import { scheduleIaContentLogging } from '../src/cron/schedule-gemini.js';
+
+import saveErrorLog from './utils/log-error.js';
+import convertCronToText from './utils/cron-to-text-parser.js';
+import { processMarkdownFiles } from './cron/utils/read-markdown-messages.js';
+import { scheduleReviewCheck } from './cron/schedule-code-review.js';
+
+
+async function startClientBot(client: any) {
   client.commands = new Collection();
   deployCommands(client);
-  deployEvents(client);
+  //deployEvents(client);
 
   processMarkdownFiles(client);
   if (GEMINI_INTEGRATION.scheduledGeminiEnabled) {
@@ -36,7 +41,7 @@ async function startClientBot(client) {
     new cron.CronJob(
       SCHEDULE_CALENDAR.scheduledCalendarInterval,
       () => {
-        console.log('Running scheduled calendar notifications...');
+        console.log("Running scheduled calendar notifications...");
         scheduleCalendarNotifications(client);
       },
       null,
@@ -55,7 +60,7 @@ async function startClientBot(client) {
     new cron.CronJob(
       SCHEDULE_CALENDAR.scheduledCalendarInterval,
       () => {
-        console.log('Running scheduled event notifications...');
+        console.log("Running scheduled event notifications...");
         scheduledEventNotifications(client);
       },
       null,
@@ -65,7 +70,7 @@ async function startClientBot(client) {
   }
 }
 
-function handleCriticalError(error) {
+function handleCriticalError(error: any) {
   saveErrorLog(error);
 }
 
@@ -73,19 +78,18 @@ const token = DISCORD_SERVER.discordToken;
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildScheduledEvents,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
   ],
 });
 client.commands = new Collection();
 
-process.on('uncaughtException', (error) => {
+process.on("uncaughtException", (error) => {
   handleCriticalError(error);
 });
 
-process.on('unhandledRejection', (reason, promise) => {
-  console.error('Unhandled Rejection at:', promise);
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection at:", promise);
   handleCriticalError(reason);
 });
 

@@ -1,9 +1,9 @@
-const { CronJob } = require('cron');
-const { listEvents } = require('../../calendar');
-const { EmbedBuilder } = require('discord.js');
-const { firebaseConfig } = require('../../firebase-config');
-const { translateLanguage } = require('../languages/index');
-const dateToCronExpression = require('../utils/date-to-cron-expression');
+import { CronJob } from 'cron';
+import { listEvents } from '../../calendar.js';
+import { EmbedBuilder } from 'discord.js';
+import { firebaseConfig } from '../../firebase-config.js';
+import { translateLanguage } from '../languages/index.js';
+import dateToCronExpression from '../utils/date-to-cron-expression.js';
 
 let activeCronJobs = [];
 
@@ -79,7 +79,7 @@ const scheduleEventNotification = async ({ client, event }) => {
  *
  * @param {Array<{summary: string, start: {dateTime: string, timeZone: string}}>} events - List of event objects.
  */
-const scheduleCalendarNotifications = async (client) => {
+export const scheduleCalendarNotifications = async (client) => {
   const events = await listEvents();
 
   if (!Array.isArray(events)) {
@@ -94,5 +94,3 @@ const scheduleCalendarNotifications = async (client) => {
     scheduleEventNotification({ client, event });
   });
 };
-
-module.exports = { scheduleCalendarNotifications };

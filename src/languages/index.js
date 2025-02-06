@@ -1,9 +1,12 @@
-const fs = require('fs');
-const path = require('path');
-const { DISCORD_SERVER } = require('../config');
+import fs from 'fs';
+import path from 'node:path';
+import { DISCORD_SERVER } from '../config.ts';
 
 const botLanguage = DISCORD_SERVER.botLanguage;
-const translationsPath = path.join(__dirname, 'translations');
+const translationsPath = path.join(
+  path.dirname(new URL(import.meta.url).pathname),
+  'translations'
+);
 const translationsCache = {
   es: {},
   en: {},
@@ -60,7 +63,7 @@ const interpolateText = (text, props = {}) => {
   return result;
 };
 
-function translateLanguage(key, params = {}) {
+export function translateLanguage(key, params = {}) {
   const translations = loadTranslations(botLanguage);
   if (!translations || !Object.values(translations).length) {
     return `Translations not available for language '${botLanguage}'.`;
@@ -69,5 +72,3 @@ function translateLanguage(key, params = {}) {
   const translation = getTranslationByKey(translations, key, botLanguage);
   return interpolateText(translation, params);
 }
-
-module.exports = { translateLanguage };

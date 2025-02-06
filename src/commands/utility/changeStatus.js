@@ -48,19 +48,19 @@ module.exports = {
         );
       }
 
-      let channelName = channel.name;
-      Object.values(MAPPED_STATUS_COMMANDS).forEach((emoji) => {
-        if (channelName.startsWith(emoji)) {
-          channelName = channelName.replace(emoji, '').trim();
-        }
-      });
+      const emojisRegExp = new RegExp(
+        `(${Object.values(MAPPED_STATUS_COMMANDS).join('|')})`,
+        'ig'
+      );
+
+      const channelName = channel.name.replace(emojisRegExp, '').trim();
 
       const updatedChannelName = `${newStatus} ${channelName}`;
       await channel.setName(updatedChannelName);
 
       if (message) {
         const markdownMessage =
-          `# ${MAPPED_STATUS_COMMANDS[status]} ${status.replaceAll('-', ' ')}\n\n` +
+          `# ${newStatus} ${status.replaceAll('-', ' ')}\n\n` +
           `${message}\n\n` +
           `> ${user}`;
         await channel.send(markdownMessage);

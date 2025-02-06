@@ -145,5 +145,10 @@
     "errorProcessingMention": "An error occurred while processing your request. Please try again later.",
     "qaRequest": "The role {{role}} has been mentioned and a review has been requested. [Check message]({{link}}).\n> {{content}}.\n\nPlease create a thread on this message to send your report.",
     "qaChannelNotFound": "Sorry, the channel: #{{channelName}} for QA requests was not found!"
+  },
+  "rememberMessages": {
+    "requestReviews": "Please review this pull request.",
+    "mergedInStaging": "This PR has been merged into staging.",
+    "requestChanges": "Changes have been requested for this PR."
   }
 }

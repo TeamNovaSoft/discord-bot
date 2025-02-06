@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { parseAllowedChannels } = require('./csv-parser-allowed-channels');
+const { translateLanguage } = require('./languages/index');
 const path = require('path');
 
 const DISCORD_SERVER = {
@@ -125,15 +126,15 @@ const GEMINI_INTEGRATION = {
 const STATUS_SCHEDULE_REMEMBER_SETTING = {
   'pr-request-review': {
     rememberAfterTime: '1440000',
-    messageTranslation: 'rememberMessages.requestReviews',
+    messageTranslation: translateLanguage('rememberMessages.requestReviews'),
   },
   'pr-merged-on-staging': {
     rememberAfterMs: '10080000',
-    messageTranslation: 'rememberMessages.mergedInStaging',
+    messageTranslation: translateLanguage('rememberMessages.mergedInStaging'),
   },
   'pr-request-changes': {
     rememberAfterMs: '360000',
-    messageTranslation: 'rememberMessages.requestChanges',
+    messageTranslation: translateLanguage('rememberMessages.requestChanges'),
   },
 };
 

@@ -122,6 +122,21 @@ const GEMINI_INTEGRATION = {
   interactionChannel: process.env.AI_AUTOMATIC_INTERACTION_CHANNEL,
 };
 
+const STATUS_SCHEDULE_REMEMBER_SETTING = {
+  'request-review': {
+    rememberAfterTime: '1440000', // Time in ms. Will send a message if thread have not changed in that time. In this case I put 1 day
+    messageTranslation: 'rememberMessages.requestReviews',
+  },
+  'merged-in-staging': {
+    rememberAfterMs: '10080000', // 1 week in ms (I am not totally sure)
+    messageTranslation: 'rememberMessages.mergedInStaging',
+  },
+  'request-changes': {
+    rememberAfterMs: '360000', // three times in a day (each 8 hours approximately)
+    messageTranslation: 'rememberMessages.requestChanges',
+  },
+};
+
 module.exports = {
   LISTEN_NEW_EVENTS,
   DISCORD_SERVER,
@@ -135,4 +150,5 @@ module.exports = {
   SCHEDULE_CALENDAR,
   GEMINI_INTEGRATION,
   CRON_SCHEDULE_REVIEW,
+  STATUS_SCHEDULE_REMEMBER_SETTING,
 };

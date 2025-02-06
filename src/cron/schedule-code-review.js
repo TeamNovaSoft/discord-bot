@@ -6,9 +6,8 @@ const {
   MAPPED_STATUS_COMMANDS,
   DISCORD_SERVER,
   CRON_SCHEDULE_REVIEW,
+  STATUS_SCHEDULE_REMEMBER_SETTING,
 } = require('../config');
-
-const STATUS_KEY = 'pr-request-review';
 
 /**
  * Retrieves the mapped status text for the given key.
@@ -26,15 +25,14 @@ const getMappedStatusText = (key) => {
 };
 
 /**
- * Checks threads for a specific status and sends reminders in all text channels.
+ * Checks threads for a specific status and sends reminders if needed.
  *
  * @param {Client} client - The Discord.js client instance.
- * @param {string} statusText - The status to look for in thread titles.
+ * @param {string} statusKey - The status key to check.
  */
-const checkThreadsForReview = async (client, statusText) => {
+const checkThreadsForStatus = async (client, statusKey) => {
   try {
     const guild = await client.guilds.fetch(DISCORD_SERVER.discordGuildId);
-
     if (!guild) {
       console.error(
         `Guild with ID ${DISCORD_SERVER.discordGuildId} not found.`
@@ -46,41 +44,46 @@ const checkThreadsForReview = async (client, statusText) => {
     const textChannels = channels.filter(
       (channel) => channel.type === ChannelType.GuildText
     );
-
     if (textChannels.size === 0) {
       console.error('No text channels found.');
+      return;
+    }
+
+    const statusConfig = STATUS_SCHEDULE_REMEMBER_SETTING[statusKey];
+    if (!statusConfig) {
+      console.error(`No configuration found for status: ${statusKey}`);
+      return;
+    }
+
+    const statusText = getMappedStatusText(statusKey);
+    if (!statusText) {
       return;
     }
 
     for (const channel of textChannels.values()) {
       try {
         const threads = await channel.threads.fetchActive();
-        const pendingReviews = threads.threads.filter((thread) =>
+        const pendingThreads = threads.threads.filter((thread) =>
           thread.name.includes(statusText)
         );
 
-        if (pendingReviews.size > 0) {
-          let messageContent = `${translateLanguage(
-            'checkReview.pendingThreads'
-          ).replace('{{channelName}}', channel.name)}\n\n`;
-          for (const thread of pendingReviews.values()) {
-            messageContent += `${translateLanguage(
-              'checkReview.threadNotReviewed'
-            )
-              .replace('{{threadName}}', thread.name)
-              .replace('{{threadUrl}}', thread.url)}\n`;
+        const now = Date.now();
+        const messageContent = [];
+        pendingThreads.forEach((thread) => {
+          const lastActivity = thread.lastMessageId
+            ? thread.lastMessage.createdTimestamp
+            : thread.createdTimestamp;
+          if (now - lastActivity >= statusConfig.rememberAfterMs) {
+            messageContent.push(
+              translateLanguage(statusConfig.messageTranslation)
+                .replace('{{threadName}}', thread.name)
+                .replace('{{threadUrl}}', thread.url)
+            );
           }
+        });
 
-          await channel.send({
-            content: messageContent,
-          });
-        } else {
-          console.log(
-            translateLanguage('checkReview.noPendingReviews').replace(
-              '{{channelName}}',
-              channel.name
-            )
-          );
+        if (messageContent.length > 0) {
+          await channel.send({ content: messageContent.join('\n') });
         }
       } catch (error) {
         saveErrorLog(error);
@@ -92,36 +95,33 @@ const checkThreadsForReview = async (client, statusText) => {
 };
 
 /**
- * Schedules a cron job to run `checkThreadsForReview` at specified intervals.
+ * Schedules cron jobs for all statuses defined in the configuration.
  *
  * @param {Client} client - The Discord.js client instance.
  */
-const scheduleReviewCheck = (client) => {
-  const statusText = getMappedStatusText(STATUS_KEY);
-  if (!statusText) {
-    return;
-  }
+const scheduleAllStatusChecks = (client) => {
+  Object.keys(STATUS_SCHEDULE_REMEMBER_SETTING).forEach((statusKey) => {
+    const schedule = CRON_SCHEDULE_REVIEW.scheduleReview;
+    if (typeof schedule !== 'string' || !schedule.trim()) {
+      console.error(`Invalid cron schedule for status ${statusKey}.`);
+      return;
+    }
 
-  const schedule = CRON_SCHEDULE_REVIEW.scheduleReview;
-
-  if (typeof schedule !== 'string' || !schedule.trim()) {
-    console.error('Invalid or missing cron schedule in configuration.');
-    return;
-  }
-
-  try {
-    new CronJob(
-      schedule,
-      () => {
-        checkThreadsForReview(client, statusText);
-      },
-      null,
-      true,
-      CRON_SCHEDULE_REVIEW.timeZone
-    );
-  } catch (error) {
-    console.error('Failed to create CronJob:', error.message);
-  }
+    try {
+      new CronJob(
+        schedule,
+        () => checkThreadsForStatus(client, statusKey),
+        null,
+        true,
+        CRON_SCHEDULE_REVIEW.timeZone
+      );
+    } catch (error) {
+      console.error(
+        `Failed to create CronJob for ${statusKey}:`,
+        error.message
+      );
+    }
+  });
 };
 
-module.exports = { scheduleReviewCheck, getMappedStatusText, STATUS_KEY };
+module.exports = { scheduleAllStatusChecks, getMappedStatusText };

@@ -3,7 +3,10 @@ import path from 'node:path';
 import fs from 'fs';
 import { firebaseConfig } from './firebase-config.js';
 
-const credentialsPath = path.join(path.dirname(new URL(import.meta.url).pathname), 'google-keys.json');
+const credentialsPath = path.join(
+  path.dirname(new URL(import.meta.url).pathname),
+  'google-keys.json'
+);
 
 if (
   !fs.existsSync(credentialsPath) &&

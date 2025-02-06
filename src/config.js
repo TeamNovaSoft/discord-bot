@@ -123,16 +123,16 @@ const GEMINI_INTEGRATION = {
 };
 
 const STATUS_SCHEDULE_REMEMBER_SETTING = {
-  'request-review': {
-    rememberAfterTime: '1440000', // Time in ms. Will send a message if thread have not changed in that time. In this case I put 1 day
+  'pr-request-review': {
+    rememberAfterTime: '1440000',
     messageTranslation: 'rememberMessages.requestReviews',
   },
-  'merged-in-staging': {
-    rememberAfterMs: '10080000', // 1 week in ms (I am not totally sure)
+  'pr-merged-on-staging': {
+    rememberAfterMs: '10080000',
     messageTranslation: 'rememberMessages.mergedInStaging',
   },
-  'request-changes': {
-    rememberAfterMs: '360000', // three times in a day (each 8 hours approximately)
+  'pr-request-changes': {
+    rememberAfterMs: '360000',
     messageTranslation: 'rememberMessages.requestChanges',
   },
 };

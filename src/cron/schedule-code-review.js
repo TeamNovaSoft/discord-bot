@@ -100,28 +100,30 @@ const checkThreadsForStatus = async (client, statusKey) => {
  * @param {Client} client - The Discord.js client instance.
  */
 const scheduleAllStatusChecks = (client) => {
-  Object.keys(STATUS_SCHEDULE_REMEMBER_SETTING).forEach((statusKey) => {
-    const schedule = CRON_SCHEDULE_REVIEW.scheduleReview;
-    if (typeof schedule !== 'string' || !schedule.trim()) {
-      console.error(`Invalid cron schedule for status ${statusKey}.`);
-      return;
-    }
+  Object.entries(STATUS_SCHEDULE_REMEMBER_SETTING).forEach(
+    ([statusKey, config]) => {
+      const schedule = CRON_SCHEDULE_REVIEW.scheduleReview;
+      if (typeof schedule !== 'string' || !schedule.trim()) {
+        console.error(`Invalid cron schedule for status ${statusKey}.`);
+        return;
+      }
 
-    try {
-      new CronJob(
-        schedule,
-        () => checkThreadsForStatus(client, statusKey),
-        null,
-        true,
-        CRON_SCHEDULE_REVIEW.timeZone
-      );
-    } catch (error) {
-      console.error(
-        `Failed to create CronJob for ${statusKey}:`,
-        error.message
-      );
+      try {
+        new CronJob(
+          schedule,
+          () => checkThreadsForStatus(client, statusKey, config),
+          null,
+          true,
+          CRON_SCHEDULE_REVIEW.timeZone
+        );
+      } catch (error) {
+        console.error(
+          `Failed to create CronJob for ${statusKey}:`,
+          error.message
+        );
+      }
     }
-  });
+  );
 };
 
 module.exports = { scheduleAllStatusChecks, getMappedStatusText };

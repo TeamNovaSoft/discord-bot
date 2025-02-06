@@ -53,9 +53,7 @@ const getAssignReply = async ({ originalChannelName, user, client }) => {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('assign-me')
-    .setDescription(
-      'Mark a task as assigned and define the name of the user that is assigned in the thread'
-    ),
+    .setDescription(translateLanguage('tasksThread.taskDescription')),
   async execute(interaction) {
     try {
       const { channel, client, user } = interaction;

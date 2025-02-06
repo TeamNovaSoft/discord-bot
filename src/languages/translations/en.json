@@ -146,6 +146,7 @@
     "qaChannelNotFound": "Sorry, the channel: #{{channelName}} for QA requests was not found!"
   },
   "tasksThread": {
+    "taskDescription": "Mark a task as assigned and define the name of the user that is assigned in the thread",
     "taskAssigned": "This task has been assigned to this user already",
     "taskAssignedTo": "Task assigned to {{newUserId}}!",
     "reassignedTaskTo": "{{originalUserAssigned}}, {{newUserAssigned}} has reassigned this task to him"

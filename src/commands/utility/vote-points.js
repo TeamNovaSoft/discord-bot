@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { VOTE_POINTS } from '../../config.ts';
-import { translateLanguage } from '../../languages/index.js';
+import { translateLanguage } from '../../languages/index.ts';
 
 const tagIds = VOTE_POINTS.TAG_IDS;
 

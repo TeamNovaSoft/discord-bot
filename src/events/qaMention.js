@@ -1,5 +1,5 @@
 import { Events } from 'discord.js';
-import { QA_MENTION } from '../config';
+import { QA_MENTION } from '../config.js';
 import { translateLanguage } from '../languages.js';
 
 module.exports = {

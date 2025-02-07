@@ -1,12 +1,23 @@
 import { CronJob } from 'cron';
-import { ChannelType } from 'discord.js';
-import { translateLanguage } from '../languages/index.js';
-import saveErrorLog from '../utils/log-error.js';
+import { ChannelType, Client, TextChannel, ThreadChannel } from 'discord.js';
+import { translateLanguage } from '../languages/index.ts';
+import saveErrorLog from '../utils/log-error.ts';
 import {
   CRON_SCHEDULE_REVIEW,
   DISCORD_SERVER,
   MAPPED_STATUS_COMMANDS,
 } from '../config.ts';
+
+export type MappedStatusCommandsType = {
+  'pr-request-review': string;
+  'pr-request-changes': string;
+  'pr-approved-by-code-review': string;
+  'pr-task-cancelled': string;
+  'pr-work-in-progress': string;
+  'pr-merged-on-staging': string;
+  'pr-merged-in-prod': string;
+  'pr-done': string;
+};
 
 export const STATUS_KEY = 'pr-request-review';
 
@@ -14,9 +25,9 @@ export const STATUS_KEY = 'pr-request-review';
  * Retrieves the mapped status text for the given key.
  *
  * @param {string} key - The key to retrieve the mapped status for.
- * @returns {string|null} - The mapped status text or null if not found.
+ * @returns {string | null} - The mapped status text or null if not found.
  */
-export const getMappedStatusText = (key) => {
+export const getMappedStatusText = (key: keyof MappedStatusCommandsType): string | null => {
   const statusText = MAPPED_STATUS_COMMANDS[key];
   if (!statusText) {
     console.error(`Mapped status for ${key} not found.`);
@@ -25,13 +36,17 @@ export const getMappedStatusText = (key) => {
   return statusText;
 };
 
+
 /**
  * Checks threads for a specific status and sends reminders in all text channels.
  *
  * @param {Client} client - The Discord.js client instance.
  * @param {string} statusText - The status to look for in thread titles.
  */
-const checkThreadsForReview = async (client, statusText) => {
+const checkThreadsForReview = async (
+  client: Client,
+  statusText: string
+): Promise<void> => {
   try {
     const guild = await client.guilds.fetch(DISCORD_SERVER.discordGuildId);
 
@@ -44,7 +59,8 @@ const checkThreadsForReview = async (client, statusText) => {
 
     const channels = await guild.channels.fetch();
     const textChannels = channels.filter(
-      (channel) => channel.type === ChannelType.GuildText
+      (channel): channel is TextChannel =>
+        channel?.type === ChannelType.GuildText
     );
 
     if (textChannels.size === 0) {
@@ -55,7 +71,7 @@ const checkThreadsForReview = async (client, statusText) => {
     for (const channel of textChannels.values()) {
       try {
         const threads = await channel.threads.fetchActive();
-        const pendingReviews = threads.threads.filter((thread) =>
+        const pendingReviews = threads.threads.filter((thread: ThreadChannel) =>
           thread.name.includes(statusText)
         );
 
@@ -83,11 +99,13 @@ const checkThreadsForReview = async (client, statusText) => {
           );
         }
       } catch (error) {
-        saveErrorLog(error);
+        const err = error as Error;
+        saveErrorLog(err);
       }
     }
   } catch (error) {
-    saveErrorLog(error);
+    const err = error as Error;
+    saveErrorLog(err);
   }
 };
 
@@ -96,7 +114,7 @@ const checkThreadsForReview = async (client, statusText) => {
  *
  * @param {Client} client - The Discord.js client instance.
  */
-export const scheduleReviewCheck = (client) => {
+export const scheduleReviewCheck = (client: Client): void => {
   const statusText = getMappedStatusText(STATUS_KEY);
   if (!statusText) {
     return;
@@ -120,6 +138,6 @@ export const scheduleReviewCheck = (client) => {
       CRON_SCHEDULE_REVIEW.timeZone
     );
   } catch (error) {
-    console.error('Failed to create CronJob:', error.message);
+    console.error('Failed to create CronJob:', (error as Error).message);
   }
 };

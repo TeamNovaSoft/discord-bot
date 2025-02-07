@@ -1,6 +1,6 @@
 import { ChannelType, Events } from 'discord.js';
 import { LISTEN_NEW_EVENTS } from '../config.ts';
-import { translateLanguage } from '../languages/index.js';
+import { translateLanguage } from '../languages/index.ts';
 
 module.exports = {
   name: Events.GuildScheduledEventCreate,

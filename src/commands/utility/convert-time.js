@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from 'discord.js';
 import moment from 'moment-timezone';
 import { TIME_ZONES } from '../../config.ts';
-import { translateLanguage } from '../../languages/index.js';
+import { translateLanguage } from '../../languages/index.ts';
 
 export default {
   data: new SlashCommandBuilder()

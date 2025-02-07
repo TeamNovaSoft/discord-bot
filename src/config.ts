@@ -4,9 +4,9 @@ import { parseAllowedChannels } from './csv-parser-allowed-channels.js'
 import path from 'path'
 
 export interface DiscordServer {
-  discordToken: string | undefined;
-  discordClientId: string | undefined;
-  discordGuildId: string | undefined;
+  discordToken: string;
+  discordClientId: string;
+  discordGuildId: string;
   botLanguage: string;
   discordAnnouncementsChannel: string | undefined;
   scheduledDiscordEventsEnabled: boolean;
@@ -71,7 +71,7 @@ export interface VotePoints {
 
 export interface GeminiIntegration {
   scheduledGeminiEnabled: boolean;
-  geminiSecret: string | undefined;
+  geminiSecret: string;
   scheduleTime: string | undefined;
   interactionsPrompts: string[] | undefined;
   interactionChannel: string | undefined;
@@ -79,9 +79,9 @@ export interface GeminiIntegration {
 
 
 const DISCORD_SERVER: DiscordServer = {
-  discordToken: process.env.DISCORD_TOKEN,
-  discordClientId: process.env.DISCORD_CLIENT_ID,
-  discordGuildId: process.env.DISCORD_GUILD_ID,
+  discordToken: process.env.DISCORD_TOKEN || "",
+  discordClientId: process.env.DISCORD_CLIENT_ID || "",
+  discordGuildId: process.env.DISCORD_GUILD_ID || "",
   botLanguage: process.env.DISCORD_LANGUAGE || 'en',
   discordAnnouncementsChannel: process.env.DISCORD_ANNOUNCEMENTS_CHANNEL_ID,
   scheduledDiscordEventsEnabled:
@@ -159,7 +159,7 @@ const VOTE_POINTS: VotePoints = {
 
 const GEMINI_INTEGRATION: GeminiIntegration = {
   scheduledGeminiEnabled: process.env.SCHEDULED_GEMINI_ENABLED === 'true',
-  geminiSecret: process.env.GEMINI_AI_API_KEY,
+  geminiSecret: process.env.GEMINI_AI_API_KEY || "",
   scheduleTime: process.env.TIME_BETWEEN_AI_AUTOMATIC_INTERACTION,
   interactionsPrompts: process.env.AI_AUTOMATIC_INTERACTION_PROMPTS?.split(
     ','

@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { MAPPED_STATUS_COMMANDS } from '../../config.ts';
-import { translateLanguage } from '../../languages/index.js';
+import { translateLanguage } from '../../languages/index.ts';
 
 const COMMAND_KEYS = Object.keys(MAPPED_STATUS_COMMANDS);
 

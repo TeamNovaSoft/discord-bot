@@ -1,9 +1,9 @@
 import { ChannelType, SlashCommandBuilder } from 'discord.js';
-import { translateLanguage } from '../../languages/index.js';
+import { translateLanguage } from '../../languages/index.ts';
 import {
   getMappedStatusText,
   STATUS_KEY,
-} from '../../cron/schedule-code-review.js';
+} from '../../cron/schedule-code-review.ts';
 
 export default {
   data: new SlashCommandBuilder()

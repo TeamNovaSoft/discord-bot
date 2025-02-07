@@ -1,7 +1,7 @@
 import { google } from 'googleapis';
 import path from 'node:path';
 import fs from 'fs';
-import { firebaseConfig } from './firebase-config.js';
+import { firebaseConfig } from './firebase-config.ts';
 
 const credentialsPath = path.join(
   path.dirname(new URL(import.meta.url).pathname),

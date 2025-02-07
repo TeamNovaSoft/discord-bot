@@ -1,5 +1,5 @@
 import { CronJob } from 'cron';
-import { translateLanguage } from '../languages/index.js';
+import { translateLanguage } from '../languages/index.ts';
 import { SCHEDULE_MESSAGES } from '../config.ts';
 
 /**

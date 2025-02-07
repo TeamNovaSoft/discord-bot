@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { REQUEST_POINT } from '../../config.ts';
-import { translateLanguage } from '../../languages/index.js';
+import { translateLanguage } from '../../languages/index.ts';
 
 export default {
   data: new SlashCommandBuilder()

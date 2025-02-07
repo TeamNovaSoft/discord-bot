@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { createSendMessageModal } from '../../modals/send-message-modal.js';
-import { translateLanguage } from '../../languages/index.js';
+import { translateLanguage } from '../../languages/index.ts';
 
 export default {
   data: new SlashCommandBuilder()

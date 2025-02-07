@@ -11,27 +11,27 @@ import {
   CRON_SCHEDULE_REVIEW,
 } from './config.ts';
 
-import deployEvents from './deploy-events.js';
-import deployCommands from './deploy-commands.js';
+import deployEvents from './deploy-events.ts';
+import deployCommands from './deploy-commands.ts';
 
-import { scheduledEventNotifications } from './cron/schedule-event-reminder.js';
-import { scheduleCalendarNotifications } from './cron/schedule-google-calendar.js';
-import { firebaseConfig } from '../firebase-config.js';
+import { scheduledEventNotifications } from './cron/schedule-event-reminder.ts';
+import { scheduleCalendarNotifications } from './cron/schedule-google-calendar.ts';
+import { firebaseConfig } from '../firebase-config.ts';
 
 import cron from 'cron';
 
-import { scheduleIaContentLogging } from '../src/cron/schedule-gemini.js';
+import { scheduleIaContentLogging } from '../src/cron/schedule-gemini.ts';
 
-import saveErrorLog from './utils/log-error.js';
-import convertCronToText from './utils/cron-to-text-parser.js';
-import { processMarkdownFiles } from './cron/utils/read-markdown-messages.js';
-import { scheduleReviewCheck } from './cron/schedule-code-review.js';
+import saveErrorLog from './utils/log-error.ts';
+import convertCronToText from './utils/cron-to-text-parser.ts';
+import { processMarkdownFiles } from './cron/utils/read-markdown-messages.ts';
+import { scheduleReviewCheck } from './cron/schedule-code-review.ts';
 
 
 async function startClientBot(client: any) {
   client.commands = new Collection();
   deployCommands(client);
-  //deployEvents(client);
+  deployEvents(client);
 
   processMarkdownFiles(client);
   if (GEMINI_INTEGRATION.scheduledGeminiEnabled) {

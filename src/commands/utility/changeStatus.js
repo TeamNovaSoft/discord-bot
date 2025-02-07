@@ -1,10 +1,10 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { MAPPED_STATUS_COMMANDS } = require('../../config');
-const { translateLanguage } = require('../../languages/index');
+import { SlashCommandBuilder } from 'discord.js';
+import { MAPPED_STATUS_COMMANDS } from '../../config.ts';
+import { translateLanguage } from '../../languages/index.ts';
 
 const COMMAND_KEYS = Object.keys(MAPPED_STATUS_COMMANDS);
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('change-status')
     .setDescription(translateLanguage('changeStatus.description'))

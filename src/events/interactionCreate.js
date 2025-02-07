@@ -1,7 +1,7 @@
-const { Events } = require('discord.js');
-const { handleModalSubmit } = require('../handlers/modal-submit');
+import { Events } from 'discord.js';
+import { handleModalSubmit } from '../handlers/modal-submit.js';
 
-module.exports = {
+export default {
   name: Events.InteractionCreate,
   async execute(_client, interaction) {
     if (interaction.isChatInputCommand()) {

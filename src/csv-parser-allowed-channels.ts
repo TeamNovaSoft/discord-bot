@@ -1,4 +1,4 @@
-function parseAllowedChannels(channels) {
+export function parseAllowedChannels(channels?: string) {
   if (typeof channels !== 'string') {
     return [];
   }
@@ -11,5 +11,3 @@ function parseAllowedChannels(channels) {
       return { name: name, value: id };
     });
 }
-
-module.exports = { parseAllowedChannels };

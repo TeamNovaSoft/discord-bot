@@ -1,12 +1,12 @@
-const {
+import {
   ActionRowBuilder,
   ModalBuilder,
   TextInputBuilder,
   TextInputStyle,
-} = require('discord.js');
-const { translateLanguage } = require('../languages/index');
+} from 'discord.js';
+import { translateLanguage } from '../languages/index.ts';
 
-function createSendMessageModal(channelId, userName) {
+export function createSendMessageModal(channelId, userName) {
   const modal = new ModalBuilder()
     .setCustomId(`send-message-modal-${channelId}-${userName}`)
     .setTitle(translateLanguage('sendMessage.modal.modalTitle'));
@@ -31,5 +31,3 @@ function createSendMessageModal(channelId, userName) {
   modal.addComponents(...rows);
   return modal;
 }
-
-module.exports = { createSendMessageModal };

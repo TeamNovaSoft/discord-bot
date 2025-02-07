@@ -1,9 +1,9 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { createPRModal } = require('../../modals/pr-template-modal');
-const { PR_TEMPLATE } = require('../../config');
-const { translateLanguage } = require('../../languages/index');
+import { SlashCommandBuilder } from 'discord.js';
+import { createPRModal } from '../../modals/pr-template-modal.js';
+import { PR_TEMPLATE } from '../../config.ts';
+import { translateLanguage } from '../../languages/index.ts';
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('pr-template')
     .setDescription(translateLanguage('prTemplate.description'))

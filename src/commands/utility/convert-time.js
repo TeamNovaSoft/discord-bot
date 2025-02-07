@@ -1,9 +1,9 @@
-const { SlashCommandBuilder } = require('discord.js');
-const moment = require('moment-timezone');
-const { TIME_ZONES } = require('../../config');
-const { translateLanguage } = require('../../languages/index');
+import { SlashCommandBuilder } from 'discord.js';
+import moment from 'moment-timezone';
+import { TIME_ZONES } from '../../config.ts';
+import { translateLanguage } from '../../languages/index.ts';
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('convert-time')
     .setDescription(translateLanguage('convertTime.description'))

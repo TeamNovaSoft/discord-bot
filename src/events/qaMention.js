@@ -1,8 +1,8 @@
-const { Events } = require('discord.js');
-const { QA_MENTION } = require('../config');
-const { translateLanguage } = require('../languages');
+import { Events } from 'discord.js';
+import { QA_MENTION } from '../config.ts';
+import { translateLanguage } from '../languages/index.ts';
 
-module.exports = {
+export default {
   name: Events.MessageCreate,
   async execute(_client, message) {
     try {

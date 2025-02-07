@@ -1,7 +1,7 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { translateLanguage } = require('../../languages/index');
+import { SlashCommandBuilder } from 'discord.js';
+import { translateLanguage } from '../../languages/index.ts';
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('user')
     .setDescription(translateLanguage('user.description')),

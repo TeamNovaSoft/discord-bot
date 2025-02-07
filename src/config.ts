@@ -1,11 +1,13 @@
-require('dotenv').config();
-const { parseAllowedChannels } = require('./csv-parser-allowed-channels');
-const path = require('path');
+import dotenv from 'dotenv';
+dotenv.config();
+import { parseAllowedChannels } from './csv-parser-allowed-channels.ts'
+import path from 'path'
+import type { CronScheduleReview, DiscordServer, GeminiIntegration, MappedStatusCommands, PrTemplate, QAMention, RequestPoint, ScheduleCalendar, ScheduleMessages, TimeZone, VotePoints } from './types/config.d.js';
 
-const DISCORD_SERVER = {
-  discordToken: process.env.DISCORD_TOKEN,
-  discordClientId: process.env.DISCORD_CLIENT_ID,
-  discordGuildId: process.env.DISCORD_GUILD_ID,
+const DISCORD_SERVER: DiscordServer = {
+  discordToken: process.env.DISCORD_TOKEN || "",
+  discordClientId: process.env.DISCORD_CLIENT_ID || "",
+  discordGuildId: process.env.DISCORD_GUILD_ID || "",
   botLanguage: process.env.DISCORD_LANGUAGE || 'en',
   discordAnnouncementsChannel: process.env.DISCORD_ANNOUNCEMENTS_CHANNEL_ID,
   scheduledDiscordEventsEnabled:
@@ -16,8 +18,7 @@ const LISTEN_NEW_EVENTS = {
   report_channel: process.env.DISCORD_ANNOUNCEMENTS_CHANNEL_ID,
 };
 
-const MAPPED_STATUS_COMMANDS = {
-  // unicode emojis
+const MAPPED_STATUS_COMMANDS: MappedStatusCommands = {
   'pr-request-review': '❗',
   'pr-request-changes': '🔁',
   'pr-approved-by-code-review': '👍',
@@ -28,78 +29,54 @@ const MAPPED_STATUS_COMMANDS = {
   'pr-done': '✅',
 };
 
-const PR_TEMPLATE = {
+const PR_TEMPLATE: PrTemplate = {
   allowedChannels: parseAllowedChannels(
     process.env.PR_TEMPLATE_ALLOWED_CHANNELS
   ),
 };
 
-const TIME_ZONES = [
+const TIME_ZONES: TimeZone[] = [
   { name: 'Argentina (ART)', value: 'America/Argentina/Buenos_Aires' },
   { name: 'Colombia (COT)', value: 'America/Bogota' },
   { name: 'Venezuela (VET)', value: 'America/Caracas' },
 ];
 
-const QA_MENTION = {
+const QA_MENTION: QAMention = {
   discordQARoleId: process.env.DISCORD_QA_ROLE_ID,
   discordQAChannelName: process.env.DISCORD_QA_CHANNEL_ID,
 };
 
-const CRON_SCHEDULE_REVIEW = {
+const CRON_SCHEDULE_REVIEW: CronScheduleReview = {
   scheduleReview: process.env.CRON_SCHEDULE_REVIEW || '0 7 * * 1,5',
   timeZone: process.env.TIME_ZONE || 'America/Bogota',
 };
 
-const REQUEST_POINT = {
+const REQUEST_POINT: RequestPoint = {
   discordAdminPointRequestChannel: process.env.ADMIN_POINT_REQUEST_CHANNEL,
   discordAdminTagId: process.env.ADMINISTRATOR_TAG_ID,
 };
 
-const SCHEDULE_MESSAGES = {
+const SCHEDULE_MESSAGES: ScheduleMessages = {
   timeZone: process.env.TIME_ZONE,
   pathMarkdownFolder: path.join(process.cwd(), '/markdown-files'),
 };
 
-const SCHEDULE_CALENDAR = {
+const SCHEDULE_CALENDAR: ScheduleCalendar = {
   scheduledCalendarInterval:
     process.env.SCHEDULED_CALENDAR_INTERVAL || '*/20 8-17 * * 1-5',
   timeZone: process.env.TIME_ZONE || 'America/Bogota',
 };
 
-const VOTE_POINTS = {
+const VOTE_POINTS: VotePoints = {
   ANSWERS: [
-    {
-      text: '1',
-      emoji: '🥇',
-    },
-    {
-      text: '2',
-      emoji: '🥈',
-    },
-    {
-      text: '3',
-      emoji: '🥉',
-    },
-    {
-      text: '4',
-      emoji: '4️⃣',
-    },
-    {
-      text: '5',
-      emoji: '5️⃣',
-    },
-    {
-      text: '6',
-      emoji: '6️⃣',
-    },
-    {
-      text: '7',
-      emoji: '7️⃣',
-    },
-    {
-      text: '8',
-      emoji: '🎱',
-    },
+    { text: '1', emoji: '🥇' },
+    { text: '2', emoji: '🥈' },
+    { text: '3', emoji: '🥉' },
+    { text: '4', emoji: '4️⃣' },
+    { text: '5', emoji: '5️⃣' },
+    { text: '6', emoji: '6️⃣' },
+    { text: '7', emoji: '7️⃣' },
+    { text: '8', emoji: '🎱' },
   ],
   TAG_IDS: {
     taskCompletedTagId:
@@ -110,9 +87,9 @@ const VOTE_POINTS = {
   },
 };
 
-const GEMINI_INTEGRATION = {
+const GEMINI_INTEGRATION: GeminiIntegration = {
   scheduledGeminiEnabled: process.env.SCHEDULED_GEMINI_ENABLED === 'true',
-  geminiSecret: process.env.GEMINI_AI_API_KEY,
+  geminiSecret: process.env.GEMINI_AI_API_KEY || "",
   scheduleTime: process.env.TIME_BETWEEN_AI_AUTOMATIC_INTERACTION,
   interactionsPrompts: process.env.AI_AUTOMATIC_INTERACTION_PROMPTS?.split(
     ','
@@ -123,8 +100,7 @@ const GEMINI_INTEGRATION = {
   interactionChannel: process.env.AI_AUTOMATIC_INTERACTION_CHANNEL,
 };
 
-module.exports = {
-  LISTEN_NEW_EVENTS,
+export {
   DISCORD_SERVER,
   MAPPED_STATUS_COMMANDS,
   TIME_ZONES,
@@ -136,4 +112,5 @@ module.exports = {
   SCHEDULE_CALENDAR,
   GEMINI_INTEGRATION,
   CRON_SCHEDULE_REVIEW,
+  LISTEN_NEW_EVENTS
 };

@@ -1,10 +1,13 @@
-const { REST, Routes } = require('discord.js');
-const fs = require('node:fs');
-const path = require('node:path');
-const { DISCORD_SERVER } = require('./config');
+import { REST, Routes } from 'discord.js';
+import fs from 'node:fs';
+import path from 'node:path';
+import { DISCORD_SERVER } from './config.ts';
+import { fileURLToPath } from 'node:url';
 
-module.exports = (client) => {
+export default async (client) => {
   const commands = [];
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
   const foldersPath = path.join(__dirname, 'commands');
   const commandFolders = fs.readdirSync(foldersPath);
   const token = DISCORD_SERVER.discordToken;
@@ -17,13 +20,13 @@ module.exports = (client) => {
       .readdirSync(commandsPath)
       .filter((file) => file.endsWith('.js'));
     for (const file of commandFiles) {
-      const command = require(path.join(commandsPath, file));
+      const command = await import(path.join(commandsPath, file));
       if ('data' in command && 'execute' in command) {
         commands.push(command.data.toJSON());
         client.commands.set(command.data.name, command);
       } else {
         console.log(
-          `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
+          `[WARNING] The command at is missing a required "data" or "execute" property.`
         );
       }
     }

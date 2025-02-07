@@ -1,9 +1,12 @@
-const { google } = require('googleapis');
-const path = require('path');
-const fs = require('fs');
-const { firebaseConfig } = require('./firebase-config');
+import { google } from 'googleapis';
+import path from 'node:path';
+import fs from 'fs';
+import { firebaseConfig } from './firebase-config.ts';
 
-const credentialsPath = path.join(__dirname, 'google-keys.json');
+const credentialsPath = path.join(
+  path.dirname(new URL(import.meta.url).pathname),
+  'google-keys.json'
+);
 
 if (
   !fs.existsSync(credentialsPath) &&
@@ -19,7 +22,7 @@ const auth = new google.auth.GoogleAuth({
 
 const calendar = google.calendar({ version: 'v3', auth });
 
-async function listEvents() {
+export async function listEvents() {
   const now = new Date();
 
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
@@ -43,5 +46,3 @@ async function listEvents() {
     };
   });
 }
-
-module.exports = { listEvents };

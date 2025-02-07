@@ -1,12 +1,12 @@
-const {
+import {
   ActionRowBuilder,
   ModalBuilder,
   TextInputBuilder,
   TextInputStyle,
-} = require('discord.js');
-const { translateLanguage } = require('../languages/index');
+} from 'discord.js';
+import { translateLanguage } from '../languages/index.ts';
 
-function createPRModal(channelId) {
+export function createPRModal(channelId) {
   const modal = new ModalBuilder()
     .setCustomId(`pr-template-modal-${channelId}`)
     .setTitle(translateLanguage('prTemplate.modal.modalTitle'));
@@ -44,5 +44,3 @@ function createPRModal(channelId) {
   modal.addComponents(...rows);
   return modal;
 }
-
-module.exports = { createPRModal };

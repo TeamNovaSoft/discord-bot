@@ -52,7 +52,7 @@ async function startClientBot(client: any) {
   }
 
   const timeZone = CRON_SCHEDULE_REVIEW.timeZone;
-  scheduleReviewCheck(client, timeZone);
+  scheduleReviewCheck(client);
 
   await client.login(token);
 

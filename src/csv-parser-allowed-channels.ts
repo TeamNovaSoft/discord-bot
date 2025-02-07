@@ -1,4 +1,4 @@
-export function parseAllowedChannels(channels) {
+export function parseAllowedChannels(channels?: string) {
   if (typeof channels !== 'string') {
     return [];
   }

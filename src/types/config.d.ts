@@ -1,7 +1,7 @@
 export interface DiscordServer {
-  discordToken: string | undefined;
-  discordClientId: string | undefined;
-  discordGuildId: string | undefined;
+  discordToken: string;
+  discordClientId: string;
+  discordGuildId: string;
   botLanguage: string;
   discordAnnouncementsChannel: string | undefined;
   scheduledDiscordEventsEnabled: boolean;
@@ -18,19 +18,8 @@ export interface MappedStatusCommands {
   'pr-done': string;
 }
 
-export type MappedStatusCommandsType = {
-  'pr-request-review': string;
-  'pr-request-changes': string;
-  'pr-approved-by-code-review': string;
-  'pr-task-cancelled': string;
-  'pr-work-in-progress': string;
-  'pr-merged-on-staging': string;
-  'pr-merged-in-prod': string;
-  'pr-done': string;
-};
-
 export interface PrTemplate {
-  allowedChannels: string[];
+  allowedChannels: { name: string; value: string }[];
 }
 
 export interface TimeZone {

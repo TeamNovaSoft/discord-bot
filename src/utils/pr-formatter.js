@@ -1,4 +1,10 @@
-function formatPRMessage({ title, overview, howToTest, prUrl, requester }) {
+export function formatPRMessage({
+  title,
+  overview,
+  howToTest,
+  prUrl,
+  requester,
+}) {
   return `
 **🔍 New PR Review Request**
 
@@ -25,5 +31,3 @@ ${howToTest}
 \`\`\`
   `;
 }
-
-module.exports = { formatPRMessage };

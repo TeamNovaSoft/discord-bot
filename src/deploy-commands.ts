@@ -11,7 +11,7 @@ interface Command {
   execute: (...args: any[]) => void;
 }
 
-const deployCommands = (client: Client) => {
+const deployCommands = async(client: Client) => {
   const commands: object[] = [];
   const foldersPath = path.join(
     path.dirname(new URL(import.meta.url).pathname),
@@ -29,7 +29,7 @@ const deployCommands = (client: Client) => {
       .filter((file) => file.endsWith('.js'));
 
     for (const file of commandFiles) {
-      import(path.join(commandsPath, file))
+      await import(path.join(commandsPath, file))
         .then((command: { default: Command }) => {
           if ('data' in command.default && 'execute' in command.default) {
             commands.push(command.default.data.toJSON());

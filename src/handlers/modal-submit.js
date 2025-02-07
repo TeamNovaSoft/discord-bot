@@ -1,8 +1,8 @@
-const { formatPRMessage } = require('../utils/pr-formatter');
-const { formatSendMessage } = require('../utils/send-message-formatter');
-const { translateLanguage } = require('../languages/index');
+import { formatPRMessage } from '../utils/pr-formatter.js';
+import { formatSendMessage } from '../utils/send-message-formatter.js';
+import { translateLanguage } from '../languages/index.ts';
 
-async function handleModalSubmit(interaction) {
+export async function handleModalSubmit(interaction) {
   await interaction.deferReply({ ephemeral: true });
 
   if (interaction.customId.startsWith('pr-template-modal-')) {

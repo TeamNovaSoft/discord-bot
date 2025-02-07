@@ -1,82 +1,8 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import { parseAllowedChannels } from './csv-parser-allowed-channels.js'
+import { parseAllowedChannels } from './csv-parser-allowed-channels.ts'
 import path from 'path'
-
-export interface DiscordServer {
-  discordToken: string;
-  discordClientId: string;
-  discordGuildId: string;
-  botLanguage: string;
-  discordAnnouncementsChannel: string | undefined;
-  scheduledDiscordEventsEnabled: boolean;
-}
-
-export interface MappedStatusCommands {
-  'pr-request-review': string;
-  'pr-request-changes': string;
-  'pr-approved-by-code-review': string;
-  'pr-task-cancelled': string;
-  'pr-work-in-progress': string;
-  'pr-merged-on-staging': string;
-  'pr-merged-in-prod': string;
-  'pr-done': string;
-}
-
-export interface PrTemplate {
-  allowedChannels: string[];
-}
-
-export interface TimeZone {
-  name: string;
-  value: string;
-}
-
-export interface QAMention {
-  discordQARoleId: string | undefined;
-  discordQAChannelName: string | undefined;
-}
-
-export interface CronScheduleReview {
-  scheduleReview: string;
-  timeZone: string;
-}
-
-export interface RequestPoint {
-  discordAdminPointRequestChannel: string | undefined;
-  discordAdminTagId: string | undefined;
-}
-
-export interface ScheduleMessages {
-  timeZone: string | undefined;
-  pathMarkdownFolder: string;
-}
-
-export interface ScheduleCalendar {
-  scheduledCalendarInterval: string;
-  timeZone: string;
-}
-
-export interface VotePoints {
-  ANSWERS: {
-    text: string;
-    emoji: string;
-  }[];
-  TAG_IDS: {
-    taskCompletedTagId: string;
-    addPointTagId: string;
-    boostedPointTagId: string;
-  };
-}
-
-export interface GeminiIntegration {
-  scheduledGeminiEnabled: boolean;
-  geminiSecret: string;
-  scheduleTime: string | undefined;
-  interactionsPrompts: string[] | undefined;
-  interactionChannel: string | undefined;
-}
-
+import type { CronScheduleReview, DiscordServer, GeminiIntegration, MappedStatusCommands, PrTemplate, QAMention, RequestPoint, ScheduleCalendar, ScheduleMessages, TimeZone, VotePoints } from './types/config.d.js';
 
 const DISCORD_SERVER: DiscordServer = {
   discordToken: process.env.DISCORD_TOKEN || "",
@@ -86,6 +12,10 @@ const DISCORD_SERVER: DiscordServer = {
   discordAnnouncementsChannel: process.env.DISCORD_ANNOUNCEMENTS_CHANNEL_ID,
   scheduledDiscordEventsEnabled:
     process.env.SCHEDULED_DISCORD_EVENTS_ENABLED === 'true',
+};
+
+const LISTEN_NEW_EVENTS = {
+  report_channel: process.env.DISCORD_ANNOUNCEMENTS_CHANNEL_ID,
 };
 
 const MAPPED_STATUS_COMMANDS: MappedStatusCommands = {
@@ -182,4 +112,5 @@ export {
   SCHEDULE_CALENDAR,
   GEMINI_INTEGRATION,
   CRON_SCHEDULE_REVIEW,
+  LISTEN_NEW_EVENTS
 };

@@ -1,10 +1,10 @@
 import { Events } from 'discord.js';
-import { VOTE_POINTS } from '../config';
-import { translateLanguage } from '../languages';
+import { VOTE_POINTS } from '../config.ts';
+import { translateLanguage } from '../languages/index.ts';
 
 const tagIds = VOTE_POINTS.TAG_IDS;
 
-module.exports = {
+export default {
   name: Events.MessageCreate,
   async execute(_client, message) {
     try {

@@ -1,4 +1,4 @@
-function formatSendMessage({ title, description, userName }) {
+export function formatSendMessage({ title, description, userName }) {
   return `
     # ${title}
 
@@ -7,5 +7,3 @@ function formatSendMessage({ title, description, userName }) {
     > Anuncio: ${userName}
     `;
 }
-
-module.exports = { formatSendMessage };

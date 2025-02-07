@@ -1,5 +1,4 @@
 const { Events } = require('discord.js');
-const { handleModalSubmit } = require('../handlers/modal-submit');
 
 module.exports = {
   name: Events.InteractionCreate,
@@ -30,15 +29,45 @@ module.exports = {
           });
         }
       }
-    } else if (interaction.isModalSubmit()) {
+    } else if (interaction.isButton()) {
+      const command = interaction.client.commands.get('remindme');
+
+      if (!command) {
+        console.error('No command matching remindme was found.');
+        return;
+      }
+
       try {
-        await handleModalSubmit(interaction);
+        await command.buttonHandler(interaction);
       } catch (error) {
-        console.error('Error handling modal submit:', error);
-        await interaction.reply({
-          content: 'There was an error processing your submission.',
-          ephemeral: true,
-        });
+        console.error('Error handling button interaction:', error);
+        if (!interaction.replied && !interaction.deferred) {
+          await interaction.reply({
+            content: 'There was an error processing your button interaction.',
+            ephemeral: true,
+          });
+        }
+      }
+    } else if (interaction.isModalSubmit()) {
+      if (interaction.customId === 'edit_reminder_modal') {
+        const command = interaction.client.commands.get('remindme');
+
+        if (!command) {
+          console.error('No command matching remindme was found.');
+          return;
+        }
+
+        try {
+          await command.buttonHandler(interaction);
+        } catch (error) {
+          console.error('Error handling modal submit:', error);
+          if (!interaction.replied && !interaction.deferred) {
+            await interaction.reply({
+              content: 'There was an error processing your submission.',
+              ephemeral: true,
+            });
+          }
+        }
       }
     }
   },

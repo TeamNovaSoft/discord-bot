@@ -146,5 +146,28 @@
     "errorProcessingMention": "Ocurrió un error al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.",
     "qaRequest": "El rol {{role}} ha sido mencionado y se ha solicitado una revisión. [Ver mensaje]({{link}}).\n> {{content}}.\n\nPor favor, crea un hilo en este mensaje para enviar tu informe.",
     "qaChannelNotFound": "Lo siento, el canal: #{{channelName}} para solicitudes de QA no fue encontrado!"
+  },
+  "remindme": {
+    "commandDescription": "Configura un recordatorio para una fecha y hora específica o solo una hora hoy",
+    "timeOptionDescription": "Fecha y hora (dd-MM-yyyy HH:mm) o solo hora (HH:mm)",
+    "messageOptionDescription": "Mensaje del recordatorio",
+    "invalidFormat": "❌ ¡Formato inválido! Usa `dd-MM-yyyy HH:mm` o `HH:mm`.",
+    "timeInFuture": "⏳ ¡La hora debe estar en el futuro!",
+    "reminderCreatedTitle": "🔔 Nuevo recordatorio creado",
+    "remindingAt": "Te recordaré a las",
+    "updatingCountdown": "Actualizando cuenta regresiva...",
+    "dmNotice": "Recibirás un mensaje privado cuando sea la hora.",
+    "resetReminder": "⏲️ Reiniciar recordatorio",
+    "editReminder": "✏️ Editar recordatorio",
+    "cancelReminder": "🗑️ Cancelar recordatorio",
+    "reminderMessage": "⏰ **Recordatorio:** {{message}}",
+    "reminderUpdatedTitle": "🔔 Nuevo recordatorio creado",
+    "timeLeft": "⏳ Tiempo restante",
+    "reminderCanceled": "🛑 Recordatorio cancelado.",
+    "noActiveReminders": "⚠️ No hay recordatorios activos.",
+    "reminderUpdated": "✅ ¡Recordatorio actualizado con éxito!",
+    "editReminderTitle": "Editar recordatorio",
+    "newTimeLabel": "Nueva fecha/hora",
+    "newMessageLabel": "Nuevo mensaje del recordatorio"
   }
 }

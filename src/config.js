@@ -46,11 +46,6 @@ const QA_MENTION = {
   discordQAChannelName: process.env.DISCORD_QA_CHANNEL_ID,
 };
 
-const CRON_SCHEDULE_REVIEW = {
-  scheduleReview: process.env.CRON_SCHEDULE_REVIEW || '0 7 * * 1,5',
-  timeZone: process.env.TIME_ZONE || 'America/Bogota',
-};
-
 const REQUEST_POINT = {
   discordAdminPointRequestChannel: process.env.ADMIN_POINT_REQUEST_CHANNEL,
   discordAdminTagId: process.env.ADMINISTRATOR_TAG_ID,
@@ -124,18 +119,24 @@ const GEMINI_INTEGRATION = {
   interactionChannel: process.env.AI_AUTOMATIC_INTERACTION_CHANNEL,
 };
 
-const STATUS_SCHEDULE_REMEMBER_SETTING = {
-  'pr-request-review': {
-    rememberAfterTime: '1440000',
-    messageTranslation: translateLanguage('rememberMessages.requestReviews'),
+const CRON_REVIEW_SETTINGS = {
+  cronSchedule: {
+    scheduleReview: process.env.CRON_SCHEDULE_REVIEW || '0 7 * * 1,5',
+    timeZone: process.env.TIME_ZONE || 'America/Bogota',
   },
-  'pr-merged-on-staging': {
-    rememberAfterMs: '10080000',
-    messageTranslation: translateLanguage('rememberMessages.mergedInStaging'),
-  },
-  'pr-request-changes': {
-    rememberAfterMs: '360000',
-    messageTranslation: translateLanguage('rememberMessages.requestChanges'),
+  statusScheduleRemember: {
+    'pr-request-review': {
+      rememberAfterMs: 1440000,
+      messageTranslation: translateLanguage('rememberMessages.requestReviews'),
+    },
+    'pr-merged-on-staging': {
+      rememberAfterMs: 10080000,
+      messageTranslation: translateLanguage('rememberMessages.mergedInStaging'),
+    },
+    'pr-request-changes': {
+      rememberAfterMs: 360000,
+      messageTranslation: translateLanguage('rememberMessages.requestChanges'),
+    },
   },
 };
 
@@ -151,6 +152,5 @@ module.exports = {
   PR_TEMPLATE,
   SCHEDULE_CALENDAR,
   GEMINI_INTEGRATION,
-  CRON_SCHEDULE_REVIEW,
-  STATUS_SCHEDULE_REMEMBER_SETTING,
+  CRON_REVIEW_SETTINGS,
 };

@@ -5,8 +5,7 @@ const saveErrorLog = require('../utils/log-error');
 const {
   MAPPED_STATUS_COMMANDS,
   DISCORD_SERVER,
-  CRON_SCHEDULE_REVIEW,
-  STATUS_SCHEDULE_REMEMBER_SETTING,
+  CRON_REVIEW_SETTINGS,
 } = require('../config');
 
 /**
@@ -49,7 +48,7 @@ const checkThreadsForStatus = async (client, statusKey) => {
       return;
     }
 
-    const statusConfig = STATUS_SCHEDULE_REMEMBER_SETTING[statusKey];
+    const statusConfig = CRON_REVIEW_SETTINGS.statusScheduleRemember[statusKey];
     if (!statusConfig) {
       console.error(`No configuration found for status: ${statusKey}`);
       return;
@@ -100,9 +99,9 @@ const checkThreadsForStatus = async (client, statusKey) => {
  * @param {Client} client - The Discord.js client instance.
  */
 const scheduleAllStatusChecks = (client) => {
-  Object.entries(STATUS_SCHEDULE_REMEMBER_SETTING).forEach(
+  Object.entries(CRON_REVIEW_SETTINGS.statusScheduleRemember).forEach(
     ([statusKey, config]) => {
-      const schedule = CRON_SCHEDULE_REVIEW.scheduleReview;
+      const schedule = CRON_REVIEW_SETTINGS.cronSchedule.scheduleReview;
       if (typeof schedule !== 'string' || !schedule.trim()) {
         console.error(`Invalid cron schedule for status ${statusKey}.`);
         return;
@@ -114,7 +113,7 @@ const scheduleAllStatusChecks = (client) => {
           () => checkThreadsForStatus(client, statusKey, config),
           null,
           true,
-          CRON_SCHEDULE_REVIEW.timeZone
+          CRON_REVIEW_SETTINGS.cronSchedule.timeZone
         );
       } catch (error) {
         console.error(

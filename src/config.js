@@ -14,17 +14,18 @@ const DISCORD_SERVER = {
 };
 
 const LISTEN_NEW_EVENTS = {
-  report_channel: process.env.ANNOUNCEMENTS_CHANNEL_ID,
+  report_channel: process.env.DISCORD_ANNOUNCEMENTS_CHANNEL_ID,
 };
 
 const MAPPED_STATUS_COMMANDS = {
+  // unicode emojis
   'pr-request-review': '❗',
   'pr-request-changes': '🔁',
   'pr-approved-by-code-review': '👍',
   'pr-task-cancelled': '🚫',
   'pr-work-in-progress': '👷🏾',
-  'pr-merged-on-staging': '✔',
-  'pr-merged-in-prod': '☑️',
+  'pr-merged-on-staging': '🟡',
+  'pr-merged-in-prod': '🟢',
   'pr-done': '✅',
 };
 

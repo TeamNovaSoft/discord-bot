@@ -120,7 +120,6 @@
     "boostedPoints": "Puntos potenciados",
     "totalPoints": "Total de puntos"
   },
-
   "checkReview": {
     "description": "Revisar los PR que necesitan revisiones de código",
     "channelOption": "Selecciona el canal para verificar los PR",
@@ -146,5 +145,11 @@
     "errorProcessingMention": "Ocurrió un error al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.",
     "qaRequest": "El rol {{role}} ha sido mencionado y se ha solicitado una revisión. [Ver mensaje]({{link}}).\n> {{content}}.\n\nPor favor, crea un hilo en este mensaje para enviar tu informe.",
     "qaChannelNotFound": "Lo siento, el canal: #{{channelName}} para solicitudes de QA no fue encontrado!"
+  },
+  "tasksThread": {
+    "taskDescription": "Marca una tarea como asignada y define el nombre del usuario asignado en el hilo",
+    "taskAssigned": "Esta tarea ha sido asignada a este usuario ya",
+    "taskAssignedTo": "Tarea asignada a {{newUserID}}!",
+    "reassignedTaskTo": "{{originalUserAssigned}}, {{newUserAssigned}} se ha reasignado esta tarea"
   }
 }

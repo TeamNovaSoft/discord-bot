@@ -56,6 +56,7 @@ const checkThreadsForStatus = async (client, statusKey) => {
 
     const statusText = getMappedStatusText(statusKey);
     if (!statusText) {
+      console.log('Status key not mapped:', statusKey);
       return;
     }
 

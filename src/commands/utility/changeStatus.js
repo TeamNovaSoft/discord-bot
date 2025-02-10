@@ -60,7 +60,7 @@ module.exports = {
 
       if (message) {
         const markdownMessage =
-          `# ${MAPPED_STATUS_COMMANDS[status]} ${status.replaceAll('-', ' ')}\n\n` +
+          `# ${newStatus} ${status.replaceAll('-', ' ')}\n\n` +
           `${message}\n\n` +
           `> ${user}`;
         await channel.send(markdownMessage);

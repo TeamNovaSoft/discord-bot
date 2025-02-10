@@ -76,6 +76,7 @@ const client = new Client({
     GatewayIntentBits.GuildScheduledEvents,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMembers,
   ],
 });
 client.commands = new Collection();

@@ -119,7 +119,6 @@
     "boostedPoints": "Boosted Points",
     "totalPoints": "Total Points"
   },
-
   "checkReview": {
     "description": "Check for PRs that need code reviews",
     "channelOption": "Select the channel to check for PRs",
@@ -145,6 +144,12 @@
     "errorProcessingMention": "An error occurred while processing your request. Please try again later.",
     "qaRequest": "The role {{role}} has been mentioned and a review has been requested. [Check message]({{link}}).\n> {{content}}.\n\nPlease create a thread on this message to send your report.",
     "qaChannelNotFound": "Sorry, the channel: #{{channelName}} for QA requests was not found!"
+  },
+  "tasksThread": {
+    "taskDescription": "Mark a task as assigned and define the name of the user that is assigned in the thread",
+    "taskAssigned": "This task has been assigned to this user already",
+    "taskAssignedTo": "Task assigned to {{newUserId}}!",
+    "reassignedTaskTo": "{{originalUserAssigned}}, {{newUserAssigned}} has reassigned this task to him"
   },
   "remindme": {
     "commandDescription": "Set a reminder for a specific date/time or just time today",

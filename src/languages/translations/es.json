@@ -120,7 +120,6 @@
     "boostedPoints": "Puntos potenciados",
     "totalPoints": "Total de puntos"
   },
-
   "checkReview": {
     "description": "Revisar los PR que necesitan revisiones de código",
     "channelOption": "Selecciona el canal para verificar los PR",
@@ -151,5 +150,11 @@
     "requestReviews": "Por favor revisa este pull request.",
     "mergedInStaging": "Este PR ha sido fusionado en staging.",
     "requestChanges": "Se han solicitado cambios para este PR."
+  },
+  "tasksThread": {
+    "taskDescription": "Marca una tarea como asignada y define el nombre del usuario asignado en el hilo",
+    "taskAssigned": "Esta tarea ha sido asignada a este usuario ya",
+    "taskAssignedTo": "Tarea asignada a {{newUserID}}!",
+    "reassignedTaskTo": "{{originalUserAssigned}}, {{newUserAssigned}} se ha reasignado esta tarea"
   }
 }

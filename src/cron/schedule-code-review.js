@@ -7,12 +7,12 @@ const {
   DISCORD_SERVER,
   CRON_REVIEW_SETTINGS,
 } = require('../config');
+const { convertMsToCron } = require('./utils/convertMsToCron');
 
 /**
- * Retrieves the mapped status text for the given key.
- *
- * @param {string} key - The key to retrieve the mapped status for.
- * @returns {string|null} - The mapped status text or null if not found.
+ * Gets the mapped status text.
+ * @param {string} key - Status key.
+ * @returns {string|null} - Mapped text or null if not found.
  */
 const getMappedStatusText = (key) => {
   const statusText = MAPPED_STATUS_COMMANDS[key];
@@ -24,10 +24,9 @@ const getMappedStatusText = (key) => {
 };
 
 /**
- * Checks threads for a specific status and sends reminders if needed.
- *
- * @param {Client} client - The Discord.js client instance.
- * @param {string} statusKey - The status key to check.
+ * Checks threads with a specific status and sends reminders if necessary.
+ * @param {Client} client - Instance of the Discord.js client.
+ * @param {string} statusKey - Key of the status to check.
  */
 const checkThreadsForStatus = async (client, statusKey) => {
   try {
@@ -70,15 +69,26 @@ const checkThreadsForStatus = async (client, statusKey) => {
         const now = Date.now();
         const messageContent = [];
         pendingThreads.forEach((thread) => {
-          const lastActivity = thread.lastMessageId
-            ? thread.lastMessage.createdTimestamp
-            : thread.createdTimestamp;
-          if (now - lastActivity >= statusConfig.rememberAfterMs) {
-            messageContent.push(
-              translateLanguage(statusConfig.messageTranslation)
-                .replace('{{threadName}}', thread.name)
-                .replace('{{threadUrl}}', thread.url)
+          const lastActivity =
+            thread.lastMessage?.createdTimestamp ||
+            thread.createdTimestamp ||
+            0;
+
+          if (lastActivity === 0) {
+            console.warn(
+              `Skipping thread "${thread.name}" due to missing timestamps.`
             );
+            return;
+          }
+
+          if (now - lastActivity >= statusConfig.rememberAfterMs) {
+            const translatedMessage = translateLanguage(
+              statusConfig.messageTranslationKey
+            )
+              .replace('{{threadName}}', thread.name)
+              .replace('{{threadUrl}}', thread.url);
+
+            messageContent.push(translatedMessage);
           }
         });
 
@@ -96,25 +106,20 @@ const checkThreadsForStatus = async (client, statusKey) => {
 
 /**
  * Schedules cron jobs for all statuses defined in the configuration.
- *
- * @param {Client} client - The Discord.js client instance.
+ * @param {Client} client - Instance of the Discord.js client.
  */
 const scheduleAllStatusChecks = (client) => {
-  Object.entries(CRON_REVIEW_SETTINGS.statusScheduleRemember).forEach(
-    ([statusKey, config]) => {
-      const schedule = CRON_REVIEW_SETTINGS.cronSchedule.scheduleReview;
-      if (typeof schedule !== 'string' || !schedule.trim()) {
-        console.error(`Invalid cron schedule for status ${statusKey}.`);
-        return;
-      }
+  Object.keys(CRON_REVIEW_SETTINGS.statusScheduleRemember).forEach(
+    (statusKey) => {
+      const schedule = convertMsToCron(statusKey);
 
       try {
         new CronJob(
           schedule,
-          () => checkThreadsForStatus(client, statusKey, config),
+          () => checkThreadsForStatus(client, statusKey),
           null,
           true,
-          CRON_REVIEW_SETTINGS.cronSchedule.timeZone
+          process.env.TIME_ZONE || 'America/Bogota'
         );
       } catch (error) {
         console.error(

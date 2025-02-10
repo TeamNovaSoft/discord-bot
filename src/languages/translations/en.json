@@ -126,7 +126,9 @@
     "noPendingReviews": "There are no PRs in 'request-review' status that need reminders in channel {{channelName}}.",
     "pendingThreads": "🔔 **Pending Threads in {{channelName}} :",
     "remindersSent": "Sent reminders for {count} PR(s) requiring review in channel {{channelName}}.",
-    "threadNotReviewed": "The thread {{threadName}} has not been reviewed:\n {{threadUrl}}",
+    "threadNotReviewed": "The thread **{{threadName}}** has not been reviewed:\n {{threadUrl}}",
+    "requestChanges": "Changes have been requested for the thread **{{threadName}}**:\n {{threadUrl}}",
+    "mergedInStaging": "The thread **{{threadName}}** has been merged into staging:\n {{threadUrl}}",
     "error": "An error occurred while checking for PRs. Please try again later."
   },
   "eventCreated": {
@@ -144,11 +146,6 @@
     "errorProcessingMention": "An error occurred while processing your request. Please try again later.",
     "qaRequest": "The role {{role}} has been mentioned and a review has been requested. [Check message]({{link}}).\n> {{content}}.\n\nPlease create a thread on this message to send your report.",
     "qaChannelNotFound": "Sorry, the channel: #{{channelName}} for QA requests was not found!"
-  },
-  "rememberMessages": {
-    "requestReviews": "Please review this pull request.",
-    "mergedInStaging": "This PR has been merged into staging.",
-    "requestChanges": "Changes have been requested for this PR."
   },
   "tasksThread": {
     "taskDescription": "Mark a task as assigned and define the name of the user that is assigned in the thread",

@@ -1,6 +1,5 @@
 require('dotenv').config();
 const { parseAllowedChannels } = require('./csv-parser-allowed-channels');
-const { translateLanguage } = require('./languages/index');
 const path = require('path');
 
 const DISCORD_SERVER = {
@@ -126,16 +125,16 @@ const CRON_REVIEW_SETTINGS = {
   },
   statusScheduleRemember: {
     'pr-request-review': {
-      rememberAfterMs: 1440000,
-      messageTranslation: translateLanguage('rememberMessages.requestReviews'),
+      rememberAfterMs: 86400000,
+      messageTranslationKey: 'checkReview.threadNotReviewed',
     },
     'pr-merged-on-staging': {
-      rememberAfterMs: 10080000,
-      messageTranslation: translateLanguage('rememberMessages.mergedInStaging'),
+      rememberAfterMs: 604800000,
+      messageTranslationKey: 'checkReview.mergedInStaging',
     },
     'pr-request-changes': {
-      rememberAfterMs: 360000,
-      messageTranslation: translateLanguage('rememberMessages.requestChanges'),
+      rememberAfterMs: 28800000,
+      messageTranslationKey: 'checkReview.requestChanges',
     },
   },
 };

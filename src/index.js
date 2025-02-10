@@ -6,6 +6,7 @@ const {
   SCHEDULE_CALENDAR,
   GEMINI_INTEGRATION,
   CRON_REVIEW_SETTINGS,
+  FIREBASE_CONFIG,
 } = require('./config');
 const deployEvents = require('./deploy-events');
 const deployCommands = require('./deploy-commands');
@@ -15,7 +16,6 @@ const {
 const {
   scheduleCalendarNotifications,
 } = require('./cron/schedule-google-calendar');
-const { firebaseConfig } = require('../firebase-config');
 const cron = require('cron');
 const { scheduleIaContentLogging } = require('../src/cron/schedule-gemini');
 const saveErrorLog = require('./utils/log-error');
@@ -32,7 +32,7 @@ async function startClientBot(client) {
   if (GEMINI_INTEGRATION.scheduledGeminiEnabled) {
     scheduleIaContentLogging(client);
   }
-  if (firebaseConfig.scheduledCalendarEnabled) {
+  if (FIREBASE_CONFIG.scheduledCalendarEnabled) {
     new cron.CronJob(
       SCHEDULE_CALENDAR.scheduledCalendarInterval,
       () => {

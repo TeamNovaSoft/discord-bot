@@ -139,6 +139,12 @@ const CRON_REVIEW_SETTINGS = {
     },
   },
 };
+const FIREBASE_CONFIG = {
+  scheduledCalendarEnabled: process.env.SCHEDULED_CALENDAR_ENABLED === 'true',
+  scopes: ['https://www.googleapis.com/auth/calendar.readonly'],
+  email: process.env.GOOGLE_EMAIL,
+  channelCalendarId: process.env.CHANNEL_CALENDAR_ID,
+};
 
 module.exports = {
   LISTEN_NEW_EVENTS,
@@ -153,4 +159,5 @@ module.exports = {
   SCHEDULE_CALENDAR,
   GEMINI_INTEGRATION,
   CRON_REVIEW_SETTINGS,
+  FIREBASE_CONFIG,
 };

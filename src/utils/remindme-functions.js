@@ -6,12 +6,6 @@ const { EmbedBuilder } = require('discord.js');
 async function updateCountdownEmbed(reply, reminderDate, message, exactTime) {
   const timeLeft = reminderDate.getTime() - Date.now();
   if (timeLeft <= 0) {
-    await reply.user.send(
-      translateLanguage('remindme.reminderMessage').replace(
-        '{{message}}',
-        message
-      )
-    );
     return;
   }
 

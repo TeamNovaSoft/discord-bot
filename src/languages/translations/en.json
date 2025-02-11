@@ -150,5 +150,17 @@
     "taskAssigned": "This task has been assigned to this user already",
     "taskAssignedTo": "Task assigned to {{newUserId}}!",
     "reassignedTaskTo": "{{originalUserAssigned}}, {{newUserAssigned}} has reassigned this task to him"
+  },
+  "sendChannelError": {
+    "error": "An error occurred  in the command",
+    "unknownCommand": "unknown command",
+    "unknownUser": "unknown user",
+    "unknownFunction": "unknown function",
+    "channelNotFound": "The error channel does not exist or is not a text channel.",
+    "couldNotSend": "Could not send the error message:",
+    "commandLabel": "Command/Function:",
+    "userLabel": "User:",
+    "channelLabel": "Channel:",
+    "errorLabel": "Error:"
   }
 }

@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { DISCORD_SERVER } = require('../../config');
 const { translateLanguage } = require('../../languages/index');
+const { sendErrorToChannel } = require('../../utils/send-error');
 
 const ASSIGN_EMOJI = '⚔';
 const ASSIGNED_PATTERN = new RegExp(`\\|${ASSIGN_EMOJI} @[\\w-]+\\|`);
@@ -78,6 +79,12 @@ module.exports = {
       });
     } catch (error) {
       console.error(error);
+      await sendErrorToChannel(
+        interaction,
+        translateLanguage('sendChannelError.error'), // Título genérico, el nombre del comando se obtiene de interaction.commandName
+        error,
+        { user: interaction.user.tag }
+      );
       await interaction.editReply(translateLanguage('changeStatus.error'));
     }
   },

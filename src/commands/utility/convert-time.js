@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const moment = require('moment-timezone');
 const { TIME_ZONES } = require('../../config');
 const { translateLanguage } = require('../../languages/index');
+const { sendErrorToChannel } = require('../../utils/send-error');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -64,6 +65,12 @@ module.exports = {
       );
     } catch (error) {
       console.error(error);
+      await sendErrorToChannel(
+        interaction,
+        translateLanguage('sendChannelError.error'),
+        error,
+        { user: interaction.user.tag }
+      );
       await interaction.reply(translateLanguage('convertTime.error'));
     }
   },

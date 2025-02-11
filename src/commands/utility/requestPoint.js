@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { REQUEST_POINT } = require('../../config');
 const { translateLanguage } = require('../../languages/index');
+const { sendErrorToChannel } = require('../../utils/send-error');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -54,6 +55,12 @@ module.exports = {
       });
     } catch (error) {
       console.error('Error executing request-point command:', error);
+      await sendErrorToChannel(
+        interaction,
+        translateLanguage('sendChannelError.error'),
+        error,
+        { user: interaction.user.tag }
+      );
 
       await interaction.reply({
         content: translateLanguage('requestPoint.error'),

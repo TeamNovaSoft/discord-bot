@@ -151,5 +151,16 @@
     "taskAssigned": "Esta tarea ha sido asignada a este usuario ya",
     "taskAssignedTo": "Tarea asignada a {{newUserID}}!",
     "reassignedTaskTo": "{{originalUserAssigned}}, {{newUserAssigned}} se ha reasignado esta tarea"
+  },
+  "sendChannelError": {
+    "unknownCommand": "comando desconocido",
+    "unknownUser": "usuario desconocido",
+    "unknownFunction": "función desconocida",
+    "channelNotFound": "El canal de errores no existe o no es un canal de texto.",
+    "couldNotSend": "No se pudo enviar el mensaje de error:",
+    "commandLabel": "Comando/Función:",
+    "userLabel": "Usuario:",
+    "channelLabel": "Canal:",
+    "errorLabel": "Error:"
   }
 }

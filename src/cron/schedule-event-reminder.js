@@ -4,6 +4,7 @@ const { translateLanguage } = require('../languages/index');
 const dateToCronExpression = require('../utils/date-to-cron-expression');
 const { SCHEDULE_MESSAGES } = require('../config');
 const saveErrorLog = require('../utils/log-error');
+const { sendErrorToChannel } = require('../utils/send-error');
 
 const hoursInMilliseconds = 60 * 60 * 1000;
 const dayInMilliseconds = 24 * hoursInMilliseconds;
@@ -63,6 +64,12 @@ const scheduleEventReminder = ({ client, event, channelId, timeZone }) => {
       } catch (error) {
         saveErrorLog(
           `Error sending event reminder in channel - '${channelId}': ${error.message}`
+        );
+        sendErrorToChannel(
+          client,
+          translateLanguage('sendChannelError.error'),
+          error,
+          { command: scheduleEventReminder.name, user: client.user.tag }
         );
       }
     },

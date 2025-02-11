@@ -21,6 +21,7 @@ const {
 const { translateLanguage } = require('../../languages/index');
 
 const activeReminders = new Map();
+let reminderCounter = 0;
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -61,13 +62,13 @@ module.exports = {
       );
     }
 
+    // Se crea un nuevo recordatorio sin cancelar otros ya existentes
     await this.startReminder(interaction, reminderDate, message, timeDiff);
   },
 
   async startReminder(interaction, reminderDate, message, originalDuration) {
     const userId = interaction.user.id;
-
-    cancelReminder(activeReminders, userId);
+    const reminderId = ++reminderCounter;
 
     const exactTime = `<t:${Math.floor(reminderDate.getTime() / 1000)}:F>`;
     const embed = new EmbedBuilder()
@@ -80,15 +81,15 @@ module.exports = {
 
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
-        .setCustomId('set_interval')
+        .setCustomId(`set_interval_${reminderId}`)
         .setLabel(translateLanguage('remindme.resetReminder'))
         .setStyle(ButtonStyle.Primary),
       new ButtonBuilder()
-        .setCustomId('edit_reminder')
+        .setCustomId(`edit_reminder_${reminderId}`)
         .setLabel(translateLanguage('remindme.editReminder'))
         .setStyle(ButtonStyle.Secondary),
       new ButtonBuilder()
-        .setCustomId('delete_reminder')
+        .setCustomId(`delete_reminder_${reminderId}`)
         .setLabel(translateLanguage('remindme.cancelReminder'))
         .setStyle(ButtonStyle.Danger)
     );
@@ -104,22 +105,35 @@ module.exports = {
       1000
     );
     const timeout = setTimeout(async () => {
-      await interaction.user.send(
-        translateLanguage('remindme.reminderMessage').replace(
-          '{{message}}',
-          message
-        )
-      );
-      cancelReminder(activeReminders, userId);
+      await disableReminderButtons(reply);
+      try {
+        await interaction.user.send(
+          translateLanguage('remindme.reminderMessage').replace(
+            '{{message}}',
+            message
+          )
+        );
+      } catch (error) {
+        console.log(error);
+      }
+      cancelReminder(activeReminders, userId, reminderId);
     }, originalDuration);
 
-    activeReminders.set(userId, {
+    const reminderObj = {
+      id: reminderId,
       interval,
       timeout,
       reminderDate,
       message,
       originalDuration,
-    });
+      reply,
+    };
+
+    if (activeReminders.has(userId)) {
+      activeReminders.get(userId).push(reminderObj);
+    } else {
+      activeReminders.set(userId, [reminderObj]);
+    }
   },
 
   async buttonHandler(interaction) {
@@ -128,36 +142,71 @@ module.exports = {
     }
 
     const userId = interaction.user.id;
+    const customId = interaction.customId;
 
-    switch (interaction.customId) {
+    const parts = customId.split('_');
+    let actionKey = '';
+    if (parts.includes('modal')) {
+      actionKey = parts.slice(0, 3).join('_');
+    } else {
+      actionKey = parts.slice(0, 2).join('_');
+    }
+    const reminderId = parseInt(parts.pop(), 10);
+
+    switch (actionKey) {
       case 'delete_reminder': {
-        const userId = interaction.user.id;
-        cancelReminder(activeReminders, userId);
-
-        await disableReminderButtons(interaction);
-        await replyToInteraction(
-          interaction,
-          translateLanguage('remindme.reminderCanceled'),
-          false
-        );
+        if (activeReminders.has(userId)) {
+          const userReminders = activeReminders.get(userId);
+          const reminder = userReminders.find((r) => r.id === reminderId);
+          if (reminder) {
+            cancelReminder(activeReminders, userId, reminderId);
+            await disableReminderButtons(interaction);
+            await replyToInteraction(
+              interaction,
+              translateLanguage('remindme.reminderCanceled'),
+              false
+            );
+          } else {
+            await replyToInteraction(
+              interaction,
+              translateLanguage('remindme.noActiveReminders'),
+              true
+            );
+          }
+        } else {
+          await replyToInteraction(
+            interaction,
+            translateLanguage('remindme.noActiveReminders'),
+            true
+          );
+        }
         break;
       }
-
-      case 'set_interval':
+      case 'set_interval': {
         if (activeReminders.has(userId)) {
-          const { message, originalDuration } = activeReminders.get(userId);
-          const newReminderDate = new Date(Date.now() + originalDuration);
-
-          await disableReminderButtons(interaction);
-          await resetReminder(
-            interaction,
-            activeReminders,
-            userId,
-            newReminderDate,
-            message,
-            originalDuration,
-            this.startReminder
-          );
+          const userReminders = activeReminders.get(userId);
+          const reminder = userReminders.find((r) => r.id === reminderId);
+          if (reminder) {
+            const { message, originalDuration } = reminder;
+            const newReminderDate = new Date(Date.now() + originalDuration);
+            await disableReminderButtons(interaction);
+            await resetReminder(
+              interaction,
+              activeReminders,
+              userId,
+              reminderId,
+              newReminderDate,
+              message,
+              originalDuration,
+              this.startReminder.bind(this)
+            );
+          } else {
+            await replyToInteraction(
+              interaction,
+              translateLanguage('remindme.noActiveReminders'),
+              true
+            );
+          }
         } else {
           await replyToInteraction(
             interaction,
@@ -166,35 +215,45 @@ module.exports = {
           );
         }
         break;
-
-      case 'edit_reminder':
+      }
+      case 'edit_reminder': {
         if (activeReminders.has(userId)) {
-          const { reminderDate, message } = activeReminders.get(userId);
-          const formattedTime = formatReminderDate(reminderDate);
+          const userReminders = activeReminders.get(userId);
+          const reminder = userReminders.find((r) => r.id === reminderId);
+          if (reminder) {
+            const { reminderDate, message } = reminder;
+            const formattedTime = formatReminderDate(reminderDate);
 
-          const modal = new ModalBuilder()
-            .setCustomId('edit_reminder_modal')
-            .setTitle(translateLanguage('remindme.editReminderTitle'));
-          modal.addComponents(
-            new ActionRowBuilder().addComponents(
-              new TextInputBuilder()
-                .setCustomId('time_input')
-                .setLabel(translateLanguage('remindme.newTimeLabel'))
-                .setStyle(TextInputStyle.Short)
-                .setRequired(true)
-                .setValue(formattedTime)
-            ),
-            new ActionRowBuilder().addComponents(
-              new TextInputBuilder()
-                .setCustomId('message_input')
-                .setLabel(translateLanguage('remindme.newMessageLabel'))
-                .setStyle(TextInputStyle.Paragraph)
-                .setRequired(true)
-                .setValue(message)
-            )
-          );
+            const modal = new ModalBuilder()
+              .setCustomId(`edit_reminder_modal_${reminderId}`)
+              .setTitle(translateLanguage('remindme.editReminderTitle'));
+            modal.addComponents(
+              new ActionRowBuilder().addComponents(
+                new TextInputBuilder()
+                  .setCustomId('time_input')
+                  .setLabel(translateLanguage('remindme.newTimeLabel'))
+                  .setStyle(TextInputStyle.Short)
+                  .setRequired(true)
+                  .setValue(formattedTime)
+              ),
+              new ActionRowBuilder().addComponents(
+                new TextInputBuilder()
+                  .setCustomId('message_input')
+                  .setLabel(translateLanguage('remindme.newMessageLabel'))
+                  .setStyle(TextInputStyle.Paragraph)
+                  .setRequired(true)
+                  .setValue(message)
+              )
+            );
 
-          await interaction.showModal(modal);
+            await interaction.showModal(modal);
+          } else {
+            await replyToInteraction(
+              interaction,
+              translateLanguage('remindme.noActiveReminders'),
+              true
+            );
+          }
         } else {
           await replyToInteraction(
             interaction,
@@ -203,7 +262,7 @@ module.exports = {
           );
         }
         break;
-
+      }
       case 'edit_reminder_modal': {
         const newTimeInput = interaction.fields.getTextInputValue('time_input');
         const newMessage =
@@ -218,29 +277,52 @@ module.exports = {
           );
         }
 
-        await disableReminderButtons(interaction);
-        cancelReminder(activeReminders, userId);
+        if (activeReminders.has(userId)) {
+          const userReminders = activeReminders.get(userId);
+          const reminder = userReminders.find((r) => r.id === reminderId);
+          if (reminder) {
+            await disableReminderButtons(reminder.reply);
 
-        await this.startReminder(
-          interaction,
-          newReminderDate,
-          newMessage,
-          newReminderDate.getTime() - Date.now()
-        );
+            cancelReminder(activeReminders, userId, reminderId);
 
-        if (!interaction.replied && !interaction.deferred) {
-          await interaction.reply({
-            content: translateLanguage('remindme.reminderUpdated'),
-            ephemeral: true,
-          });
+            await this.startReminder(
+              interaction,
+              newReminderDate,
+              newMessage,
+              newReminderDate.getTime() - Date.now()
+            );
+
+            if (!interaction.replied && !interaction.deferred) {
+              await interaction.reply({
+                content: translateLanguage('remindme.reminderUpdated'),
+                ephemeral: true,
+              });
+            } else {
+              await interaction.followUp({
+                content: translateLanguage('remindme.reminderUpdated'),
+                ephemeral: true,
+              });
+            }
+          } else {
+            await replyToInteraction(
+              interaction,
+              translateLanguage('remindme.noActiveReminders'),
+              true
+            );
+          }
         } else {
-          await interaction.followUp({
-            content: translateLanguage('remindme.reminderUpdated'),
-            ephemeral: true,
-          });
+          await replyToInteraction(
+            interaction,
+            translateLanguage('remindme.noActiveReminders'),
+            true
+          );
         }
         break;
       }
+
+      default:
+        // Caso por defecto: acción no reconocida
+        break;
     }
   },
 };

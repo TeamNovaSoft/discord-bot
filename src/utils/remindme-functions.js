@@ -1,6 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { translateLanguage } = require('../languages/index');
-// remindme-functions.js
 const { EmbedBuilder } = require('discord.js');
 
 async function updateCountdownEmbed(reply, reminderDate, message, exactTime) {
@@ -45,12 +44,19 @@ function parseDate(timeInput) {
   return reminderDate;
 }
 
-function cancelReminder(activeReminders, userId) {
+function cancelReminder(activeReminders, userId, reminderId) {
   if (activeReminders.has(userId)) {
-    const { interval, timeout } = activeReminders.get(userId);
-    clearInterval(interval);
-    clearTimeout(timeout);
-    activeReminders.delete(userId);
+    const userReminders = activeReminders.get(userId);
+    const index = userReminders.findIndex((r) => r.id === reminderId);
+    if (index !== -1) {
+      const { interval, timeout } = userReminders[index];
+      clearInterval(interval);
+      clearTimeout(timeout);
+      userReminders.splice(index, 1);
+      if (userReminders.length === 0) {
+        activeReminders.delete(userId);
+      }
+    }
   }
 }
 
@@ -62,7 +68,9 @@ async function replyToInteraction(interaction, message, ephemeral = false) {
   }
 }
 
-function disableReminderButtons(interaction) {
+function disableReminderButtons(target) {
+  const message = target.message ?? target;
+
   const disabledRow = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId('disabled_set_interval')
@@ -81,19 +89,20 @@ function disableReminderButtons(interaction) {
       .setDisabled(true)
   );
 
-  return interaction.message.edit({ components: [disabledRow] });
+  return message.edit({ components: [disabledRow] });
 }
 
 async function resetReminder(
   interaction,
   activeReminders,
   userId,
+  reminderId,
   newReminderDate,
   message,
   originalDuration,
   startReminder
 ) {
-  cancelReminder(activeReminders, userId);
+  cancelReminder(activeReminders, userId, reminderId);
   await disableReminderButtons(interaction);
   await startReminder(interaction, newReminderDate, message, originalDuration);
 }

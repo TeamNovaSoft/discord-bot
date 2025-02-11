@@ -17,7 +17,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.AWS_SSH_PRIVATE_KEY }}" > ~/.ssh/aws_key.pem
-          chmod 600 ~/.ssh/aws_key.pem
+          chmod 400 ~/.ssh/aws_key.pem
           ssh-keyscan -H ${{ secrets.AWS_HOST }} >> ~/.ssh/known_hosts
 
       - name: 🚀 Desplegar en AWS
@@ -28,3 +28,4 @@ jobs:
             npm install  # O el comando que necesites
             pm2 restart app  # Si usas PM2 para correr el servidor
           EOF
+

@@ -28,4 +28,3 @@ jobs:
             npm install  # O el comando que necesites
             pm2 restart app  # Si usas PM2 para correr el servidor
           EOF
-

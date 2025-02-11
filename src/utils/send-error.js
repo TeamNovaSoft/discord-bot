@@ -1,4 +1,3 @@
-// utils/sendError.js
 require('dotenv').config();
 const { translateLanguage } = require('../languages/index');
 
@@ -13,7 +12,6 @@ const { translateLanguage } = require('../languages/index');
 async function sendErrorToChannel(source, title, error, additionalInfo = {}) {
   let client, commandName, user;
 
-  // If "source" has interaction properties, it is assumed to be an interaction.
   if (source && source.client && source.commandName) {
     client = source.client;
     commandName =
@@ -23,7 +21,6 @@ async function sendErrorToChannel(source, title, error, additionalInfo = {}) {
       ? source.user.tag
       : translateLanguage('sendChannelError.unknownUser');
   } else {
-    // Otherwise, it is assumed that "source" is a client directly.
     client = source;
     commandName =
       additionalInfo.command ||
@@ -32,7 +29,6 @@ async function sendErrorToChannel(source, title, error, additionalInfo = {}) {
       additionalInfo.user || translateLanguage('sendChannelError.unknownUser');
   }
 
-  // Ensure additionalInfo has the command or function name.
   additionalInfo.command = commandName;
 
   const errorChannelID = process.env.ERROR_CHANNEL_ID;
@@ -43,7 +39,6 @@ async function sendErrorToChannel(source, title, error, additionalInfo = {}) {
     return;
   }
 
-  // Format the error message
   let message = `**${title}**\n`;
   message += `**${translateLanguage('sendChannelError.commandLabel')}** ${commandName}\n`;
   message += `**${translateLanguage('sendChannelError.userLabel')}** ${user}\n`;

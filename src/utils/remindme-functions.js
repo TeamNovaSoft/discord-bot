@@ -35,7 +35,7 @@ function parseDate(timeInput) {
     reminderDate = new Date();
     reminderDate.setHours(hour, minute, 0, 0);
     if (reminderDate.getTime() < Date.now()) {
-      return null;
+      reminderDate.setDate(reminderDate.getDate() + 1);
     }
   } else {
     return null;
@@ -99,12 +99,12 @@ async function resetReminder(
   reminderId,
   newReminderDate,
   message,
-  originalDuration,
+  timeInMsFromNow,
   startReminder
 ) {
   cancelReminder(activeReminders, userId, reminderId);
   await disableReminderButtons(interaction);
-  await startReminder(interaction, newReminderDate, message, originalDuration);
+  await startReminder(interaction, newReminderDate, message, timeInMsFromNow);
 }
 
 function formatReminderDate(reminderDate) {

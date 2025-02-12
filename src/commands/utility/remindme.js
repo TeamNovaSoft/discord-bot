@@ -53,20 +53,17 @@ module.exports = {
       );
     }
 
-    const timeDiff = reminderDate.getTime() - Date.now();
+    let timeDiff = reminderDate.getTime() - Date.now();
+
     if (timeDiff <= 0) {
-      return replyToInteraction(
-        interaction,
-        translateLanguage('remindme.timeInFuture'),
-        true
-      );
+      reminderDate.setDate(reminderDate.getDate() + 1);
+      timeDiff = reminderDate.getTime() - Date.now();
     }
 
-    // Se crea un nuevo recordatorio sin cancelar otros ya existentes
     await this.startReminder(interaction, reminderDate, message, timeDiff);
   },
 
-  async startReminder(interaction, reminderDate, message, originalDuration) {
+  async startReminder(interaction, reminderDate, message, timeInMsFromNow) {
     const userId = interaction.user.id;
     const reminderId = ++reminderCounter;
 
@@ -117,7 +114,7 @@ module.exports = {
         console.log(error);
       }
       cancelReminder(activeReminders, userId, reminderId);
-    }, originalDuration);
+    }, timeInMsFromNow);
 
     const reminderObj = {
       id: reminderId,
@@ -125,7 +122,7 @@ module.exports = {
       timeout,
       reminderDate,
       message,
-      originalDuration,
+      timeInMsFromNow,
       reply,
     };
 
@@ -187,8 +184,8 @@ module.exports = {
           const userReminders = activeReminders.get(userId);
           const reminder = userReminders.find((r) => r.id === reminderId);
           if (reminder) {
-            const { message, originalDuration } = reminder;
-            const newReminderDate = new Date(Date.now() + originalDuration);
+            const { message, timeInMsFromNow } = reminder;
+            const newReminderDate = new Date(Date.now() + timeInMsFromNow);
             await disableReminderButtons(interaction);
             await resetReminder(
               interaction,
@@ -197,7 +194,7 @@ module.exports = {
               reminderId,
               newReminderDate,
               message,
-              originalDuration,
+              timeInMsFromNow,
               this.startReminder.bind(this)
             );
           } else {
@@ -321,7 +318,6 @@ module.exports = {
       }
 
       default:
-        // Caso por defecto: acción no reconocida
         break;
     }
   },

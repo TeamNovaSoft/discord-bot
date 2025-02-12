@@ -7,7 +7,6 @@ const {
   DISCORD_SERVER,
   CRON_REVIEW_SETTINGS,
 } = require('../config');
-const { convertMsToCron } = require('./utils/convertMsToCron');
 
 /**
  * Gets the mapped status text.
@@ -109,23 +108,20 @@ const checkThreadsForStatus = async (client, statusKey) => {
  * @param {Client} client - Instance of the Discord.js client.
  */
 const scheduleAllStatusChecks = (client) => {
-  Object.keys(CRON_REVIEW_SETTINGS.statusScheduleRemember).forEach(
-    (statusKey) => {
-      const schedule = convertMsToCron(statusKey);
+  Object.entries(CRON_REVIEW_SETTINGS.statusScheduleRemember).forEach(
+    ([key, config]) => {
+      const schedule = config.scheduleConfig;
 
       try {
         new CronJob(
           schedule,
-          () => checkThreadsForStatus(client, statusKey),
+          () => checkThreadsForStatus(client, key),
           null,
           true,
           process.env.TIME_ZONE || 'America/Bogota'
         );
       } catch (error) {
-        console.error(
-          `Failed to create CronJob for ${statusKey}:`,
-          error.message
-        );
+        console.error(`Failed to create CronJob for ${key}:`, error.message);
       }
     }
   );

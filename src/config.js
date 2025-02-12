@@ -125,14 +125,17 @@ const CRON_REVIEW_SETTINGS = {
   },
   statusScheduleRemember: {
     'pr-request-review': {
+      scheduleConfig: process.env.REQUEST_REVIEW_CRON || '0 7 * * *',
       rememberAfterMs: 86400000,
       messageTranslationKey: 'checkReview.threadNotReviewed',
     },
     'pr-merged-on-staging': {
+      scheduleConfig: process.env.MERGED_IN_STAGING_CRON || '0 7 * * 1',
       rememberAfterMs: 604800000,
       messageTranslationKey: 'checkReview.mergedInStaging',
     },
     'pr-request-changes': {
+      scheduleConfig: process.env.REQUEST_CHANGES_CRON || '0 */8 * * *',
       rememberAfterMs: 28800000,
       messageTranslationKey: 'checkReview.requestChanges',
     },

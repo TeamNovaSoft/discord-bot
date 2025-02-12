@@ -4,6 +4,8 @@
 
 This guide explains how to set up a GitHub Actions workflow to deploy an application to a remote server (e.g., AWS EC2). It also details the required environment variables for automation to work correctly.
 
+> ⚠️ **Warning:** Deployment is only triggered when a branch is merged into main, not when a commit is pushed directly to the branch.
+
 ## Setting Up Environment Variables in GitHub Actions
 
 To successfully deploy, certain environment variables need to be configured as secrets in the GitHub repository.
@@ -33,35 +35,7 @@ This workflow performs the following steps:
 
 - Restarts the application with pm2.
 
-```yaml
-name: Deploy to AWS EC2
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Deploy to AWS EC2
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/aws_key.pem ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }} << 'EOF'
-            eval "$(ssh-agent -s)"
-            ssh-add ~/.ssh/github_key
-            if [ ! -d "${{ secrets.AWS_WORK_DIRECTORY }}/.git" ]; then
-              git clone git@github.com:YOUR_USER/YOUR_REPO.git ${{ secrets.AWS_WORK_DIRECTORY }}
-            fi
-            cd ${{ secrets.AWS_WORK_DIRECTORY }}
-            git pull origin main
-            npm install
-            pm2 restart app || pm2 start index.js --name app
-          EOF
-```
+For the full configuration go to [link](../.github/workflows/deploy.yml)
 
 ## How to Add Environment Variables in GitHub
 

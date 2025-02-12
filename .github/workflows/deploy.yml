@@ -24,7 +24,7 @@ jobs:
         run: |
           ssh -i ~/.ssh/aws_key.pem ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }} << 'EOF'
             cd /home/ec2-user/app/novabot
-            git pull origin main
+            git pull origin feat/integrate-aws-host
             yarn
             pm2 restart ecosystem.config.js
           EOF

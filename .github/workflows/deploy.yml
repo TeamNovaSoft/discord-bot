@@ -3,6 +3,10 @@ on:
   pull_request:
     types:
       - closed
+    paths:
+      - '**/*.js'
+      - '**/*.json'
+      - '**/*.ts'
     braches:
       - main
 

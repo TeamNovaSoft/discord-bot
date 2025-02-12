@@ -81,7 +81,7 @@ module.exports = {
       console.error(error);
       await sendErrorToChannel(
         interaction,
-        translateLanguage('sendChannelError.error'), // Título genérico, el nombre del comando se obtiene de interaction.commandName
+        translateLanguage('sendChannelError.error'),
         error,
         { user: interaction.user.tag }
       );

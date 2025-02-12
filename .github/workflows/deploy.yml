@@ -1,12 +1,14 @@
 name: Deploy to AWS
-
 on:
-  push:
-    branches:
-      - feat/integrate-aws-host
+  pull_request:
+    types:
+      - closed
+    braches:
+      - main
 
 jobs:
-  deploy:
+  if_merged:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +26,7 @@ jobs:
         run: |
           ssh -i ~/.ssh/aws_key.pem ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }} << 'EOF'
             cd /home/ec2-user/app/novabot
-            git pull origin feat/integrate-aws-host
+            git pull origin main
             yarn
             pm2 restart ecosystem.config.js
           EOF

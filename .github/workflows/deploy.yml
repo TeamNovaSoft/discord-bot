@@ -23,9 +23,8 @@ jobs:
       - name: 🚀 Desplegar en AWS
         run: |
           ssh -i ~/.ssh/aws_key.pem ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }} << 'EOF'
-            cd /home/ec2-user/app
+            cd /home/ec2-user/app/novabot
             git pull origin main
-            npm install  # O el comando que necesites
-            pm2 restart app  # Si usas PM2 para correr el servidor
+            yarn
+            pm2 restart ecosystem.config.js
           EOF
-

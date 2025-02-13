@@ -6,6 +6,7 @@ const {
   MAPPED_STATUS_COMMANDS,
   DISCORD_SERVER,
   CRON_REVIEW_SETTINGS,
+  TIME_ZONES,
 } = require('../config');
 
 /**
@@ -26,6 +27,7 @@ const getMappedStatusText = (key) => {
  * Checks threads with a specific status and sends reminders if necessary.
  * @param {Client} client - Instance of the Discord.js client.
  * @param {string} statusKey - Key of the status to check.
+ * @returns {string|null}
  */
 const checkThreadsForStatus = async (client, statusKey) => {
   try {
@@ -118,7 +120,7 @@ const scheduleAllStatusChecks = (client) => {
           () => checkThreadsForStatus(client, key),
           null,
           true,
-          process.env.TIME_ZONE || 'America/Bogota'
+          TIME_ZONES || 'America/Bogota'
         );
       } catch (error) {
         console.error(`Failed to create CronJob for ${key}:`, error.message);

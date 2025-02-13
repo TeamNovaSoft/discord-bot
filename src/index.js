@@ -22,6 +22,7 @@ const saveErrorLog = require('./utils/log-error');
 const convertCronToText = require('./utils/cron-to-text-parser');
 const { processMarkdownFiles } = require('./cron/utils/read-markdown-messages');
 const { scheduleReviewCheck } = require('./cron/schedule-code-review');
+const { registerGlobalErrorHandlers } = require('./utils/send-error');
 
 async function startClientBot(client) {
   client.commands = new Collection();
@@ -83,11 +84,13 @@ client.commands = new Collection();
 
 process.on('uncaughtException', (error) => {
   handleCriticalError(error);
+  registerGlobalErrorHandlers(client);
 });
 
 process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise);
   handleCriticalError(reason);
+  registerGlobalErrorHandlers(client);
 });
 
 startClientBot(client);

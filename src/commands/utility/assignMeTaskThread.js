@@ -82,8 +82,7 @@ module.exports = {
       await sendErrorToChannel(
         interaction,
         translateLanguage('sendChannelError.error'),
-        error,
-        { user: interaction.user.tag }
+        error
       );
       await interaction.editReply(translateLanguage('changeStatus.error'));
     }

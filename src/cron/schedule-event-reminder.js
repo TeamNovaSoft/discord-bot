@@ -66,10 +66,13 @@ const scheduleEventReminder = ({ client, event, channelId, timeZone }) => {
           `Error sending event reminder in channel - '${channelId}': ${error.message}`
         );
         sendErrorToChannel(
-          client,
+          {
+            client,
+            commandName: scheduleEventReminder.name,
+            user: client.user,
+          },
           translateLanguage('sendChannelError.error'),
-          error,
-          { command: scheduleEventReminder.name, user: client.user.tag }
+          error
         );
       }
     },

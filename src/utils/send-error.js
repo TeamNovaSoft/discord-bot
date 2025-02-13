@@ -1,14 +1,6 @@
 require('dotenv').config();
 const { translateLanguage } = require('../languages/index');
 
-/**
- * Sends an error message to the configured channel.
- *
- * @param {Interaction|Client} source - Can be the interaction object or directly the Discord client.
- * @param {string} title - Title or header of the error.
- * @param {Error} error - The Error object to report.
- * @param {object} [additionalInfo={}] - Additional information (e.g., command, user, channel, etc.).
- */
 async function sendErrorToChannel(source, title, error, additionalInfo = {}) {
   let client, commandName, user;
 
@@ -25,8 +17,7 @@ async function sendErrorToChannel(source, title, error, additionalInfo = {}) {
     commandName =
       additionalInfo.command ||
       translateLanguage('sendChannelError.unknownFunction');
-    user =
-      additionalInfo.user || translateLanguage('sendChannelError.unknownUser');
+    user = translateLanguage('sendChannelError.unknownUser');
   }
 
   additionalInfo.command = commandName;
@@ -46,6 +37,7 @@ async function sendErrorToChannel(source, title, error, additionalInfo = {}) {
     message += `**${translateLanguage('sendChannelError.channelLabel')}** ${additionalInfo.channel}\n`;
   }
   message += `**${translateLanguage('sendChannelError.errorLabel')}** \`\`\`js\n${error.stack || error}\n\`\`\``;
+
   try {
     await errorChannel.send(message);
   } catch (err) {
@@ -53,4 +45,18 @@ async function sendErrorToChannel(source, title, error, additionalInfo = {}) {
   }
 }
 
-module.exports = { sendErrorToChannel };
+function registerGlobalErrorHandlers(client) {
+  process.on('uncaughtException', async (error) => {
+    console.error('Unhandled Exception:', error);
+    await sendErrorToChannel(client, 'Unhandled Exception', error);
+  });
+
+  process.on('unhandledRejection', async (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+    await sendErrorToChannel(client, 'Unhandled Rejection', reason, {
+      promise,
+    });
+  });
+}
+
+module.exports = { sendErrorToChannel, registerGlobalErrorHandlers };

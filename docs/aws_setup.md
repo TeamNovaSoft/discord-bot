@@ -4,7 +4,7 @@
 
 This guide explains how the GitHub Actions workflow is set up in this project to deploy the application to a remote server. It also details the required environment variables for the automation to function correctly.
 
-> [!WARNING]  
+> [!NOTE]  
 > In this project, deployment is only triggered when a branch is merged into `main`, not when a commit is pushed directly to the branch. If you need to change this behavior, check the workflow configuration in GitHub Actions.
 
 ## Setting Up Environment Variables in GitHub Actions

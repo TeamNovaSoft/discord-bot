@@ -173,5 +173,9 @@
     "editReminderTitle": "Edit Reminder",
     "newTimeLabel": "New Date/Time",
     "newMessageLabel": "New Reminder Message"
+  },
+  "interaction": {
+    "errorButton": "There was an error processing your button interaction.",
+    "errorSubmission": "There was an error processing your submission."
   }
 }

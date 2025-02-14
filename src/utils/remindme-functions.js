@@ -106,9 +106,10 @@ async function resetReminder(
   await disableReminderButtons(interaction);
   await startReminder(interaction, newReminderDate, message, timeInMsFromNow);
 }
-
 function formatReminderDate(reminderDate) {
-  return `${String(reminderDate.getDate()).padStart(2, '0')}-${String(reminderDate.getMonth() + 1).padStart(2, '0')}-${reminderDate.getFullYear()} ${String(reminderDate.getHours()).padStart(2, '0')}:${String(reminderDate.getMinutes()).padStart(2, '0')}`;
+  const formattedDate = `${String(reminderDate.getDate()).padStart(2, '0')}-${String(reminderDate.getMonth() + 1).padStart(2, '0')}-${reminderDate.getFullYear()} ${String(reminderDate.getHours()).padStart(2, '0')}:${String(reminderDate.getMinutes()).padStart(2, '0')}`;
+
+  return formattedDate;
 }
 
 module.exports = {

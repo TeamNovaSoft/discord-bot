@@ -1,4 +1,5 @@
 const { Events } = require('discord.js');
+const { translateLanguage } = require('../languages');
 
 module.exports = {
   name: Events.InteractionCreate,
@@ -43,7 +44,7 @@ module.exports = {
         console.error('Error handling button interaction:', error);
         if (!interaction.replied && !interaction.deferred) {
           await interaction.reply({
-            content: 'There was an error processing your button interaction.',
+            content: translateLanguage('interaction.errorButton'),
             ephemeral: true,
           });
         }
@@ -63,7 +64,7 @@ module.exports = {
           console.error('Error handling modal submit:', error);
           if (!interaction.replied && !interaction.deferred) {
             await interaction.reply({
-              content: 'There was an error processing your submission.',
+              content: translateLanguage('interaction.errorSubmission'),
               ephemeral: true,
             });
           }

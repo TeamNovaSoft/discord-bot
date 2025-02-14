@@ -32,11 +32,7 @@ const generateIaContent = async ({ client, channel, prompts }) => {
   } catch (error) {
     console.error(error);
     sendErrorToChannel(
-      {
-        client,
-        commandName: generateIaContent.name,
-        user: client.user,
-      },
+      client,
       translateLanguage('sendChannelError.error'),
       error
     );

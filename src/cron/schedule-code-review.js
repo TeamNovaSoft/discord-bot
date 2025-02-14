@@ -93,8 +93,7 @@ const checkThreadsForReview = async (client, statusText) => {
     sendErrorToChannel(
       client,
       translateLanguage('sendChannelError.error'),
-      error,
-      { command: scheduleReviewCheck.name, user: client.user.tag }
+      error
     );
   }
 };

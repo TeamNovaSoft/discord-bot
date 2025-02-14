@@ -20,8 +20,6 @@ async function sendErrorToChannel(source, title, error, additionalInfo = {}) {
     user = translateLanguage('sendChannelError.unknownUser');
   }
 
-  additionalInfo.command = commandName;
-
   const errorChannelID = process.env.ERROR_CHANNEL_ID;
   const errorChannel = client.channels.cache.get(errorChannelID);
 

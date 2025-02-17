@@ -29,7 +29,7 @@ const getMappedStatusText = (key) => {
  * @param {string} statusKey - Key of the status to check.
  * @returns {string|null}
  */
-const checkThreadsForStatus = async (client, statusKey) => {
+const checkThreadsForStatus = async (client, statusKey, statusConfig) => {
   try {
     const guild = await client.guilds.fetch(DISCORD_SERVER.discordGuildId);
     if (!guild) {
@@ -48,7 +48,6 @@ const checkThreadsForStatus = async (client, statusKey) => {
       return;
     }
 
-    const statusConfig = CRON_REVIEW_SETTINGS.statusScheduleRemember[statusKey];
     if (!statusConfig) {
       console.error(`No configuration found for status: ${statusKey}`);
       return;
@@ -117,7 +116,7 @@ const scheduleAllStatusChecks = (client) => {
       try {
         new CronJob(
           schedule,
-          () => checkThreadsForStatus(client, key),
+          () => checkThreadsForStatus(client, key, config),
           null,
           true,
           TIME_ZONES || 'America/Bogota'

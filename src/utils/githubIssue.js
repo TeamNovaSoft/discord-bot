@@ -4,11 +4,10 @@ const { translateLanguage } = require('../languages/index');
 
 function getGitHubIssueURL(errorMessage) {
   try {
-    const packageJsonPath = path.join(__dirname, '../../package.json');
+    const packageJsonPath = path.join(process.cwd(), 'package.json');
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
 
-    const issueBaseUrl = packageJson.bugs?.url;
-
+    const issueBaseUrl = packageJson.bugs?.url.replace(/\/choose$/, '');
     if (!issueBaseUrl) {
       console.warn(translateLanguage('githubIssue.warning'));
       return null;

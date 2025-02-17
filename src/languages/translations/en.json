@@ -150,5 +150,32 @@
     "taskAssigned": "This task has been assigned to this user already",
     "taskAssignedTo": "Task assigned to {{newUserId}}!",
     "reassignedTaskTo": "{{originalUserAssigned}}, {{newUserAssigned}} has reassigned this task to him"
+  },
+  "remindme": {
+    "commandDescription": "Set a reminder for a specific date/time or just time today",
+    "timeOptionDescription": "Date and time (dd-MM-yyyy HH:mm) or just time (HH:mm)",
+    "messageOptionDescription": "Reminder message",
+    "invalidFormat": "❌ Invalid format! Use `dd-MM-yyyy HH:mm` or `HH:mm`.",
+    "timeInFuture": "⏳ The time must be in the future!",
+    "reminderCreatedTitle": "🔔 New Reminder Created",
+    "remindingAt": "Reminding you at",
+    "updatingCountdown": "Updating countdown...",
+    "dmNotice": "You will receive a DM when the time is up.",
+    "resetReminder": "⏲️ Reset",
+    "editReminder": "✏️ Edit",
+    "cancelReminder": "🗑️ Cancel",
+    "reminderMessage": "⏰ **Reminder:** {{message}}",
+    "reminderUpdatedTitle": "🔔 New Reminder Created",
+    "timeLeft": "⏳ Time left",
+    "reminderCanceled": "🛑 Reminder canceled.",
+    "noActiveReminders": "⚠️ No active reminders found.",
+    "reminderUpdated": "✅ Reminder updated successfully!",
+    "editReminderTitle": "Edit Reminder",
+    "newTimeLabel": "New Date/Time",
+    "newMessageLabel": "New Reminder Message"
+  },
+  "interaction": {
+    "errorButton": "There was an error processing your button interaction.",
+    "errorSubmission": "There was an error processing your submission."
   }
 }

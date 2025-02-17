@@ -151,5 +151,32 @@
     "taskAssigned": "Esta tarea ha sido asignada a este usuario ya",
     "taskAssignedTo": "Tarea asignada a {{newUserID}}!",
     "reassignedTaskTo": "{{originalUserAssigned}}, {{newUserAssigned}} se ha reasignado esta tarea"
+  },
+  "remindme": {
+    "commandDescription": "Configura un recordatorio para una fecha y hora específica o solo una hora hoy",
+    "timeOptionDescription": "Fecha y hora (dd-MM-yyyy HH:mm) o solo hora (HH:mm)",
+    "messageOptionDescription": "Mensaje del recordatorio",
+    "invalidFormat": "❌ ¡Formato inválido! Usa `dd-MM-yyyy HH:mm` o `HH:mm`.",
+    "timeInFuture": "⏳ ¡La hora debe estar en el futuro!",
+    "reminderCreatedTitle": "🔔 Nuevo recordatorio creado",
+    "remindingAt": "Te recordaré a las",
+    "updatingCountdown": "Actualizando cuenta regresiva...",
+    "dmNotice": "Recibirás un mensaje privado cuando sea la hora.",
+    "resetReminder": "⏲️ Reiniciar",
+    "editReminder": "✏️ Editar",
+    "cancelReminder": "🗑️ Cancelar",
+    "reminderMessage": "⏰ **Recordatorio:** {{message}}",
+    "reminderUpdatedTitle": "🔔 Nuevo recordatorio creado",
+    "timeLeft": "⏳ Tiempo restante",
+    "reminderCanceled": "🛑 Recordatorio cancelado.",
+    "noActiveReminders": "⚠️ No hay recordatorios activos.",
+    "reminderUpdated": "✅ ¡Recordatorio actualizado con éxito!",
+    "editReminderTitle": "Editar recordatorio",
+    "newTimeLabel": "Nueva fecha/hora",
+    "newMessageLabel": "Nuevo mensaje del recordatorio"
+  },
+  "interaction": {
+    "errorButton": "Hubo un error al procesar la interacción del botón.",
+    "errorSubmission": "Hubo un error al procesar tu envío."
   }
 }

@@ -28,8 +28,6 @@ async function sendErrorToChannel(source, error, additionalInfo = {}) {
   const errorChannel = client.channels.cache.get(errorChannelID);
 
   if (!errorChannel || !errorChannel.isTextBased()) {
-    console.error(translateLanguage('sendChannelError.channelNotFound'));
-
     if (interaction && interaction.replied === false) {
       try {
         await interaction.reply({
@@ -38,12 +36,8 @@ async function sendErrorToChannel(source, error, additionalInfo = {}) {
         });
       } catch (err) {
         console.error(
-          translateLanguage('sendChannelError.couldNotSendToUser'),
-          err
-        );
-
-        console.error(
-          `Failed to find error channel with ID: ${errorChannelID}`,
+          translateLanguage('sendChannelError.couldNotSendToUser \n'),
+          `Failed to find error channel with ID: ${errorChannelID}\n${err}`,
           err
         );
       }

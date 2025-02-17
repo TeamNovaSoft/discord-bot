@@ -41,9 +41,13 @@ async function sendErrorToChannel(source, error, additionalInfo = {}) {
           translateLanguage('sendChannelError.couldNotSendToUser'),
           err
         );
+
+        console.error(
+          `Failed to find error channel with ID: ${errorChannelID}`,
+          err
+        );
       }
     }
-
     return;
   }
 

@@ -1,0 +1,33 @@
+name: Deploy to AWS
+on:
+  pull_request:
+    types:
+      - closed
+    paths:
+      - '**/*.js'
+      - '**/*.json'
+      - '**/*.ts'
+    branches:
+      - main
+
+jobs:
+  if_merged:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📂 Setting up SSH access
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.AWS_SSH_PRIVATE_KEY }}" > ~/.ssh/aws_key.pem
+          chmod 400 ~/.ssh/aws_key.pem
+          ssh-keyscan -H ${{ secrets.AWS_HOST }} >> ~/.ssh/known_hosts
+
+      - name: 🚀 Deploy on AWS
+        run: |
+          ssh -i ~/.ssh/aws_key.pem ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }} << 'EOF'
+            cd ${{ secrets.AWS_WORK_DIRECTORY }}
+            git pull origin main
+            yarn
+            pm2 restart ecosystem.config.js
+          EOF

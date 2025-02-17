@@ -162,6 +162,12 @@
     "commandLabel": "Command/Function:",
     "userLabel": "User:",
     "channelLabel": "Channel:",
+    "reportIssue": "Report this issue",
+    "clickHere": "Click here",
     "errorLabel": "Error:"
+  },
+  "githubIssue": {
+    "warning": "Bug reporting URL not found in package.json.",
+    "error": "Could not read package.json"
   }
 }

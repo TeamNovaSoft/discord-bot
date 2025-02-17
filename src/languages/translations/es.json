@@ -154,6 +154,7 @@
   },
   "sendChannelError": {
     "error": "Ocurrió un error puedes pasar esta ubicación al servicio técnico",
+    "noSePudoEnviarAlUsuario": "No se pudo enviar un mensaje de error al usuario.",
     "unknownCommand": "comando desconocido",
     "unknownUser": "usuario desconocido",
     "unknownFunction": "función desconocida",
@@ -161,7 +162,13 @@
     "couldNotSend": "No se pudo enviar el mensaje de error:",
     "commandLabel": "Comando/Función:",
     "userLabel": "Usuario:",
+    "reportIssue": "Reportar este problema",
+    "clickHere": "Haz clic aquí",
     "channelLabel": "Canal:",
     "errorLabel": "Error:"
+  },
+  "githubIssue": {
+    "warning": "URL de reporte de errores no encontrada en package.json.",
+    "error": "No se pudo leer package.json"
   }
 }

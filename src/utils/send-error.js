@@ -29,6 +29,21 @@ async function sendErrorToChannel(source, error, additionalInfo = {}) {
 
   if (!errorChannel || !errorChannel.isTextBased()) {
     console.error(translateLanguage('sendChannelError.channelNotFound'));
+
+    if (interaction && interaction.replied === false) {
+      try {
+        await interaction.reply({
+          content: translateLanguage('sendChannelError.channelNotFound'),
+          ephemeral: true,
+        });
+      } catch (err) {
+        console.error(
+          translateLanguage('sendChannelError.couldNotSendToUser'),
+          err
+        );
+      }
+    }
+
     return;
   }
 
@@ -77,9 +92,9 @@ function registerGlobalErrorHandlers(client) {
     await sendErrorToChannel(client, error);
   });
 
-  process.on('unhandledRejection', async (reason, promise) => {
-    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
-    await sendErrorToChannel(client, reason, { promise });
+  process.on('unhandledRejection', async (reason) => {
+    console.error('Unhandled Rejection:', reason);
+    await sendErrorToChannel(client, reason);
   });
 }
 

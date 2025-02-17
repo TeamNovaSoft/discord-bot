@@ -152,7 +152,8 @@
     "reassignedTaskTo": "{{originalUserAssigned}}, {{newUserAssigned}} has reassigned this task to him"
   },
   "sendChannelError": {
-    "error": "An error occurred  in the command",
+    "error": "An error occurred you can pass this location to the technical service",
+    "couldNotSendToUser": "Could not send an error message to the user.",
     "unknownCommand": "unknown command",
     "unknownUser": "unknown user",
     "unknownFunction": "unknown function",

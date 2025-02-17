@@ -71,12 +71,7 @@ module.exports = {
       }
     } catch (error) {
       console.error(`Error in check-review command: ${error}`);
-      await sendErrorToChannel(
-        interaction,
-        translateLanguage('sendChannelError.error'),
-        error
-      );
-
+      await sendErrorToChannel(interaction, error);
       await interaction.reply({
         content: translateLanguage('checkReview.error'),
         ephemeral: true,

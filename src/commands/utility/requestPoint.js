@@ -55,12 +55,7 @@ module.exports = {
       });
     } catch (error) {
       console.error('Error executing request-point command:', error);
-      await sendErrorToChannel(
-        interaction,
-        translateLanguage('sendChannelError.error'),
-        error
-      );
-
+      await sendErrorToChannel(interaction, error);
       await interaction.reply({
         content: translateLanguage('requestPoint.error'),
         ephemeral: true,

@@ -65,11 +65,7 @@ module.exports = {
       );
     } catch (error) {
       console.error(error);
-      await sendErrorToChannel(
-        interaction,
-        translateLanguage('sendChannelError.error'),
-        error
-      );
+      await sendErrorToChannel(interaction, error);
       await interaction.reply(translateLanguage('convertTime.error'));
     }
   },

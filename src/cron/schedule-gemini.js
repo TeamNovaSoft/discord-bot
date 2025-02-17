@@ -1,7 +1,6 @@
 const { CronJob } = require('cron');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { GEMINI_INTEGRATION, SCHEDULE_MESSAGES } = require('../config');
-const { translateLanguage } = require('../languages/index');
 const { sendErrorToChannel } = require('../utils/send-error');
 const genAI = new GoogleGenerativeAI(GEMINI_INTEGRATION.geminiSecret);
 
@@ -31,11 +30,7 @@ const generateIaContent = async ({ client, channel, prompts }) => {
     currentChannel.send(result.response.text());
   } catch (error) {
     console.error(error);
-    sendErrorToChannel(
-      client,
-      translateLanguage('sendChannelError.error'),
-      error
-    );
+    sendErrorToChannel(client, error);
     return null;
   }
 };

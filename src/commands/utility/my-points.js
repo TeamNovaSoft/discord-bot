@@ -128,11 +128,7 @@ module.exports = {
       });
     } catch (error) {
       console.error(`Error in my-points command: ${error}`);
-      await sendErrorToChannel(
-        interaction,
-        translateLanguage('sendChannelError.error'),
-        error
-      );
+      await sendErrorToChannel(interaction, error);
       await interaction.editReply({
         content: translateLanguage(
           'myPoints.errorFetching',

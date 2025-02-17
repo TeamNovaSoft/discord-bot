@@ -90,11 +90,7 @@ const checkThreadsForReview = async (client, statusText) => {
     }
   } catch (error) {
     saveErrorLog(error);
-    sendErrorToChannel(
-      client,
-      translateLanguage('sendChannelError.error'),
-      error
-    );
+    sendErrorToChannel(client, error);
   }
 };
 
@@ -128,11 +124,7 @@ const scheduleReviewCheck = (client) => {
     );
   } catch (error) {
     console.error('Failed to create CronJob:', error.message);
-    sendErrorToChannel(
-      client,
-      translateLanguage('sendChannelError.error'),
-      error
-    );
+    sendErrorToChannel(client, error);
   }
 };
 

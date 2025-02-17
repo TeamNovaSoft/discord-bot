@@ -153,6 +153,7 @@
     "reassignedTaskTo": "{{originalUserAssigned}}, {{newUserAssigned}} se ha reasignado esta tarea"
   },
   "sendChannelError": {
+    "error": "Ocurrió un error puedes pasar esta ubicación al servicio técnico",
     "unknownCommand": "comando desconocido",
     "unknownUser": "usuario desconocido",
     "unknownFunction": "función desconocida",

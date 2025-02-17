@@ -26,11 +26,7 @@ module.exports = {
         await interaction.showModal(modal);
       }
     } catch (error) {
-      await sendErrorToChannel(
-        interaction,
-        translateLanguage('sendChannelError.error'),
-        error
-      );
+      await sendErrorToChannel(interaction, error);
     }
   },
 };

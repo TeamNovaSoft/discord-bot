@@ -79,11 +79,7 @@ module.exports = {
         ephemeral: true,
       });
     } catch (error) {
-      await sendErrorToChannel(
-        interaction,
-        translateLanguage('sendChannelError.error'),
-        error
-      );
+      await sendErrorToChannel(interaction, error);
     }
   },
 };

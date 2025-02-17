@@ -65,11 +65,7 @@ const scheduleEventReminder = ({ client, event, channelId, timeZone }) => {
         saveErrorLog(
           `Error sending event reminder in channel - '${channelId}': ${error.message}`
         );
-        sendErrorToChannel(
-          client,
-          translateLanguage('sendChannelError.error'),
-          error
-        );
+        sendErrorToChannel(client, error);
       }
     },
     null,

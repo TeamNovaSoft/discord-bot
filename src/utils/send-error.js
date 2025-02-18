@@ -86,12 +86,10 @@ async function sendErrorToChannel(source, error, additionalInfo = {}) {
 
 function registerGlobalErrorHandlers(client) {
   process.on('uncaughtException', async (error) => {
-    console.error('Unhandled Exception:', error);
     await sendErrorToChannel(client, error);
   });
 
   process.on('unhandledRejection', async (reason) => {
-    console.error('Unhandled Rejection:', reason);
     await sendErrorToChannel(client, reason);
   });
 }

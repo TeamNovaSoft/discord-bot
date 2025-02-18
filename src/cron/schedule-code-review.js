@@ -8,7 +8,6 @@ const {
   MAPPED_STATUS_COMMANDS,
   DISCORD_SERVER,
   CRON_REVIEW_SETTINGS,
-  TIME_ZONES,
 } = require('../config');
 
 /**
@@ -121,7 +120,7 @@ const scheduleAllStatusChecks = (client) => {
           () => checkThreadsForStatus(client, statusText, config),
           null,
           true,
-          TIME_ZONES || 'America/Bogota'
+          CRON_REVIEW_SETTINGS.timeZone
         );
       } catch (error) {
         console.error('Failed to create CronJob:', error.message);

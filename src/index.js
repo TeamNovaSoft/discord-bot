@@ -22,7 +22,7 @@ const saveErrorLog = require('./utils/log-error');
 const convertCronToText = require('./utils/cron-to-text-parser');
 const { processMarkdownFiles } = require('./cron/utils/read-markdown-messages');
 const { scheduleReviewCheck } = require('./cron/schedule-code-review');
-const { registerGlobalErrorHandlers } = require('./utils/send-error');
+const { sendErrorToChannel } = require('./utils/send-error');
 
 async function startClientBot(client) {
   client.commands = new Collection();
@@ -68,7 +68,7 @@ async function startClientBot(client) {
 
 function handleCriticalError(error) {
   saveErrorLog(error);
-  registerGlobalErrorHandlers(client);
+  sendErrorToChannel(client, error);
 }
 
 const token = DISCORD_SERVER.discordToken;
@@ -83,15 +83,13 @@ const client = new Client({
 });
 client.commands = new Collection();
 
-registerGlobalErrorHandlers(client);
-
 process.on('uncaughtException', (error) => {
-  handleCriticalError(error, client);
+  handleCriticalError(error);
 });
 
 process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise);
-  handleCriticalError(reason, client);
+  handleCriticalError(reason);
 });
 
 startClientBot(client);

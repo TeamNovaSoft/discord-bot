@@ -84,14 +84,4 @@ async function sendErrorToChannel(source, error, additionalInfo = {}) {
   }
 }
 
-function registerGlobalErrorHandlers(client) {
-  process.on('uncaughtException', async (error) => {
-    await sendErrorToChannel(client, error);
-  });
-
-  process.on('unhandledRejection', async (reason) => {
-    await sendErrorToChannel(client, reason);
-  });
-}
-
-module.exports = { sendErrorToChannel, registerGlobalErrorHandlers };
+module.exports = { sendErrorToChannel };

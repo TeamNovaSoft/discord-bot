@@ -2,6 +2,8 @@ const { CronJob } = require('cron');
 const { ChannelType } = require('discord.js');
 const { translateLanguage } = require('../languages/index');
 const saveErrorLog = require('../utils/log-error');
+const { sendErrorToChannel } = require('../utils/send-error');
+
 const {
   MAPPED_STATUS_COMMANDS,
   DISCORD_SERVER,
@@ -88,6 +90,7 @@ const checkThreadsForReview = async (client, statusText) => {
     }
   } catch (error) {
     saveErrorLog(error);
+    sendErrorToChannel(client, error);
   }
 };
 
@@ -121,6 +124,7 @@ const scheduleReviewCheck = (client) => {
     );
   } catch (error) {
     console.error('Failed to create CronJob:', error.message);
+    sendErrorToChannel(client, error);
   }
 };
 

@@ -4,6 +4,7 @@ const {
   getMappedStatusText,
   STATUS_KEY,
 } = require('../../cron/schedule-code-review');
+const { sendErrorToChannel } = require('../../utils/send-error');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -70,6 +71,7 @@ module.exports = {
       }
     } catch (error) {
       console.error(`Error in check-review command: ${error}`);
+      await sendErrorToChannel(interaction, error);
       await interaction.reply({
         content: translateLanguage('checkReview.error'),
         ephemeral: true,

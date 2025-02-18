@@ -151,6 +151,25 @@
     "taskAssignedTo": "Task assigned to {{newUserId}}!",
     "reassignedTaskTo": "{{originalUserAssigned}}, {{newUserAssigned}} has reassigned this task to him"
   },
+  "sendChannelError": {
+    "error": "An error occurred you can pass this location to the technical service",
+    "couldNotSendToUser": "Could not send an error message to the user.",
+    "unknownCommand": "unknown command",
+    "unknownUser": "unknown user",
+    "unknownFunction": "unknown function",
+    "channelNotFound": "The error channel does not exist or is not a text channel.",
+    "couldNotSend": "Could not send the error message:",
+    "commandLabel": "Command/Function:",
+    "userLabel": "User:",
+    "channelLabel": "Channel:",
+    "reportIssue": "Report this issue",
+    "clickHere": "Click here",
+    "errorLabel": "Error:"
+  },
+  "githubIssue": {
+    "warning": "Bug reporting URL not found in package.json.",
+    "error": "Could not read package.json"
+  },
   "remindme": {
     "commandDescription": "Set a reminder for a specific date/time or just time today",
     "timeOptionDescription": "Date and time (dd-MM-yyyy HH:mm) or just time (HH:mm)",

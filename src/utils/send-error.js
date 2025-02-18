@@ -2,6 +2,9 @@ require('dotenv').config();
 const { translateLanguage } = require('../languages/index');
 const { getGitHubIssueURL } = require('./githubIssue');
 
+const MAX_MESSAGE_LENGTH = 300;
+const MAX_MESSAGE_REPORT_LENGTH = 1000;
+
 async function sendErrorToChannel(source, error, additionalInfo = {}) {
   const title = translateLanguage('sendChannelError.error');
 
@@ -56,9 +59,12 @@ async function sendErrorToChannel(source, error, additionalInfo = {}) {
     message += `**${translateLanguage('sendChannelError.channelLabel')}** ${additionalInfo.channel}\n`;
   }
 
-  message += `**${translateLanguage('sendChannelError.errorLabel')}** \`\`\`js\n${error.stack || error}\n\`\`\``;
+  const errorPreview = `${(error.stack || error).toString().slice(0, MAX_MESSAGE_LENGTH)}...`;
+  const sliceErrorReport = `${(error.stack || error).toString().slice(0, MAX_MESSAGE_REPORT_LENGTH)}...`;
 
-  const issueUrl = getGitHubIssueURL(error.stack || error);
+  message += `**${translateLanguage('sendChannelError.errorLabel')}** \`\`\`js\n${errorPreview}\n\`\`\``;
+
+  const issueUrl = getGitHubIssueURL(sliceErrorReport);
   if (issueUrl) {
     message += `\n🔗 **${translateLanguage('sendChannelError.reportIssue')}**: [${translateLanguage('sendChannelError.clickHere')}](${issueUrl})`;
   }

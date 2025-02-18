@@ -30,6 +30,7 @@ module.exports = {
             ephemeral: true,
           });
         }
+        throw error;
       }
     } else if (interaction.isButton()) {
       const command = interaction.client.commands.get('remindme');

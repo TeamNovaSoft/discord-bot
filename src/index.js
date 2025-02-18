@@ -22,6 +22,7 @@ const saveErrorLog = require('./utils/log-error');
 const convertCronToText = require('./utils/cron-to-text-parser');
 const { processMarkdownFiles } = require('./cron/utils/read-markdown-messages');
 const { scheduleAllStatusChecks } = require('./cron/schedule-code-review');
+const { sendErrorToChannel } = require('./utils/send-error');
 
 async function startClientBot(client) {
   client.commands = new Collection();
@@ -67,6 +68,7 @@ async function startClientBot(client) {
 
 function handleCriticalError(error) {
   saveErrorLog(error);
+  sendErrorToChannel(client, error);
 }
 
 const token = DISCORD_SERVER.discordToken;

@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { translateLanguage } = require('../../languages/index');
 const { VOTE_POINTS } = require('../../config');
+const { sendErrorToChannel } = require('../../utils/send-error');
 
 const tagIds = VOTE_POINTS.TAG_IDS;
 
@@ -127,6 +128,7 @@ module.exports = {
       });
     } catch (error) {
       console.error(`Error in my-points command: ${error}`);
+      await sendErrorToChannel(interaction, error);
       await interaction.editReply({
         content: translateLanguage(
           'myPoints.errorFetching',

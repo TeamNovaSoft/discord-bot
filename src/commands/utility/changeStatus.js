@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { MAPPED_STATUS_COMMANDS } = require('../../config');
 const { translateLanguage } = require('../../languages/index');
+const { sendErrorToChannel } = require('../../utils/send-error');
 
 const COMMAND_KEYS = Object.keys(MAPPED_STATUS_COMMANDS);
 
@@ -73,6 +74,7 @@ module.exports = {
       );
     } catch (error) {
       console.error(error);
+      await sendErrorToChannel(interaction, error);
       await interaction.editReply(translateLanguage('changeStatus.error'));
     }
   },

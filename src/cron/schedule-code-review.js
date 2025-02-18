@@ -31,7 +31,7 @@ const getMappedStatusText = (key) => {
  * @param {string} statusKey - Key of the status to check.
  * @returns {string|null}
  */
-const checkThreadsForStatus = async (client, statusKey, statusConfig) => {
+const checkThreadsForStatus = async (client, statusText, statusConfig) => {
   try {
     const guild = await client.guilds.fetch(DISCORD_SERVER.discordGuildId);
     if (!guild) {
@@ -47,17 +47,6 @@ const checkThreadsForStatus = async (client, statusKey, statusConfig) => {
     );
     if (textChannels.size === 0) {
       console.error('No text channels found.');
-      return;
-    }
-
-    if (!statusConfig) {
-      console.error(`No configuration found for status: ${statusKey}`);
-      return;
-    }
-
-    const statusText = getMappedStatusText(statusKey);
-    if (!statusText) {
-      console.log('Status key not mapped:', statusKey);
       return;
     }
 
@@ -114,12 +103,22 @@ const checkThreadsForStatus = async (client, statusKey, statusConfig) => {
 const scheduleAllStatusChecks = (client) => {
   Object.entries(CRON_REVIEW_SETTINGS.statusScheduleRemember).forEach(
     ([key, config]) => {
-      const schedule = config.scheduleConfig;
-
       try {
+        const isValidConfig =
+          config?.scheduleConfig &&
+          config?.rememberAfterMs &&
+          config?.messageTranslationKey;
+        const statusText = getMappedStatusText(key);
+
+        if (!isValidConfig || !statusText) {
+          throw new Error(`No configuration found for status: ${key}`);
+        }
+
+        const schedule = config.scheduleConfig;
+
         new CronJob(
           schedule,
-          () => checkThreadsForStatus(client, key, config),
+          () => checkThreadsForStatus(client, statusText, config),
           null,
           true,
           TIME_ZONES || 'America/Bogota'

@@ -18,6 +18,7 @@ const {
 } = require('./cron/schedule-google-calendar');
 const cron = require('cron');
 const { scheduleIaContentLogging } = require('../src/cron/schedule-gemini');
+const saveErrorLog = require('./utils/log-error');
 const convertCronToText = require('./utils/cron-to-text-parser');
 const { processMarkdownFiles } = require('./cron/utils/read-markdown-messages');
 const { scheduleReviewCheck } = require('./cron/schedule-code-review');
@@ -65,6 +66,11 @@ async function startClientBot(client) {
   }
 }
 
+function handleCriticalError(error) {
+  saveErrorLog(error);
+  registerGlobalErrorHandlers(client);
+}
+
 const token = DISCORD_SERVER.discordToken;
 const client = new Client({
   intents: [
@@ -78,5 +84,14 @@ const client = new Client({
 client.commands = new Collection();
 
 registerGlobalErrorHandlers(client);
+
+process.on('uncaughtException', (error) => {
+  handleCriticalError(error, client);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise);
+  handleCriticalError(reason, client);
+});
 
 startClientBot(client);

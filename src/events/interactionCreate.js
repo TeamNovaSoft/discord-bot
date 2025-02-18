@@ -1,5 +1,6 @@
 const { Events } = require('discord.js');
 const { translateLanguage } = require('../languages');
+const { handleModalSubmit } = require('../handlers/modal-submit');
 
 module.exports = {
   name: Events.InteractionCreate,
@@ -50,24 +51,26 @@ module.exports = {
         }
       }
     } else if (interaction.isModalSubmit()) {
-      if (interaction.customId === 'edit_reminder_modal') {
-        const command = interaction.client.commands.get('remindme');
+      try {
+        if (interaction.customId === 'edit_reminder_modal') {
+          const command = interaction.client.commands.get('remindme');
 
-        if (!command) {
-          console.error('No command matching remindme was found.');
-          return;
-        }
-
-        try {
-          await command.buttonHandler(interaction);
-        } catch (error) {
-          console.error('Error handling modal submit:', error);
-          if (!interaction.replied && !interaction.deferred) {
-            await interaction.reply({
-              content: translateLanguage('interaction.errorSubmission'),
-              ephemeral: true,
-            });
+          if (!command) {
+            console.error('No command matching remindme was found.');
+            return;
           }
+
+          await command.buttonHandler(interaction);
+        } else {
+          await handleModalSubmit(interaction);
+        }
+      } catch (error) {
+        console.error('Error handling modal submit:', error);
+        if (!interaction.replied && !interaction.deferred) {
+          await interaction.reply({
+            content: translateLanguage('interaction.errorSubmission'),
+            ephemeral: true,
+          });
         }
       }
     }

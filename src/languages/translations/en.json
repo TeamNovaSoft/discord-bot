@@ -153,6 +153,7 @@
   },
   "sendChannelError": {
     "error": "An error occurred you can pass this location to the technical service",
+    "errorReport": "Click here to report it to technical service",
     "couldNotSendToUser": "Could not send an error message to the user.",
     "unknownCommand": "unknown command",
     "unknownUser": "unknown user",

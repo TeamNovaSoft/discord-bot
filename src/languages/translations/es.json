@@ -154,6 +154,7 @@
   },
   "sendChannelError": {
     "error": "Ocurrió un error puedes pasar esta ubicación al servicio técnico",
+    "errorReport": "Haga clic aquí para informarlo al servicio técnico",
     "noSePudoEnviarAlUsuario": "No se pudo enviar un mensaje de error al usuario.",
     "unknownCommand": "comando desconocido",
     "unknownUser": "usuario desconocido",

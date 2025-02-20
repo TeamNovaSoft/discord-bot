@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { translateLanguage } = require('../languages/index');
+const { translateLanguage } = require('../languages');
 const { getGitHubIssueURL } = require('./githubIssue');
 
 async function sendErrorToChannel(source, error, additionalInfo = {}) {

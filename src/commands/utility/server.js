@@ -1,8 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const {
-  translateLanguage,
-  translateCommand,
-} = require('../../languages/index');
+const { translateLanguage, translateCommand } = require('../../languages');
 
 module.exports = {
   data: new SlashCommandBuilder()

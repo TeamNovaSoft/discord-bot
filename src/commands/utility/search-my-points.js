@@ -1,9 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { VOTE_POINTS } = require('../../config');
-const {
-  translateLanguage,
-  translateCommand,
-} = require('../../languages/index');
+const { translateLanguage, translateCommand } = require('../../languages');
 const { sendErrorToChannel } = require('../../utils/send-error');
 
 const tagIds = VOTE_POINTS.TAG_IDS;

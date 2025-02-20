@@ -18,10 +18,7 @@ const {
   resetReminder,
   formatReminderDate,
 } = require('../../utils/remindme-functions');
-const {
-  translateLanguage,
-  translateCommand,
-} = require('../../languages/index');
+const { translateLanguage, translateCommand } = require('../../languages');
 
 const activeReminders = new Map();
 let reminderCounter = 0;

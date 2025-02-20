@@ -1,9 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { REQUEST_POINT } = require('../../config');
-const {
-  translateLanguage,
-  translateCommand,
-} = require('../../languages/index');
+const { translateLanguage, translateCommand } = require('../../languages');
 const { sendErrorToChannel } = require('../../utils/send-error');
 
 module.exports = {

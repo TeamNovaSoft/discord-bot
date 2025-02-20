@@ -1,8 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const {
-  translateLanguage,
-  translateCommand,
-} = require('../../languages/index');
+const { translateLanguage, translateCommand } = require('../../languages');
 const { VOTE_POINTS } = require('../../config');
 const { sendErrorToChannel } = require('../../utils/send-error');
 

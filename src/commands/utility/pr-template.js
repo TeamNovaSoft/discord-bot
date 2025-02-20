@@ -1,10 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { createPRModal } = require('../../modals/pr-template-modal');
 const { PR_TEMPLATE } = require('../../config');
-const {
-  translateLanguage,
-  translateCommand,
-} = require('../../languages/index');
+const { translateLanguage, translateCommand } = require('../../languages');
 
 module.exports = {
   data: new SlashCommandBuilder()

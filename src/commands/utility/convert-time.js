@@ -1,10 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const moment = require('moment-timezone');
 const { TIME_ZONES } = require('../../config');
-const {
-  translateLanguage,
-  translateCommand,
-} = require('../../languages/index');
+const { translateLanguage, translateCommand } = require('../../languages');
 const { sendErrorToChannel } = require('../../utils/send-error');
 
 module.exports = {

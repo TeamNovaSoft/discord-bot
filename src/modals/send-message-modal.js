@@ -4,7 +4,7 @@ const {
   TextInputBuilder,
   TextInputStyle,
 } = require('discord.js');
-const { translateLanguage } = require('../languages/index');
+const { translateLanguage } = require('../languages');
 
 function createSendMessageModal(channelId, userName) {
   const modal = new ModalBuilder()

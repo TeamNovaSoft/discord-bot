@@ -1,8 +1,5 @@
 const { SlashCommandBuilder, ChannelType } = require('discord.js');
-const {
-  translateLanguage,
-  translateCommand,
-} = require('../../languages/index');
+const { translateLanguage, translateCommand } = require('../../languages');
 const {
   getMappedStatusText,
   STATUS_KEY,

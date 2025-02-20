@@ -1,6 +1,6 @@
 const { CronJob } = require('cron');
 const { ChannelType } = require('discord.js');
-const { translateLanguage } = require('../languages/index');
+const { translateLanguage } = require('../languages');
 const saveErrorLog = require('../utils/log-error');
 const { sendErrorToChannel } = require('../utils/send-error');
 

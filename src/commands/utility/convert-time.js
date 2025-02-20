@@ -1,17 +1,22 @@
 const { SlashCommandBuilder } = require('discord.js');
 const moment = require('moment-timezone');
 const { TIME_ZONES } = require('../../config');
-const { translateLanguage } = require('../../languages/index');
+const {
+  translateLanguage,
+  translateCommand,
+} = require('../../languages/index');
 const { sendErrorToChannel } = require('../../utils/send-error');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('convert-time')
     .setDescription(translateLanguage('convertTime.description'))
+    .setDescriptionLocalizations(translateCommand('changeStatus.description'))
     .addStringOption((option) =>
       option
         .setName('from')
         .setDescription(translateLanguage('convertTime.fromOption'))
+        .setDescriptionLocalizations(translateCommand('convertTime.fromOption'))
         .setRequired(true)
         .addChoices(TIME_ZONES)
     )
@@ -19,6 +24,7 @@ module.exports = {
       option
         .setName('to')
         .setDescription(translateLanguage('convertTime.toOption'))
+        .setDescriptionLocalizations(translateCommand('convertTime.toOption'))
         .setRequired(true)
         .addChoices(TIME_ZONES)
     )
@@ -26,6 +32,7 @@ module.exports = {
       option
         .setName('time')
         .setDescription(translateLanguage('convertTime.timeOption'))
+        .setDescriptionLocalizations(translateCommand('convertTime.timeOption'))
         .setRequired(true)
     ),
 

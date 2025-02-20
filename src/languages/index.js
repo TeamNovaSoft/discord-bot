@@ -70,4 +70,24 @@ function translateLanguage(key, params = {}) {
   return interpolateText(translation, params);
 }
 
-module.exports = { translateLanguage };
+const translateCommand = (command) => {
+  const languages = {
+    'es-ES': 'es',
+    'en-US': 'en',
+  };
+
+  const result = {};
+
+  for (const [locale, lang] of Object.entries(languages)) {
+    const translations = loadTranslations(lang);
+    if (translations) {
+      result[locale] = getTranslationByKey(translations, command, lang);
+    } else {
+      result[locale] = `Missing translation for ${lang}`;
+    }
+  }
+
+  return result;
+};
+
+module.exports = { translateLanguage, translateCommand };

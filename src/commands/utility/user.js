@@ -1,10 +1,14 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { translateLanguage } = require('../../languages/index');
+const {
+  translateLanguage,
+  translateCommand,
+} = require('../../languages/index');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('user')
-    .setDescription(translateLanguage('user.description')),
+    .setDescription(translateLanguage('user.description'))
+    .setDescriptionLocalizations(translateCommand('user.description')),
   async execute(interaction) {
     const username = interaction.user.username;
     const joinedAt = interaction.member.joinedAt.toDateString();

@@ -1,5 +1,8 @@
 const { SlashCommandBuilder, ChannelType } = require('discord.js');
-const { translateLanguage } = require('../../languages/index');
+const {
+  translateLanguage,
+  translateCommand,
+} = require('../../languages/index');
 const {
   getMappedStatusText,
   STATUS_KEY,
@@ -10,10 +13,14 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('check-review')
     .setDescription(translateLanguage('checkReview.description'))
+    .setDescriptionLocalizations(translateCommand('checkReview.description'))
     .addChannelOption((option) =>
       option
         .setName('channel')
         .setDescription(translateLanguage('checkReview.channelOption'))
+        .setDescriptionLocalizations(
+          translateCommand('checkReview.channelOption')
+        )
         .addChannelTypes(ChannelType.GuildText)
         .setRequired(true)
     ),

@@ -1,5 +1,8 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { translateLanguage } = require('../../languages/index');
+const {
+  translateLanguage,
+  translateCommand,
+} = require('../../languages/index');
 const { VOTE_POINTS } = require('../../config');
 const { sendErrorToChannel } = require('../../utils/send-error');
 
@@ -9,28 +12,35 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('my-points')
     .setDescription(translateLanguage('myPoints.description'))
+    .setDescriptionLocalizations(translateCommand('myPoints.description'))
     .addIntegerOption((option) =>
       option
         .setName('year')
         .setDescription(translateLanguage('myPoints.yearOption'))
+        .setDescriptionLocalizations(translateCommand('myPoints.yearOption'))
         .setRequired(false)
     )
     .addIntegerOption((option) =>
       option
         .setName('month')
         .setDescription(translateLanguage('myPoints.monthOption'))
+        .setDescriptionLocalizations(translateCommand('myPoints.monthOption'))
         .setRequired(false)
     )
     .addUserOption((option) =>
       option
         .setName('user')
         .setDescription(translateLanguage('myPoints.userOption'))
+        .setDescriptionLocalizations(translateCommand('myPoints.userOption'))
         .setRequired(false)
     )
     .addStringOption((option) =>
       option
         .setName('channels')
         .setDescription(translateLanguage('myPoints.channelsOption'))
+        .setDescriptionLocalizations(
+          translateCommand('myPoints.channelsOption')
+        )
         .setRequired(false)
     ),
 

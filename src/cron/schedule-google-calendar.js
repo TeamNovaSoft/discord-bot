@@ -7,6 +7,8 @@ const { FIREBASE_CONFIG } = require('../config');
 
 let activeCronJobs = [];
 
+const minutesBeforeEvent = 10 * 60 * 1000;
+
 const clearAllCronJobs = () => {
   activeCronJobs.forEach((job) => job.stop());
   activeCronJobs = [];
@@ -34,7 +36,10 @@ const scheduleEventNotification = async ({ client, event }) => {
     );
   }
 
-  const cronExpression = dateToCronExpression(event.start.dateTime);
+  const startDate = new Date(event.start.dateTime);
+  startDate.setTime(startDate.getTime() - minutesBeforeEvent);
+
+  const cronExpression = dateToCronExpression(startDate);
   const job = new CronJob(
     cronExpression,
     async () => {

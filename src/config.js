@@ -118,7 +118,7 @@ const GEMINI_INTEGRATION = {
   interactionChannel: process.env.AI_AUTOMATIC_INTERACTION_CHANNEL,
 };
 
-const CRON_REVIEW_SETTINGS = {
+const CRON_STATUS_REMINDER = {
   cronSchedule: {
     scheduleReview: process.env.CRON_SCHEDULE_REVIEW || '0 7 * * 1,5',
     timeZone: process.env.TIME_ZONE || 'America/Bogota',
@@ -160,6 +160,6 @@ module.exports = {
   PR_TEMPLATE,
   SCHEDULE_CALENDAR,
   GEMINI_INTEGRATION,
-  CRON_REVIEW_SETTINGS,
+  CRON_STATUS_REMINDER,
   FIREBASE_CONFIG,
 };

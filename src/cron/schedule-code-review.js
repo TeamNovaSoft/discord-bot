@@ -7,7 +7,7 @@ const { sendErrorToChannel } = require('../utils/send-error');
 const {
   MAPPED_STATUS_COMMANDS,
   DISCORD_SERVER,
-  CRON_REVIEW_SETTINGS,
+  CRON_STATUS_REMINDER,
 } = require('../config');
 
 /**
@@ -100,7 +100,7 @@ const checkThreadsForStatus = async (client, statusText, statusConfig) => {
  * @param {Client} client - Instance of the Discord.js client.
  */
 const scheduleAllStatusChecks = (client) => {
-  Object.entries(CRON_REVIEW_SETTINGS.statusScheduleRemember).forEach(
+  Object.entries(CRON_STATUS_REMINDER.statusScheduleRemember).forEach(
     ([key, config]) => {
       try {
         const isValidConfig =
@@ -120,7 +120,7 @@ const scheduleAllStatusChecks = (client) => {
           () => checkThreadsForStatus(client, statusText, config),
           null,
           true,
-          CRON_REVIEW_SETTINGS.timeZone
+          CRON_STATUS_REMINDER.timeZone
         );
       } catch (error) {
         console.error('Failed to create CronJob:', error.message);

@@ -1,10 +1,10 @@
 # Creating New Commands
 
-Para crear un nuevo comando:
+To create a new command:
 
-1. Navega al directorio `commands` y crea una nueva carpeta para tu comando (si es necesario).
+1. Navigate to the `commands` directory and create a new folder for your command (if necessary).
 
-2. Dentro de esta carpeta, crea un nuevo archivo JavaScript para tu comando. Aquí tienes un ejemplo básico de estructura:
+2. Inside this folder, create a new JavaScript file for your command. Here’s a basic structure example:
 
    ```javascript
    const { SlashCommandBuilder } = require('discord.js');
@@ -20,4 +20,4 @@ Para crear un nuevo comando:
    };
    ```
 
-3. El nuevo comando se cargará automáticamente la próxima vez que inicies el bot.
+3. The new command will be automatically loaded the next time you start the bot.

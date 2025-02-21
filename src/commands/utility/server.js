@@ -1,10 +1,11 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { translateLanguage } = require('../../languages/index');
+const { translateLanguage, translateCommand } = require('../../languages');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('server')
-    .setDescription(translateLanguage('server.description')),
+    .setDescription(translateLanguage('server.description'))
+    .setDescriptionLocalizations(translateCommand('server.description')),
   async execute(interaction) {
     const serverName = interaction.guild.name;
     const memberCount = interaction.guild.memberCount;

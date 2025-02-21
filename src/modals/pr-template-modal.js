@@ -4,7 +4,7 @@ const {
   TextInputBuilder,
   TextInputStyle,
 } = require('discord.js');
-const { translateLanguage } = require('../languages/index');
+const { translateLanguage } = require('../languages');
 
 function createPRModal(channelId) {
   const modal = new ModalBuilder()

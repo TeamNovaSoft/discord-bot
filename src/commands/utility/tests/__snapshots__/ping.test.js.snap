@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Ping command command snapshot 1`] = `
+{
+  "contexts": undefined,
+  "default_member_permissions": undefined,
+  "default_permission": undefined,
+  "description": "Ping command description",
+  "description_localizations": undefined,
+  "dm_permission": undefined,
+  "integration_types": undefined,
+  "name": "ping",
+  "name_localizations": undefined,
+  "nsfw": undefined,
+  "options": [],
+  "type": 1,
+}
+`;

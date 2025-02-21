@@ -6,29 +6,30 @@ const botLanguage = DISCORD_SERVER?.botLanguage || 'en-US';
 const translationsPath = path.join(__dirname, 'translations');
 const translationsCache = {};
 
-function loadTranslations(lang) {
+function loadAllTranslations() {
   try {
-    if (translationsCache[lang]) {
-      return translationsCache[lang];
-    }
+    const files = fs
+      .readdirSync(translationsPath)
+      .filter((file) => file.endsWith('.json'));
+    const languages = [];
 
-    const filePath = path.join(translationsPath, `${lang}.json`);
-    if (!fs.existsSync(filePath)) {
-      console.error(`Translation file for language '${lang}' not found.`);
-      return null;
-    }
+    files.forEach((file) => {
+      const lang = file.replace('.json', '');
+      const filePath = path.join(translationsPath, file);
+      const translations = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
-    const translations = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    translationsCache[lang] = translations;
-    return translations;
+      translationsCache[lang] = translations;
+      languages.push(lang);
+    });
+
+    return languages;
   } catch (error) {
-    console.error(
-      `Error loading translations for language '${lang}':`,
-      error.message
-    );
-    return null;
+    console.error(`Error loading translations:`, error.message);
+    return [];
   }
 }
+
+const locales = loadAllTranslations();
 
 function getTranslationByKey(translations, key, lang) {
   const keys = key.split('.');
@@ -56,8 +57,8 @@ const interpolateText = (text, params = {}) => {
 };
 
 function translateLanguage(key, params = {}, language = botLanguage) {
-  const translations = loadTranslations(language);
-  if (!translations) {
+  const translations = translationsCache[language] || {};
+  if (!Object.keys(translations).length) {
     return `Translations not available for language '${language}'.`;
   }
   const translation = getTranslationByKey(translations, key, language);
@@ -65,11 +66,10 @@ function translateLanguage(key, params = {}, language = botLanguage) {
 }
 
 const translateCommand = (command) => {
-  const locales = ['es-ES', 'en-US'];
   const result = {};
 
   for (const locale of locales) {
-    const translations = loadTranslations(locale);
+    const translations = translationsCache[locale];
     result[locale] = translations
       ? getTranslationByKey(translations, command, locale)
       : `Missing translation for ${locale}`;

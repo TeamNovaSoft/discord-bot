@@ -2,16 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const { DISCORD_SERVER } = require('../config');
 
-const botLanguage = DISCORD_SERVER?.botLanguage || 'en';
+const botLanguage = DISCORD_SERVER?.botLanguage || 'en-US';
 const translationsPath = path.join(__dirname, 'translations');
-const translationsCache = {
-  es: {},
-  en: {},
-};
+const translationsCache = {};
 
 function loadTranslations(lang) {
   try {
-    if (Object.keys(translationsCache[lang] ?? {}).length > 0) {
+    if (translationsCache[lang]) {
       return translationsCache[lang];
     }
 
@@ -50,41 +47,32 @@ function getTranslationByKey(translations, key, lang) {
     : `Invalid translation format for key '${key}' in language '${lang}'.`;
 }
 
-const interpolateText = (text, props = {}) => {
+const interpolateText = (text, params = {}) => {
   let result = text;
-
-  Object.entries(props).forEach(([key, value]) => {
+  Object.entries(params).forEach(([key, value]) => {
     result = result.replaceAll(`{{${key}}}`, value);
   });
-
   return result;
 };
 
-function translateLanguage(key, params = {}) {
-  const translations = loadTranslations(botLanguage);
-  if (!translations || !Object.values(translations).length) {
-    return `Translations not available for language '${botLanguage}'.`;
+function translateLanguage(key, params = {}, language = botLanguage) {
+  const translations = loadTranslations(language);
+  if (!translations) {
+    return `Translations not available for language '${language}'.`;
   }
-
-  const translation = getTranslationByKey(translations, key, botLanguage);
+  const translation = getTranslationByKey(translations, key, language);
   return interpolateText(translation, params);
 }
 
 const translateCommand = (command) => {
-  const languages = {
-    'es-ES': 'es',
-    'en-US': 'en',
-  };
-
+  const locales = ['es-ES', 'en-US'];
   const result = {};
 
-  for (const [locale, lang] of Object.entries(languages)) {
-    const translations = loadTranslations(lang);
-    if (translations) {
-      result[locale] = getTranslationByKey(translations, command, lang);
-    } else {
-      result[locale] = `Missing translation for ${lang}`;
-    }
+  for (const locale of locales) {
+    const translations = loadTranslations(locale);
+    result[locale] = translations
+      ? getTranslationByKey(translations, command, locale)
+      : `Missing translation for ${locale}`;
   }
 
   return result;

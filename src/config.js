@@ -45,11 +45,6 @@ const QA_MENTION = {
   discordQAChannelName: process.env.DISCORD_QA_CHANNEL_ID,
 };
 
-const CRON_SCHEDULE_REVIEW = {
-  scheduleReview: process.env.CRON_SCHEDULE_REVIEW || '0 7 * * 1,5',
-  timeZone: process.env.TIME_ZONE || 'America/Bogota',
-};
-
 const REQUEST_POINT = {
   discordAdminPointRequestChannel: process.env.ADMIN_POINT_REQUEST_CHANNEL,
   discordAdminTagId: process.env.ADMINISTRATOR_TAG_ID,
@@ -123,6 +118,29 @@ const GEMINI_INTEGRATION = {
   interactionChannel: process.env.AI_AUTOMATIC_INTERACTION_CHANNEL,
 };
 
+const CRON_STATUS_REMINDER = {
+  cronSchedule: {
+    scheduleReview: process.env.CRON_SCHEDULE_REVIEW || '0 7 * * 1,5',
+    timeZone: process.env.TIME_ZONE || 'America/Bogota',
+  },
+  statusScheduleRemember: {
+    'pr-request-review': {
+      scheduleConfig: process.env.REQUEST_REVIEW_CRON || '0 7 * * *',
+      rememberAfterMs: 86400000,
+      messageTranslationKey: 'checkReview.threadNotReviewed',
+    },
+    'pr-merged-on-staging': {
+      scheduleConfig: process.env.MERGED_IN_STAGING_CRON || '0 7 * * 1',
+      rememberAfterMs: 604800000,
+      messageTranslationKey: 'checkReview.mergedInStaging',
+    },
+    'pr-request-changes': {
+      scheduleConfig: process.env.REQUEST_CHANGES_CRON || '0 */8 * * *',
+      rememberAfterMs: 28800000,
+      messageTranslationKey: 'checkReview.requestChanges',
+    },
+  },
+};
 const FIREBASE_CONFIG = {
   scheduledCalendarEnabled: process.env.SCHEDULED_CALENDAR_ENABLED === 'true',
   scopes: ['https://www.googleapis.com/auth/calendar.readonly'],
@@ -142,6 +160,6 @@ module.exports = {
   PR_TEMPLATE,
   SCHEDULE_CALENDAR,
   GEMINI_INTEGRATION,
-  CRON_SCHEDULE_REVIEW,
+  CRON_STATUS_REMINDER,
   FIREBASE_CONFIG,
 };

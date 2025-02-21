@@ -5,7 +5,7 @@ const {
   SCHEDULE_MESSAGES,
   SCHEDULE_CALENDAR,
   GEMINI_INTEGRATION,
-  CRON_SCHEDULE_REVIEW,
+  CRON_STATUS_REMINDER,
   FIREBASE_CONFIG,
 } = require('./config');
 const deployEvents = require('./deploy-events');
@@ -21,7 +21,7 @@ const { scheduleIaContentLogging } = require('../src/cron/schedule-gemini');
 const saveErrorLog = require('./utils/log-error');
 const convertCronToText = require('./utils/cron-to-text-parser');
 const { processMarkdownFiles } = require('./cron/utils/read-markdown-messages');
-const { scheduleReviewCheck } = require('./cron/schedule-code-review');
+const { scheduleAllStatusChecks } = require('./cron/schedule-code-review');
 const { sendErrorToChannel } = require('./utils/send-error');
 
 async function startClientBot(client) {
@@ -47,8 +47,8 @@ async function startClientBot(client) {
     console.log(convertCronToText(SCHEDULE_CALENDAR.scheduledCalendarInterval));
   }
 
-  const timeZone = CRON_SCHEDULE_REVIEW.timeZone;
-  scheduleReviewCheck(client, timeZone);
+  const timeZone = CRON_STATUS_REMINDER.cronSchedule.timeZone;
+  scheduleAllStatusChecks(client, timeZone);
 
   await client.login(token);
 

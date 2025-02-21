@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { DISCORD_SERVER } = require('../config');
 
-const botLanguage = DISCORD_SERVER.botLanguage;
+const botLanguage = DISCORD_SERVER?.botLanguage || 'en';
 const translationsPath = path.join(__dirname, 'translations');
 const translationsCache = {
   es: {},

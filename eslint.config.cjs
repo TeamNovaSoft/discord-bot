@@ -1,10 +1,12 @@
-import globals from 'globals';
-import pluginJs from '@eslint/js';
-import prettierPlugin from 'eslint-plugin-prettier';
-import importPlugin from 'eslint-plugin-import';
+const globals = require('globals');
+const pluginJs = require('@eslint/js');
+const prettierPlugin = require('eslint-plugin-prettier');
+const pluginJest = require('eslint-plugin-jest');
+const importPlugin = require('eslint-plugin-import');
 
 const { node } = globals;
-export default [
+
+module.exports = [
   pluginJs.configs.recommended,
   importPlugin.flatConfigs.recommended,
   {
@@ -56,6 +58,13 @@ export default [
           endOfLine: 'auto',
         },
       ],
+    },
+  },
+  {
+    files: ['**/*.test.js'],
+    plugins: { jest: pluginJest },
+    languageOptions: {
+      globals: pluginJest.environments.globals.globals,
     },
   },
 ];

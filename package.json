@@ -1,6 +1,7 @@
 {
   "name": "discord-bot",
   "version": "1.0.1",
+  "type": "commonjs",
   "engines": {
     "node": "23.6.0"
   },
@@ -8,6 +9,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
+    "test": "jest",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"**/*.{js,json,md}\"",
@@ -32,13 +34,15 @@
     "@commitlint/config-conventional": "^19.6.0",
     "@eslint/js": "^9.14.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
-    "eslint": "^9.14.0",
+    "eslint": "^9.20.1",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-jest": "^28.11.0",
+    "eslint-plugin-prettier": "^5.2.3",
     "globals": "^15.12.0",
     "husky": "^9.1.7",
+    "jest": "^29.7.0",
     "lint-staged": "^15.2.10",
-    "prettier": "3.3.3"
+    "prettier": "^3.3.3"
   },
   "bugs": {
     "url": "https://github.com/TeamNovaSoft/novabot/issues/new/choose"

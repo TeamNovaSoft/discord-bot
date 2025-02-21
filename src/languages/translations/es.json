@@ -127,7 +127,9 @@
     "noPendingReviews": "No hay PR en estado 'request-review' que necesiten recordatorios en el canal {{channelName}}.",
     "pendingThreads": "🔔 **Hilos pendientes en {{channelName}}:**",
     "remindersSent": "Se enviaron recordatorios para {count} PR(s) que requieren revisión en el canal {{channelName}}.",
-    "threadNotReviewed": "El hilo {{threadName}} no ha sido revisado:\n {{threadUrl}}",
+    "threadNotReviewed": "El hilo **{{threadName}}** no ha sido revisado:\n {{threadUrl}}",
+    "requestChanges": "Se han solicitado cambios en el hilo **{{threadName}}**:\n {{threadUrl}}",
+    "mergedInStaging": "El hilo **{{threadName}}** ha sido fusionado en staging:\n {{threadUrl}}",
     "error": "Ocurrió un error al verificar los PR. Por favor, intenta nuevamente más tarde."
   },
   "eventCreated": {

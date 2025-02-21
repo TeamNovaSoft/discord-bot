@@ -35,6 +35,7 @@ module.exports = [
       'max-lines-per-function': ["error", 50],
       'import/no-dynamic-require': 'warn',
       'import/no-nodejs-modules': 'warn',
+      'no-unused-expressions': 'error',
 
       eqeqeq: ['error', 'always'],
       curly: ['error', 'all'],

@@ -3,7 +3,7 @@ name: Lint Check
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches: [ "main", "dev", "**" ]
+    branches: ['main', 'dev', '**']
 
 jobs:
   lint:
@@ -43,3 +43,6 @@ jobs:
 
       - name: Run Prettier
         run: yarn run format:check
+
+      - name: Run Jest
+        run: yarn run test

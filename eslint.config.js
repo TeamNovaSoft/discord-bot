@@ -32,7 +32,7 @@ module.exports = [
       'no-throw-literal': 'error',
       'prefer-promise-reject-errors': 'error',
       'max-lines': ["error", 250],
-      'max-lines-per-function': ["error", 50],
+      'max-lines-per-function': ["error", 42],
       'import/no-dynamic-require': 'warn',
       'import/no-nodejs-modules': 'warn',
       'no-unused-expressions': 'error',

@@ -36,6 +36,7 @@ module.exports = [
       'import/no-dynamic-require': 'warn',
       'import/no-nodejs-modules': 'warn',
       'no-unused-expressions': 'error',
+      'import/no-cycle': 'error',
 
       eqeqeq: ['error', 'always'],
       curly: ['error', 'all'],

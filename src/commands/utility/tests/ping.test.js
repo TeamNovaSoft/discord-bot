@@ -7,6 +7,15 @@ jest.mock('../../../languages', () => ({
     }
     return key;
   }),
+  translateCommand: jest.fn((key) => {
+    if (key === 'ping.description') {
+      return {
+        'en-US': 'Ping command description',
+        'es-ES': 'Descripción del comando Ping',
+      };
+    }
+    return {};
+  }),
 }));
 
 describe('Ping command', () => {

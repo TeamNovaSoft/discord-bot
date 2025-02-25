@@ -50,8 +50,8 @@ module.exports = {
         ? channelsInput.split(',').map((channel) => channel.trim())
         : [];
 
-      const targetStartDate = new Date(year, month - 1, 1);
-      const targetEndDate = new Date(year, month, 0);
+      const targetStartDate = new Date(year, month - 1, 0);
+      const targetEndDate = new Date(year, month, 1);
 
       const fetchedPoints = {
         taskCompleted: 0,
@@ -98,11 +98,9 @@ module.exports = {
         }
 
         const activeThreadsResult = await channel.threads.fetchActive();
-
         const archivedThreadsPublic = await channel.threads.fetchArchived({
           type: 'public',
         });
-
         let archivedThreadsPrivate = { threads: new Map() };
         try {
           archivedThreadsPrivate = await channel.threads.fetchArchived({
@@ -127,14 +125,14 @@ module.exports = {
         );
 
         for (const thread of allThreads.values()) {
-          const threadCreationDate = new Date(thread.createdAt);
-          if (
-            threadCreationDate >= targetStartDate &&
-            threadCreationDate <= targetEndDate
-          ) {
-            const messages = await thread.messages.fetch();
-            calculatePoints(messages, user, tagIds, fetchedPoints);
-          }
+          const messages = await thread.messages.fetch();
+          const filteredMessages = messages.filter((message) => {
+            const messageDate = new Date(message.createdAt);
+            return (
+              messageDate >= targetStartDate && messageDate <= targetEndDate
+            );
+          });
+          calculatePoints(filteredMessages, user, tagIds, fetchedPoints);
         }
       }
 
@@ -151,9 +149,7 @@ module.exports = {
         `${translateLanguage('myPoints.totalPoints')}: ${fetchedPoints.addPoint + fetchedPoints.boostedPoint || 0}`,
       ].join('\n');
 
-      await interaction.editReply({
-        content: responseContent,
-      });
+      await interaction.editReply({ content: responseContent });
     } catch (error) {
       console.error(`Error in my-points command: ${error}`);
       await sendErrorToChannel(interaction, error);

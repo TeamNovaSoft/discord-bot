@@ -51,7 +51,7 @@ module.exports = {
         : [];
 
       const targetStartDate = new Date(year, month - 1, 0);
-      const targetEndDate = new Date(year, month, 0);
+      const targetEndDate = new Date(year, month, 1);
 
       const fetchedPoints = {
         taskCompleted: 0,

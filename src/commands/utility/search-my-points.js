@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { VOTE_POINTS } = require('../../config');
-const { translateLanguage, translateCommand } = require('../../languages');
+const { translateLanguage, keyTranslations } = require('../../languages');
 const { sendErrorToChannel } = require('../../utils/send-error');
 
 const tagIds = VOTE_POINTS.TAG_IDS;
@@ -9,13 +9,13 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('my-points-query')
     .setDescription(translateLanguage('searchMyPoints.description'))
-    .setDescriptionLocalizations(translateCommand('searchMyPoints.description'))
+    .setDescriptionLocalizations(keyTranslations('searchMyPoints.description'))
     .addIntegerOption((option) =>
       option
         .setName('year')
         .setDescription(translateLanguage('searchMyPoints.yearOption'))
         .setDescriptionLocalizations(
-          translateCommand('searchMyPoints.yearOption')
+          keyTranslations('searchMyPoints.yearOption')
         )
         .setRequired(false)
     )
@@ -24,7 +24,7 @@ module.exports = {
         .setName('month')
         .setDescription(translateLanguage('searchMyPoints.monthOption'))
         .setDescriptionLocalizations(
-          translateCommand('searchMyPoints.monthOption')
+          keyTranslations('searchMyPoints.monthOption')
         )
         .setRequired(false)
     )
@@ -33,7 +33,7 @@ module.exports = {
         .setName('user')
         .setDescription(translateLanguage('searchMyPoints.userOption'))
         .setDescriptionLocalizations(
-          translateCommand('searchMyPoints.userOption')
+          keyTranslations('searchMyPoints.userOption')
         )
         .setRequired(false)
     )
@@ -42,7 +42,7 @@ module.exports = {
         .setName('channels')
         .setDescription(translateLanguage('searchMyPoints.channelsOption'))
         .setDescriptionLocalizations(
-          translateCommand('searchMyPoints.channelsOption')
+          keyTranslations('searchMyPoints.channelsOption')
         )
         .setRequired(false)
     ),

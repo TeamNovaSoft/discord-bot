@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { DISCORD_SERVER } = require('../../config');
-const { translateLanguage, translateCommand } = require('../../languages');
+const { translateLanguage, keyTranslations } = require('../../languages');
 const { sendErrorToChannel } = require('../../utils/send-error');
 
 const ASSIGN_EMOJI = '⚔';
@@ -56,7 +56,7 @@ module.exports = {
     .setName('assign-me')
     .setDescription(translateLanguage('tasksThread.taskDescription'))
     .setDescriptionLocalizations(
-      translateCommand('tasksThread.taskDescription')
+      keyTranslations('tasksThread.taskDescription')
     ),
   async execute(interaction) {
     try {

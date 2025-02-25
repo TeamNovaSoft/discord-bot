@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { MAPPED_STATUS_COMMANDS } = require('../../config');
-const { translateLanguage, translateCommand } = require('../../languages');
+const { translateLanguage, keyTranslations } = require('../../languages');
 const { sendErrorToChannel } = require('../../utils/send-error');
 
 const COMMAND_KEYS = Object.keys(MAPPED_STATUS_COMMANDS);
@@ -9,13 +9,13 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('change-status')
     .setDescription(translateLanguage('changeStatus.description'))
-    .setDescriptionLocalizations(translateCommand('changeStatus.description'))
+    .setDescriptionLocalizations(keyTranslations('changeStatus.description'))
     .addStringOption((option) =>
       option
         .setName('status')
         .setDescription(translateLanguage('changeStatus.statusOption'))
         .setDescriptionLocalizations(
-          translateCommand('changeStatus.statusOption')
+          keyTranslations('changeStatus.statusOption')
         )
         .setRequired(true)
         .addChoices(
@@ -30,7 +30,7 @@ module.exports = {
         .setName('message')
         .setDescription(translateLanguage('changeStatus.messageOption'))
         .setDescriptionLocalizations(
-          translateCommand('changeStatus.messageOption')
+          keyTranslations('changeStatus.messageOption')
         )
         .setRequired(false)
     ),

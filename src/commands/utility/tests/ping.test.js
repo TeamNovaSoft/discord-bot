@@ -7,7 +7,7 @@ jest.mock('../../../languages', () => ({
     }
     return key;
   }),
-  translateCommand: jest.fn((key) => {
+  keyTranslations: jest.fn((key) => {
     if (key === 'ping.description') {
       return {
         'en-US': 'Ping command description',

@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { VOTE_POINTS } = require('../../config');
-const { translateLanguage, translateCommand } = require('../../languages');
+const { translateLanguage, keyTranslations } = require('../../languages');
 
 const tagIds = VOTE_POINTS.TAG_IDS;
 
@@ -8,13 +8,13 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('vote-points')
     .setDescription(translateLanguage('votePoints.description'))
-    .setDescriptionLocalizations(translateCommand('votePoints.description'))
+    .setDescriptionLocalizations(keyTranslations('votePoints.description'))
     .addUserOption((option) =>
       option
         .setName('user')
         .setDescription(translateLanguage('votePoints.userDescription'))
         .setDescriptionLocalizations(
-          translateCommand('votePoints.userDescription')
+          keyTranslations('votePoints.userDescription')
         )
         .setRequired(true)
     )
@@ -23,7 +23,7 @@ module.exports = {
         .setName('point-type')
         .setDescription(translateLanguage('votepoints.pointDescription'))
         .setDescriptionLocalizations(
-          translateCommand('votepoints.pointDescription')
+          keyTranslations('votepoints.pointDescription')
         )
         .setRequired(true)
         .addChoices(

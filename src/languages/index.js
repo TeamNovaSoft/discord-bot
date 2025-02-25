@@ -65,17 +65,11 @@ function translateLanguage(key, params = {}, language = botLanguage) {
   return interpolateText(translation, params);
 }
 
-const translateCommand = (command) => {
-  const result = {};
-
-  for (const locale of locales) {
-    const translations = translationsCache[locale];
-    result[locale] = translations
-      ? getTranslationByKey(translations, command, locale)
-      : `Missing translation for ${locale}`;
-  }
-
-  return result;
+const keyTranslations = (command, params = {}) => {
+  return locales.reduce((result, locale) => {
+    result[locale] = translateLanguage(command, params, locale);
+    return result;
+  }, {});
 };
 
-module.exports = { translateLanguage, translateCommand };
+module.exports = { translateLanguage, keyTranslations };

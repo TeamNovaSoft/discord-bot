@@ -59,9 +59,21 @@ module.exports = {
         boostedPoint: 0,
       };
 
-      function calculatePoints(messages, user, tagIds, fetchedPoints) {
+      function calculatePoints(
+        messages,
+        user,
+        tagIds,
+        fetchedPoints,
+        start,
+        end
+      ) {
         messages.forEach((message) => {
           if (message.author.id !== interaction.client.user.id) {
+            return;
+          }
+
+          const messageDate = new Date(message.createdAt);
+          if (messageDate < start || messageDate >= end) {
             return;
           }
 
@@ -71,21 +83,17 @@ module.exports = {
             (match) => match[1]
           );
 
-          mentionedUsers.forEach((mentionedUserId) => {
-            if (mentionedUserId === user.id) {
-              if (
-                message.content.includes(`<@&${tagIds.taskCompletedTagId}>`)
-              ) {
-                fetchedPoints.taskCompleted += 1;
-              }
-              if (message.content.includes(`<@&${tagIds.addPointTagId}>`)) {
-                fetchedPoints.addPoint += 1;
-              }
-              if (message.content.includes(`<@&${tagIds.boostedPointTagId}>`)) {
-                fetchedPoints.boostedPoint += 1;
-              }
+          if (mentionedUsers.includes(user.id)) {
+            if (message.content.includes(`<@&${tagIds.taskCompletedTagId}>`)) {
+              fetchedPoints.taskCompleted += 1;
             }
-          });
+            if (message.content.includes(`<@&${tagIds.addPointTagId}>`)) {
+              fetchedPoints.addPoint += 1;
+            }
+            if (message.content.includes(`<@&${tagIds.boostedPointTagId}>`)) {
+              fetchedPoints.boostedPoint += 1;
+            }
+          }
         });
       }
 
@@ -97,42 +105,25 @@ module.exports = {
           return;
         }
 
-        const activeThreadsResult = await channel.threads.fetchActive();
-        const archivedThreadsPublic = await channel.threads.fetchArchived({
+        const activeThreadsData = await channel.threads.fetchActive();
+        const archivedThreadsData = await channel.threads.fetchArchived({
           type: 'public',
         });
-        let archivedThreadsPrivate = { threads: new Map() };
-        try {
-          archivedThreadsPrivate = await channel.threads.fetchArchived({
-            type: 'private',
-          });
-        } catch (error) {
-          console.warn(
-            'No se pudieron obtener hilos archivados privados:',
-            error
-          );
-        }
+        const threads = [
+          ...activeThreadsData.threads.values(),
+          ...archivedThreadsData.threads.values(),
+        ];
 
-        const allThreads = new Map();
-        activeThreadsResult.threads.forEach((thread) =>
-          allThreads.set(thread.id, thread)
-        );
-        archivedThreadsPublic.threads.forEach((thread) =>
-          allThreads.set(thread.id, thread)
-        );
-        archivedThreadsPrivate.threads.forEach((thread) =>
-          allThreads.set(thread.id, thread)
-        );
-
-        for (const thread of allThreads.values()) {
+        for (const thread of threads) {
           const messages = await thread.messages.fetch();
-          const filteredMessages = messages.filter((message) => {
-            const messageDate = new Date(message.createdAt);
-            return (
-              messageDate >= targetStartDate && messageDate <= targetEndDate
-            );
-          });
-          calculatePoints(filteredMessages, user, tagIds, fetchedPoints);
+          calculatePoints(
+            messages,
+            user,
+            tagIds,
+            fetchedPoints,
+            targetStartDate,
+            targetEndDate
+          );
         }
       }
 

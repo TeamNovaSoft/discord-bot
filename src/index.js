@@ -5,7 +5,7 @@ const deployEvents = require('./deploy-events');
 const deployCommands = require('./deploy-commands');
 const saveErrorLog = require('./utils/log-error');
 const { sendErrorToChannel } = require('./utils/send-error');
-const { reminderScheduler } = require('./reminder-scheduler');
+const { scheduleJobs } = require('./schedule-jobs');
 
 async function startClientBot(client) {
   client.commands = new Collection();
@@ -13,7 +13,7 @@ async function startClientBot(client) {
   deployEvents(client);
 
   await client.login(token);
-  reminderScheduler(client);
+  scheduleJobs(client);
 }
 
 function handleCriticalError(error) {

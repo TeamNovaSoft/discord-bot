@@ -4,7 +4,7 @@ const {
   FIREBASE_CONFIG,
 } = require('./config');
 const { scheduleAllStatusChecks } = require('./cron/schedule-code-review');
-const { scheduleIaContentLogging } = require('../src/cron/schedule-gemini');
+const { scheduleIaContentLogging } = require('./cron/schedule-gemini');
 const { processMarkdownFiles } = require('./cron/utils/read-markdown-messages');
 const {
   setupCalendarNotifications,
@@ -13,7 +13,7 @@ const {
   scheduleDiscordEventNotifications,
 } = require('./cron/schedule-event-reminder');
 
-function reminderScheduler(client) {
+function scheduleJobs(client) {
   processMarkdownFiles(client);
 
   if (GEMINI_INTEGRATION.scheduledGeminiEnabled) {
@@ -31,4 +31,4 @@ function reminderScheduler(client) {
   }
 }
 
-module.exports = { reminderScheduler };
+module.exports = { scheduleJobs };

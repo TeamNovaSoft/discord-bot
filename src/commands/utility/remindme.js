@@ -18,7 +18,7 @@ const {
   resetReminder,
   formatReminderDate,
 } = require('../../utils/remindme-functions');
-const { translateLanguage } = require('../../languages/index');
+const { translateLanguage, keyTranslations } = require('../../languages');
 
 const activeReminders = new Map();
 let reminderCounter = 0;
@@ -27,16 +27,23 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('remindme')
     .setDescription(translateLanguage('remindme.commandDescription'))
+    .setDescriptionLocalizations(keyTranslations('remindme.commandDescription'))
     .addStringOption((option) =>
       option
         .setName('time')
         .setDescription(translateLanguage('remindme.timeOptionDescription'))
+        .setDescriptionLocalizations(
+          keyTranslations('remindme.timeOptionDescription')
+        )
         .setRequired(true)
     )
     .addStringOption((option) =>
       option
         .setName('message')
         .setDescription(translateLanguage('remindme.messageOptionDescription'))
+        .setDescriptionLocalizations(
+          keyTranslations('remindme.messageOptionDescription')
+        )
         .setRequired(true)
     ),
 

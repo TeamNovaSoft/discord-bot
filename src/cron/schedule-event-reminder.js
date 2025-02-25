@@ -1,6 +1,6 @@
 const { CronJob } = require('cron');
 const { DISCORD_SERVER } = require('../config');
-const { translateLanguage } = require('../languages/index');
+const { translateLanguage } = require('../languages');
 const dateToCronExpression = require('../utils/date-to-cron-expression');
 const { SCHEDULE_MESSAGES } = require('../config');
 const saveErrorLog = require('../utils/log-error');

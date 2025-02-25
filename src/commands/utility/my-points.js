@@ -50,9 +50,8 @@ module.exports = {
         ? channelsInput.split(',').map((channel) => channel.trim())
         : [];
 
-      // Se define el rango completo del mes:
       const targetStartDate = new Date(year, month - 1, 1);
-      const targetEndDate = new Date(year, month, 0); // Último día del mes
+      const targetEndDate = new Date(year, month, 0);
 
       const fetchedPoints = {
         taskCompleted: 0,
@@ -98,15 +97,12 @@ module.exports = {
           return;
         }
 
-        // Obtener hilos activos
         const activeThreadsResult = await channel.threads.fetchActive();
 
-        // Obtener hilos archivados públicos
         const archivedThreadsPublic = await channel.threads.fetchArchived({
           type: 'public',
         });
 
-        // Intentar obtener hilos archivados privados (en caso de permisos)
         let archivedThreadsPrivate = { threads: new Map() };
         try {
           archivedThreadsPrivate = await channel.threads.fetchArchived({
@@ -119,7 +115,6 @@ module.exports = {
           );
         }
 
-        // Combinar todos los hilos en un único Map
         const allThreads = new Map();
         activeThreadsResult.threads.forEach((thread) =>
           allThreads.set(thread.id, thread)
@@ -131,7 +126,6 @@ module.exports = {
           allThreads.set(thread.id, thread)
         );
 
-        // Procesar cada hilo (tanto activo como archivado)
         for (const thread of allThreads.values()) {
           const threadCreationDate = new Date(thread.createdAt);
           if (
@@ -144,7 +138,6 @@ module.exports = {
         }
       }
 
-      // Procesar canales de forma concurrente
       await Promise.all(channels.map(processChannel));
 
       const monthName = new Intl.DateTimeFormat(interaction.locale, {

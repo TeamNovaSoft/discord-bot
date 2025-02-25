@@ -50,8 +50,8 @@ module.exports = {
         ? channelsInput.split(',').map((channel) => channel.trim())
         : [];
 
-      const targetStartDate = new Date(year, month - 1, 1);
-      const targetEndDate = new Date(year, month, 0);
+      const targetStartDate = new Date(year, month - 1, 0);
+      const targetEndDate = new Date(year, month, 1);
 
       const fetchedPoints = {
         taskCompleted: 0,

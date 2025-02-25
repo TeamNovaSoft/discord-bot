@@ -50,14 +50,16 @@ module.exports = {
         ? channelsInput.split(',').map((channel) => channel.trim())
         : [];
 
-      const targetStartDate = new Date(year, month - 1, 0);
-      const targetEndDate = new Date(year, month, 1);
+      // Se define el rango completo del mes:
+      const targetStartDate = new Date(year, month - 1, 1);
+      const targetEndDate = new Date(year, month, 0); // Último día del mes
 
       const fetchedPoints = {
         taskCompleted: 0,
         addPoint: 0,
         boostedPoint: 0,
       };
+
       function calculatePoints(messages, user, tagIds, fetchedPoints) {
         messages.forEach((message) => {
           if (message.author.id !== interaction.client.user.id) {
@@ -96,8 +98,41 @@ module.exports = {
           return;
         }
 
-        const activeThreads = await channel.threads.fetchActive();
-        for (const thread of activeThreads.threads.values()) {
+        // Obtener hilos activos
+        const activeThreadsResult = await channel.threads.fetchActive();
+
+        // Obtener hilos archivados públicos
+        const archivedThreadsPublic = await channel.threads.fetchArchived({
+          type: 'public',
+        });
+
+        // Intentar obtener hilos archivados privados (en caso de permisos)
+        let archivedThreadsPrivate = { threads: new Map() };
+        try {
+          archivedThreadsPrivate = await channel.threads.fetchArchived({
+            type: 'private',
+          });
+        } catch (error) {
+          console.warn(
+            'No se pudieron obtener hilos archivados privados:',
+            error
+          );
+        }
+
+        // Combinar todos los hilos en un único Map
+        const allThreads = new Map();
+        activeThreadsResult.threads.forEach((thread) =>
+          allThreads.set(thread.id, thread)
+        );
+        archivedThreadsPublic.threads.forEach((thread) =>
+          allThreads.set(thread.id, thread)
+        );
+        archivedThreadsPrivate.threads.forEach((thread) =>
+          allThreads.set(thread.id, thread)
+        );
+
+        // Procesar cada hilo (tanto activo como archivado)
+        for (const thread of allThreads.values()) {
           const threadCreationDate = new Date(thread.createdAt);
           if (
             threadCreationDate >= targetStartDate &&
@@ -109,7 +144,7 @@ module.exports = {
         }
       }
 
-      // Process channels concurrently
+      // Procesar canales de forma concurrente
       await Promise.all(channels.map(processChannel));
 
       const monthName = new Intl.DateTimeFormat(interaction.locale, {

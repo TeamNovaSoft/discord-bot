@@ -2,12 +2,13 @@ const globals = require('globals');
 const pluginJs = require('@eslint/js');
 const prettierPlugin = require('eslint-plugin-prettier');
 const pluginJest = require('eslint-plugin-jest');
+const importPlugin = require('eslint-plugin-import');
 
 const { node } = globals;
 
 module.exports = [
   pluginJs.configs.recommended,
-
+  importPlugin.flatConfigs.recommended,
   {
     files: ['**/*.js'],
     plugins: {
@@ -30,6 +31,12 @@ module.exports = [
       'no-undef': 'error',
       'no-throw-literal': 'error',
       'prefer-promise-reject-errors': 'error',
+      'max-lines': ['error', 250],
+      'max-lines-per-function': ['error', 42],
+      'import/no-dynamic-require': 'warn',
+      'import/no-nodejs-modules': 'warn',
+      'no-unused-expressions': 'error',
+      'import/no-cycle': 'error',
 
       eqeqeq: ['error', 'always'],
       curly: ['error', 'all'],

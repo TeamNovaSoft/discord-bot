@@ -21,8 +21,8 @@ module.exports = [
         filePath: 'readonly',
       },
       parserOptions: {
-        ecmaVersion: 2020
-      }
+        ecmaVersion: 2020,
+      },
     },
     rules: {
       'no-console': 'off',

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { translateLanguage } = require('../languages/index');
+const { translateLanguage } = require('../languages');
 
 function getGitHubIssueURL(errorMessage) {
   try {

@@ -10,6 +10,8 @@ const {
   CRON_STATUS_REMINDER,
 } = require('../config');
 
+const STATUS_KEY = 'pr-request-review';
+
 /**
  * Gets the mapped status text.
  * @param {string} key - Status key.
@@ -130,4 +132,4 @@ const scheduleAllStatusChecks = (client) => {
   );
 };
 
-module.exports = { scheduleAllStatusChecks, getMappedStatusText };
+module.exports = { scheduleAllStatusChecks, getMappedStatusText, STATUS_KEY };

@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { VOTE_POINTS } = require('../../config');
-const { translateLanguage } = require('../../languages/index');
+const { translateLanguage, keyTranslations } = require('../../languages');
 const { sendErrorToChannel } = require('../../utils/send-error');
 
 const tagIds = VOTE_POINTS.TAG_IDS;
@@ -9,28 +9,41 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('my-points-query')
     .setDescription(translateLanguage('searchMyPoints.description'))
+    .setDescriptionLocalizations(keyTranslations('searchMyPoints.description'))
     .addIntegerOption((option) =>
       option
         .setName('year')
         .setDescription(translateLanguage('searchMyPoints.yearOption'))
+        .setDescriptionLocalizations(
+          keyTranslations('searchMyPoints.yearOption')
+        )
         .setRequired(false)
     )
     .addIntegerOption((option) =>
       option
         .setName('month')
         .setDescription(translateLanguage('searchMyPoints.monthOption'))
+        .setDescriptionLocalizations(
+          keyTranslations('searchMyPoints.monthOption')
+        )
         .setRequired(false)
     )
     .addUserOption((option) =>
       option
         .setName('user')
         .setDescription(translateLanguage('searchMyPoints.userOption'))
+        .setDescriptionLocalizations(
+          keyTranslations('searchMyPoints.userOption')
+        )
         .setRequired(false)
     )
     .addStringOption((option) =>
       option
         .setName('channels')
         .setDescription(translateLanguage('searchMyPoints.channelsOption'))
+        .setDescriptionLocalizations(
+          keyTranslations('searchMyPoints.channelsOption')
+        )
         .setRequired(false)
     ),
 

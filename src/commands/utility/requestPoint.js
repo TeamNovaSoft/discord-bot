@@ -1,22 +1,27 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { REQUEST_POINT } = require('../../config');
-const { translateLanguage } = require('../../languages/index');
+const { translateLanguage, keyTranslations } = require('../../languages');
 const { sendErrorToChannel } = require('../../utils/send-error');
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('request-point')
     .setDescription(translateLanguage('requestPoint.description'))
+    .setDescriptionLocalizations(keyTranslations('requestPoint.description'))
     .addUserOption((option) =>
       option
         .setName('user')
         .setDescription(translateLanguage('requestPoint.userOption'))
+        .setDescriptionLocalizations(keyTranslations('requestPoint.userOption'))
         .setRequired(true)
     )
     .addStringOption((option) =>
       option
         .setName('reason')
         .setDescription(translateLanguage('requestPoint.reasonOption'))
+        .setDescriptionLocalizations(
+          keyTranslations('requestPoint.reasonOption')
+        )
         .setRequired(true)
     ),
   async execute(interaction) {

@@ -6,7 +6,10 @@ exports[`Ping command command snapshot 1`] = `
   "default_member_permissions": undefined,
   "default_permission": undefined,
   "description": "Ping command description",
-  "description_localizations": undefined,
+  "description_localizations": {
+    "en-US": "Ping command description",
+    "es-ES": "Descripción del comando Ping",
+  },
   "dm_permission": undefined,
   "integration_types": undefined,
   "name": "ping",

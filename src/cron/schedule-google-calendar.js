@@ -3,7 +3,12 @@ const { listEvents } = require('../../calendar');
 const { EmbedBuilder } = require('discord.js');
 const { translateLanguage } = require('../languages');
 const dateToCronExpression = require('../utils/date-to-cron-expression');
-const { FIREBASE_CONFIG } = require('../config');
+const convertCronToText = require('../utils/cron-to-text-parser');
+const {
+  FIREBASE_CONFIG,
+  SCHEDULE_CALENDAR,
+  SCHEDULE_MESSAGES,
+} = require('../config');
 
 let activeCronJobs = [];
 
@@ -100,4 +105,25 @@ const scheduleCalendarNotifications = async (client) => {
   });
 };
 
-module.exports = { scheduleCalendarNotifications };
+/**
+ * @description Schedules a cron job to send calendar notifications.
+ *
+ * @param {Client} client The client (Discord) to use for sending notifications.
+ *
+ * @returns {void}
+ */
+const setupCalendarNotifications = async (client) => {
+  new CronJob(
+    SCHEDULE_CALENDAR.scheduledCalendarInterval,
+    () => {
+      console.log('Running scheduled calendar notifications...');
+      scheduleCalendarNotifications(client);
+    },
+    null,
+    true,
+    SCHEDULE_MESSAGES.timeZone
+  );
+  console.log(convertCronToText(SCHEDULE_CALENDAR.scheduledCalendarInterval));
+};
+
+module.exports = { setupCalendarNotifications };

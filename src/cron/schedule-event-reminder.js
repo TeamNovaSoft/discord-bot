@@ -1,8 +1,11 @@
 const { CronJob } = require('cron');
-const { DISCORD_SERVER } = require('../config');
-const { translateLanguage } = require('../languages');
+const { translateLanguage } = require('../languages/index');
 const dateToCronExpression = require('../utils/date-to-cron-expression');
-const { SCHEDULE_MESSAGES } = require('../config');
+const {
+  SCHEDULE_MESSAGES,
+  DISCORD_SERVER,
+  SCHEDULE_CALENDAR,
+} = require('../config');
 const saveErrorLog = require('../utils/log-error');
 const { sendErrorToChannel } = require('../utils/send-error');
 
@@ -104,4 +107,24 @@ const scheduledEventNotifications = async (client) => {
   });
 };
 
-module.exports = { scheduledEventNotifications };
+/**
+ * @description Enables scheduled event notifications by creating a cron job
+ *
+ * @param {Client} client The client (Discord) to use for sending notifications.
+ *
+ * @returns {void}
+ */
+const scheduleDiscordEventNotifications = async (client) => {
+  new CronJob(
+    SCHEDULE_CALENDAR.scheduledCalendarInterval,
+    () => {
+      console.log('Running scheduled event notifications...');
+      scheduledEventNotifications(client);
+    },
+    null,
+    true,
+    SCHEDULE_MESSAGES.timeZone
+  );
+};
+
+module.exports = { scheduleDiscordEventNotifications };

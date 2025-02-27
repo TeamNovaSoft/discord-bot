@@ -5,17 +5,23 @@ const { sendErrorToChannel } = require('../../utils/send-error');
 
 const tagIds = VOTE_POINTS.TAG_IDS;
 
-function calculatePoints({ interaction, messages, user, fetchedPoints }) {
+function calculatePoints({
+  interaction,
+  messages = [],
+  user,
+  fetchedPoints,
+  targetStartDate,
+  targetEndDate,
+}) {
   messages.forEach((message) => {
     if (message.author.id !== interaction.client.user.id) {
       return;
     }
 
     const messageDate = new Date(message.createdAt);
-    if (messageDate < start || messageDate >= end) {
+    if (messageDate < targetStartDate || messageDate >= targetEndDate) {
       return;
     }
-
 
     const userMentionRegex = /<@(\d+)>/g;
     const mentionedUsers = Array.from(
@@ -67,14 +73,15 @@ async function processChannel({
 
   for (const thread of threads) {
     const messages = await thread.messages.fetch();
-    calculatePoints(
+    calculatePoints({
+      interaction,
       messages,
       user,
       tagIds,
       fetchedPoints,
       targetStartDate,
-      targetEndDate
-    );
+      targetEndDate,
+    });
   }
 }
 

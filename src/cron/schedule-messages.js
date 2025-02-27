@@ -1,5 +1,5 @@
 const { CronJob } = require('cron');
-const { translateLanguage } = require('../languages/index');
+const { translateLanguage } = require('../languages');
 const { SCHEDULE_MESSAGES } = require('../config');
 
 /**

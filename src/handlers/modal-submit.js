@@ -1,6 +1,6 @@
 const { formatPRMessage } = require('../utils/pr-formatter');
 const { formatSendMessage } = require('../utils/send-message-formatter');
-const { translateLanguage } = require('../languages/index');
+const { translateLanguage } = require('../languages');
 
 async function handleModalSubmit(interaction) {
   await interaction.deferReply({ ephemeral: true });

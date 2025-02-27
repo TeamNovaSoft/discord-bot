@@ -7,7 +7,6 @@ const { node } = globals;
 
 module.exports = [
   pluginJs.configs.recommended,
-
   {
     files: ['**/*.js'],
     plugins: {

@@ -1,6 +1,6 @@
 require('dotenv').config();
+const { translateLanguage } = require('../languages');
 const { EmbedBuilder } = require('discord.js');
-const { translateLanguage } = require('../languages/index');
 const { getGitHubIssueURL } = require('./githubIssue');
 
 /**

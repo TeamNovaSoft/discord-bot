@@ -1,5 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
-const { translateLanguage } = require('../languages/index');
+const { translateLanguage } = require('../languages');
 const { EmbedBuilder } = require('discord.js');
 
 async function updateCountdownEmbed(reply, reminderDate, message, exactTime) {

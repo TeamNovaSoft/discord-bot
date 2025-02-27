@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { translateLanguage } = require('../../languages/index');
+const { translateLanguage, keyTranslations } = require('../../languages');
 const { VOTE_POINTS } = require('../../config');
 const { sendErrorToChannel } = require('../../utils/send-error');
 
@@ -9,28 +9,33 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('my-points')
     .setDescription(translateLanguage('myPoints.description'))
+    .setDescriptionLocalizations(keyTranslations('myPoints.description'))
     .addIntegerOption((option) =>
       option
         .setName('year')
         .setDescription(translateLanguage('myPoints.yearOption'))
+        .setDescriptionLocalizations(keyTranslations('myPoints.yearOption'))
         .setRequired(false)
     )
     .addIntegerOption((option) =>
       option
         .setName('month')
         .setDescription(translateLanguage('myPoints.monthOption'))
+        .setDescriptionLocalizations(keyTranslations('myPoints.monthOption'))
         .setRequired(false)
     )
     .addUserOption((option) =>
       option
         .setName('user')
         .setDescription(translateLanguage('myPoints.userOption'))
+        .setDescriptionLocalizations(keyTranslations('myPoints.userOption'))
         .setRequired(false)
     )
     .addStringOption((option) =>
       option
         .setName('channels')
         .setDescription(translateLanguage('myPoints.channelsOption'))
+        .setDescriptionLocalizations(keyTranslations('myPoints.channelsOption'))
         .setRequired(false)
     ),
 
@@ -50,17 +55,30 @@ module.exports = {
         ? channelsInput.split(',').map((channel) => channel.trim())
         : [];
 
-      const targetStartDate = new Date(year, month - 1, 1);
-      const targetEndDate = new Date(year, month, 0);
+      const targetStartDate = new Date(year, month - 1, 0);
+      const targetEndDate = new Date(year, month, 1);
 
       const fetchedPoints = {
         taskCompleted: 0,
         addPoint: 0,
         boostedPoint: 0,
       };
-      function calculatePoints(messages, user, tagIds, fetchedPoints) {
+
+      function calculatePoints(
+        messages,
+        user,
+        tagIds,
+        fetchedPoints,
+        start,
+        end
+      ) {
         messages.forEach((message) => {
           if (message.author.id !== interaction.client.user.id) {
+            return;
+          }
+
+          const messageDate = new Date(message.createdAt);
+          if (messageDate < start || messageDate >= end) {
             return;
           }
 
@@ -70,21 +88,17 @@ module.exports = {
             (match) => match[1]
           );
 
-          mentionedUsers.forEach((mentionedUserId) => {
-            if (mentionedUserId === user.id) {
-              if (
-                message.content.includes(`<@&${tagIds.taskCompletedTagId}>`)
-              ) {
-                fetchedPoints.taskCompleted += 1;
-              }
-              if (message.content.includes(`<@&${tagIds.addPointTagId}>`)) {
-                fetchedPoints.addPoint += 1;
-              }
-              if (message.content.includes(`<@&${tagIds.boostedPointTagId}>`)) {
-                fetchedPoints.boostedPoint += 1;
-              }
+          if (mentionedUsers.includes(user.id)) {
+            if (message.content.includes(`<@&${tagIds.taskCompletedTagId}>`)) {
+              fetchedPoints.taskCompleted += 1;
             }
-          });
+            if (message.content.includes(`<@&${tagIds.addPointTagId}>`)) {
+              fetchedPoints.addPoint += 1;
+            }
+            if (message.content.includes(`<@&${tagIds.boostedPointTagId}>`)) {
+              fetchedPoints.boostedPoint += 1;
+            }
+          }
         });
       }
 
@@ -96,20 +110,28 @@ module.exports = {
           return;
         }
 
-        const activeThreads = await channel.threads.fetchActive();
-        for (const thread of activeThreads.threads.values()) {
-          const threadCreationDate = new Date(thread.createdAt);
-          if (
-            threadCreationDate >= targetStartDate &&
-            threadCreationDate <= targetEndDate
-          ) {
-            const messages = await thread.messages.fetch();
-            calculatePoints(messages, user, tagIds, fetchedPoints);
-          }
+        const activeThreadsData = await channel.threads.fetchActive();
+        const archivedThreadsData = await channel.threads.fetchArchived({
+          type: 'public',
+        });
+        const threads = [
+          ...activeThreadsData.threads.values(),
+          ...archivedThreadsData.threads.values(),
+        ];
+
+        for (const thread of threads) {
+          const messages = await thread.messages.fetch();
+          calculatePoints(
+            messages,
+            user,
+            tagIds,
+            fetchedPoints,
+            targetStartDate,
+            targetEndDate
+          );
         }
       }
 
-      // Process channels concurrently
       await Promise.all(channels.map(processChannel));
 
       const monthName = new Intl.DateTimeFormat(interaction.locale, {
@@ -123,9 +145,7 @@ module.exports = {
         `${translateLanguage('myPoints.totalPoints')}: ${fetchedPoints.addPoint + fetchedPoints.boostedPoint || 0}`,
       ].join('\n');
 
-      await interaction.editReply({
-        content: responseContent,
-      });
+      await interaction.editReply({ content: responseContent });
     } catch (error) {
       console.error(`Error in my-points command: ${error}`);
       await sendErrorToChannel(interaction, error);

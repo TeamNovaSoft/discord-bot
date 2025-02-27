@@ -1,7 +1,7 @@
 const { CronJob } = require('cron');
 const { listEvents } = require('../../calendar');
 const { EmbedBuilder } = require('discord.js');
-const { translateLanguage } = require('../languages/index');
+const { translateLanguage } = require('../languages');
 const dateToCronExpression = require('../utils/date-to-cron-expression');
 const convertCronToText = require('../utils/cron-to-text-parser');
 const {

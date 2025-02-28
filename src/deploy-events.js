@@ -1,15 +1,19 @@
-const fs = require('node:fs');
-const path = require('node:path');
-
 module.exports = (client) => {
-  const eventsPath = path.join(__dirname, 'events');
-  const eventFiles = fs
-    .readdirSync(eventsPath)
-    .filter((file) => file.endsWith('.js'));
+  const guildScheduledEventCreate = require('./events/guildScheduledEventCreate');
+  const interactionCreateEvent = require('./events/interactionCreate');
+  const pollVotationResultEvent = require('./events/pollVotationResults');
+  const qaMetionEvent = require('./events/qaMention');
+  const readyEvent = require('./events/ready');
 
-  for (const file of eventFiles) {
-    const event = require(path.join(eventsPath, file));
+  const eventList = [
+    guildScheduledEventCreate,
+    interactionCreateEvent,
+    pollVotationResultEvent,
+    qaMetionEvent,
+    readyEvent,
+  ];
 
+  for (const event of eventList) {
     const eventHandler = (...args) => event.execute(client, ...args);
 
     if (event.once) {
